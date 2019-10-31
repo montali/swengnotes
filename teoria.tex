@@ -1,0 +1,125 @@
+\documentclass[11pt]{article}
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{hyperref}
+
+\usepackage[normalem]{ulem}
+\newcommand{\numpy}{{\tt numpy}}    % tt font for numpy
+
+\topmargin -.5in
+\textheight 9in
+\oddsidemargin -.25in
+\evensidemargin -.25in
+\textwidth 7in
+
+\begin{document}
+
+% ========== Edit your name here
+\author{Simone Montali}
+\title{Riassunti di Ingegneria del Software}
+
+\maketitle
+
+\medskip
+
+\section{T1 - Software Development Process}
+Anche la signora seduta all'angolo di via Cavour, sa che oggi più che mai i software sono parte di tutti i processi che fanno girare il mondo. L'Ingegneria del software è però molto di più che scrivere codice. Infatti, è piuttosto un concetto di risoluzione dei problemi del mondo reale, sfruttando software. I requirements sono sempre più stringenti: tempi brevi, sistemi complessi, molte funzionalità richieste. Un buon software deve avere ottime \textbf{maintainability, dependability, efficiency, acceptability}. Problemi e soluzioni sono complessi, ma il software offre estrema flessibilità. Esso è un sistema discreto. Alcuni problemi tipici possono essere le scadenze, i budget, le performance, la manutenzione. Le sfide principali sono rappresentate da \textbf{eterogeneità, delivery, trust.} L'attività di problem solving è composta da due fasi: l'analisi e la sintesi. 
+\subsection{Quindi? Cos'è l'ingegneria del software?}
+Siamo giunti al nocciolo della questione: \textbf{di cosa stiamo parlando?} L'ingegneria del software è un insieme di \textbf{tecniche, metodologie, strumenti} che aiutano nella produzione di software di alta qualità dati un budget, una scadenza, e delle modifiche continue. La sfida principale è quindi quella di avere a che fare con complessità elevate. 
+Siamo di fronte anche a un aumento delle responsabilità: un ingegnere del software non deve solo scrivere codice, ma piuttosto lavorare con competenze e confidenzialità, applicando un'etica.
+\subsubsection{Processo del software}
+In seguito ad una rappresentazione astratta, si procede con un set di attività strutturato: specifica dei \textbf{requirements}, \textbf{design}, \textbf{implementazione}, \textbf{validazione},\textbf{evoluzione}. 
+\subsection{Modelli di sviluppo del software}
+Distinguiamo tra \textbf{plan-driven} e \textbf{agile} development. Nel primo, prima si pianificano i requirement, e solo in seguito si sviluppa il software. Nel secondo si sviluppa il software un pezzo alla volta, a stretto contatto col cliente. 
+\subsubsection{Modello a cascata}
+In questo modello, \textbf{plan-driven}, le specifiche e lo sviluppo sono separati. I pro sono, ad esempio, un'ottima documentazione e manutenzione semplice. D'altro canto, però, le specifiche vengono \textit{"congelate"} dopo la prima fase, il cliente viene poco coinvolto, ed i tempi sono più lunghi. 
+\subsubsection{Modello a spirale}
+Nel modello a spirale, abbiamo diverse fasi che si susseguono a spirale; il \textit{risk handling} viene gestito tramite prototipazione, che permette di testare i prodotti contro i requirements. Alcuni pro possono essere l'elevata prevenzione dei rischi, la completezza della documentazione, la flessibilità. È, però, un modello costoso, riservato ad esperti ed a progetti costosi e richiedenti molta sicurezza. La spirale può allargarsi all'infinito. Il \textbf{prototipo} è un'implementazione limitata del sistema, rappresentando solo alcuni aspetti. È utilizzato in varie fasi dello sviluppo. Porta però vari vantaggi, come un'elevata usabilità, un buon design, una grande facilità di manutenzione, ed un ridotto costo di sviluppo. 
+\subsubsection{Incremental development}
+L'incremental development consiste in una prima fase di raccolta dei requirement, da cui nasce la versione iniziale, una fase di design, ed una fase di implementazione, che produce la versione finale. Alcuni pro possono essere la naturale presenza di prototipi ad ogni aggiunta di feature, un basso rischio di fallimento progettuale, una quantità di testing variabile in base alla priorità. Alcuni contro: bassa \textit{process visibility}, sistemi mal strutturati, skill speciali necessarie. Esso è adatto per progetti piccoli, o parti di progetti grandi. 
+\subsubsection{Test driven development}
+Qui, i test vengono scritti prima dell'implementazione, rendendo note le difficoltà da subito. Rende il debug più semplice. Si aggiunge un test, si prova il codice vecchio con il test nuovo, si aggiunge la feature e si verifica che il test sia ancora positivo. 
+\subsubsection{Agile development}
+\textit{"Tutti fanno Agile, nessuno fa Agile."}L'agile è basato sulla \textbf{continuous delivery}, con dei requirements in continuo cambiamento. Il cliente è direttamente coinvolto, aggiungendo requirements man mano che il progetto va avanti. È una metodologia semplice nella quale il team si auto organizza, ma ha svariati rischi, come la mancanza di planning, la necessità di team esperti, la documentazione scarna o spesso errata. 
+\subsubsection{Extreme Programming}
+\textit{Suona più badass di quanto sia realmente. /s} L'XP è utilizzato in situazioni in cui i requirements variano velocemente, i team sono ridotti e "affiatati"(spesso si ricorre al \textbf{pair programming}). È un tipo di programmazione agile, basato su design semplice, release minori, refactoring continuo, alta semplicità. 
+\subsection{Reusable software}
+È spesso comodo lavorare per \textbf{microservizi} atomici, in modo da poterli riutilizzare. Parliamo, ad esempio, di API. Questo riduce i costi e i tempi di sviluppo, al costo di leggeri sacrifici sul lato dei requirements, e un mancato controllo sull'evoluzione del software $\rightarrow$ funzionalità che variano il loro comportamento. \textit{Parlo a lei, signor React (ah, già, Mark), che cambia tutto ad ogni versione.} 
+
+\section{T2 - Coding, Debugging, Testing} 
+Un buono stile di coding è fondamentale perché i programmi vengono scritti una volta, ma letti molte. Alcuni aspetti importanti sono il layout, i nomi, i commenti. 
+\subsection{Legge di Ambler per gli standard}
+Più uno standard è utilizzato, più è facile comunicare tra membri del team. Si possono inventare standard quando necessario, ma attenzione a non perdere tempo in qualcosa che non verrà riutilizzato. Tutti i linguaggi hanno standard reperibili. \textit{Consiglio per la vita: quando vi servono, esistono \hyperlink{http://google.github.io/styleguide/}{gli standard di Google, gente più affidabile di me.}} È consigliabile avere standard aziendali. Uno standard consiste di nomenclature, formattazione, formato e contenuto dei commenti. È necessario documentare tutte le volte in cui si infrangono gli standard. \textit{(È davvero necessario infrangerlo?)}
+\subsection{Coding practices}
+Alcune pratiche sono rappresentate da:
+\begin{itemize}
+    \item \textbf{indentazione}, che oltre ad essere importante per la leggibilità, a volte fa parte delle regole di compilazione. \textit{e.g. Python.}
+    \item \textbf{whitespaces}, migliorano la leggibilità. \textit{Però, non fate le bestie di satana mettendo uno spazio dopo l'apertura della parentesi. Non fatelo. }
+    \item \textbf{Naming, commenting}, rendono la comprensione del codice molto più facile.
+\end{itemize}
+I commenti sono uno strumento fondamentale da tenere sempre vicino al codice. Non pensiate però di essere autorizzati a scrivere \textit{spaghetti code}, se commentato. Refactorate. Fondamentale è spiegare i compiti di classi, funzioni, variabili o blocchi di codice complessi. \textit{In generale, se avreste bisogno di spiegarlo a Guido Soncini, commentatelo}. Utilizzare uno standard permette ai vostri colleghi di non dover riscrivere il vostro codice perché non gli piace. Rendete più semplice agiungere funzioni, o creare la documentazione. È, insomma, tempo ben speso. 
+\subsection{Dealing with errors}
+Distinguiamo tra prima, durante e dopo: \textbf{prevention, detection, recovery}. Alcune fonti di errori possono essere un design errato, una mancanza di isolazione, o typos. Per esempio, errori di "confini" negli array, errori di \textit{off-by-one}, errori di input errati. Per debuggare, bisogna riconoscere l'esistenza di un bug, isolarne la fonte, identificarne la causa, trovare un fix, applicarlo, e \textbf{testarlo}. \textit{Lo scrivo in grassetto perché mi capita spesso di romperepiù di quello che metto a posto.} 
+Riconoscere un bug spesso è complicato, soprattutto quando accade solo in determinate situazioni, o se il software è difficile da testare. Per trovare i bug, potete usare dei print statement, molto veloci da usare ma spesso incompleti e poco pratici. Per questo, esistono gli strumenti di debug, che permettono di bloccare il codice in determinati punti, analizzare le variabili, \textit{e bestemmiare con calma.} Spesso gli errori sono dovuti al design piuttosto che all'implementazione. 
+\subsection{Testing}
+Il testing permette di scovare errori e bug, ma non la loro assenza. È purtroppo impossibile testare ogni caso. Il tester deve conoscere il sistema e le tecniche di testing. \textbf{Il tester non dovrebbe essere il programmatore.} Spesso il programmatore ha in mente il modo corretto di far funzionare il programma, e quindi difficilmente trova casi in cui il suddetto si rompe. 
+\subsubsection{Unit testing}
+Lo unit testing permette di testare singole unità di codice, trovando falle negli algoritmi, i dati, la sintassi. Un set di test cases viene creato e poi utilizzato. 
+\subsubsection{Integration testing}
+L'integration testing prova un gruppo di sottosistemi, o anche l'intero software. Viene eseguito dai programmatori, il goal è testare le interfacce oltre ai sottosistemi. 
+L'intero sistema è visto come un insieme di sottosistemi, l'obiettivo è quello di testare tutte le interfacce e l'interazione tra sottosistemi. La strategia determina il modo in cui i sottosistemi vengono testati. Molte falle sono date da problemi nell'interazione tra sottosistemi. Le falle non intercettate in questa fase diventeranno molto più costose. 
+\subsubsection{System Testing}
+Il system testing testa l'intero sistema, per verificare che rispetti i requirements funzionali e non, oltre alle prestazioni. 
+\subsubsection{Functional Testing}
+Questo tipo di testing viene svolto per verificare la funzionalità del sistema. I test cases vengono ideati a partire dai requirement del progetto, ed il sistema è trattato come una black box. 
+\subsubsection{Performance Testing}
+Questo tipo di testing tenta di provare il sistema in situazioni estreme, come alti carichi, input errati, grandi volumi di dati. Alcuni esempi sono stress testing, security testing, volume testing, recovery testing.
+\subsubsection{Acceptance Testing}
+Questo tipo di testing prova che il sistema sia effettivamente pronto per la fase di production. I test vengono scelti ed effettuati dal cliente. Questi sono i famosi \textbf{alpha e beta tests.} Nel primo, il software è ancora nell'environment di sviluppo. Nella beta, l'environment è quello del cliente e l'utilizzo effettuato è realistico. 
+\section{T3 - System Modeling and UML}
+Il system modeling fornisce rappresentazioni astratte a problemi reali, tramite notazione grafica. Un modello funzionale dovrebbe introdurre i componenti essenziali, utilizzare una notazione \textit{consistente}, ed utilizzare tool al supporto della creazione. Il modello esprime quindi la realtà, adattata a dei modelli standard. Il system modeling deve essere \textbf{predictive}, in quanto deve essere svolto prima del development. Dev'essere \textbf{extracted} da un sistema esistente, tramite analisi delle proprietà del software. Deve essere \textbf{prescriptive}, ossia definire un set di regole e limiti per l'evoluzione del software. 
+\subsection{UML}
+Unified Modeling Language nasce per unire diversi standard/linguaggi di modellazione, con diagrammi multipli e interoperabilità. UML è \textbf{semplice, espressivo, utile, consistent, estensibile}. Alcuni esempi di views sono:
+\begin{itemize}
+    \item Use Case view
+    \item Structural view
+    \item Behavioral view
+    \item Implementation view
+    \item Environment view
+\end{itemize}
+\section{T4 - Requirements Engineering}
+Gli scopi del requirements engineering sono \textbf{identificare} i servizi necessari ed i constraint, \textbf{definire} offerta e contratto, \textbf{ottenere} tutte le informazioni necessarie al design. I desiderata sono:
+\begin{itemize}
+    \item \textbf{Validi}, esprimendo le reali necessità
+    \item \textbf{Non ambigui}, leggibili in un solo modo 
+    \item \textbf{Completi}
+    \item \textbf{Comprensibili} da tutte le persone coinvolte 
+    \item \textbf{Consistent}, non possono contraddirsi 
+    \item \textbf{Prioritizzati}, a volte bisogna scegliere
+    \item \textbf{Verificabili}, con test 
+    \item \textbf{Modificabili} senza difficoltà
+    \item \textbf{Traceable}, la loro origine è chiara
+\end{itemize}
+\subsection{Some requirements classifications}
+\subsubsection{Functional requirements (System Feature)}
+Descrivono funzionalità di sistema o di servizi, come l'input di dati, operazioni svolte, workflow, dati in output, autorizzazioni. Ad esempio, in una biblioteca, un functional requirement può essere la ricerca di libri da parte di un socio.
+\subsubsection{Non-functional requirements (System Feature)}
+Descrivono constraints di parti del sistema e del suo sviluppo. Specificano criteri per giudicare l'operato del sistema. Con l'esempio di prima, i libri devono avere un codice che rispetti lo standard ISBN, e il sistema non deve rilasciare informazioni sensibili sui soci a determinati autorizzati. 
+Alcune metriche per questi requirements possono essere velocità, dimensione, facilità d'uso, affidabilità, robustezza, portabilità.
+\subsubsection{Domain requirements (System Feature)}
+I \textbf{domain requirements} derivano dal dominio dell'applicazione, ossia l'ambito in cui si lavora. Ad esempio, sviluppando un sistema per Trenitalia \textit{(qualcuno lo fa veramente? Non sono scritti da scimmiette?)}, il dominio sarebbe quello della gestione dei treni. Il problema sta nel fatto che il programmatore non ha conoscenze al riguardo dei treni, e deve utilizzare quindi un linguaggio, implicazioni e conoscenze che non gli appartengono. 
+\subsubsection{Volatile Requirements (Static/Dynamic Nature)}
+I \textbf{mutable requirements} sono requirements destinati a cambiare, come normative o tasse. Gli \textbf{emergent requirements} cambiano quando il cliente capisce di più sul sistema. I \textbf{consequential requirements} emergono con l'informatizzazione di un sistema che non lo era. I \textbf{compatibility requirements} emergono dal doversi interfacciare con altri sistemi appartenenti all'organizzazione. 
+\subsection{Rischi}
+Alcuni rischi nella scrittura dei requirements possono essere:
+\begin{itemize}
+    \item Imprecisioni
+    \item Conflitti tra più requirements
+\end{itemize}
+\subsection{Documento di specifica dei requirements}
+Il \textbf{documento di specifica dei requirements} specifica i requirement di sistema, includendone una definizione e una specifica. È detto \textbf{System Specification} se include direttive su hardware e software, \textbf{Software Requirements Specification} (SRS) se include il solo software. Dovrebbe seguire lo standard IEEE 830. Un SRS deve avere un'\textbf{introduzione}, una \textbf{descrizione generale} ed infine \textbf{le feature e i requirement.} Dovrebbe avere un formato stratificato, notazioni grafiche e termini consistenti, acronimi chiari, indice, glossario, ed uno stile non ambiguo. A tal proposito, il linguaggio naturale spesso nasconde delle insidie: mancanza di chiarezza, ambiguità, troppa flessibilità... Bisogna quindi inventare uno standard di utilizzo del linguaggio naturale, con sintassi fissa, termini chiari. Alcune keyword sono: \textbf{shall, should, can, must, may, will, might, expected to, could.} Alcune alternative al linguaggio naturale possono essere un linguaggio naturale strutturato, linguaggi di descrizione del design, notazioni grafiche, notazioni formali. I rischi del processo di specifica sono una mancanza di comprensione, requirements che cambiano rapidamente, impreicisione nella stesura del documento, difficoltà nel conciliare conflitti. 
+\end{document}

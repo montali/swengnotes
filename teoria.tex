@@ -122,4 +122,68 @@ Alcuni rischi nella scrittura dei requirements possono essere:
 \end{itemize}
 \subsection{Documento di specifica dei requirements}
 Il \textbf{documento di specifica dei requirements} specifica i requirement di sistema, includendone una definizione e una specifica. È detto \textbf{System Specification} se include direttive su hardware e software, \textbf{Software Requirements Specification} (SRS) se include il solo software. Dovrebbe seguire lo standard IEEE 830. Un SRS deve avere un'\textbf{introduzione}, una \textbf{descrizione generale} ed infine \textbf{le feature e i requirement.} Dovrebbe avere un formato stratificato, notazioni grafiche e termini consistenti, acronimi chiari, indice, glossario, ed uno stile non ambiguo. A tal proposito, il linguaggio naturale spesso nasconde delle insidie: mancanza di chiarezza, ambiguità, troppa flessibilità... Bisogna quindi inventare uno standard di utilizzo del linguaggio naturale, con sintassi fissa, termini chiari. Alcune keyword sono: \textbf{shall, should, can, must, may, will, might, expected to, could.} Alcune alternative al linguaggio naturale possono essere un linguaggio naturale strutturato, linguaggi di descrizione del design, notazioni grafiche, notazioni formali. I rischi del processo di specifica sono una mancanza di comprensione, requirements che cambiano rapidamente, impreicisione nella stesura del documento, difficoltà nel conciliare conflitti. 
+
+\section{T5 - Requirement engineering and UML}
+\subsection{Use case diagram}
+Nello use case diagram includiamo tutti i casi d'uso del sistema, da parte di diversi \textbf{attori}, rappresentanti utenti, ma anche servizi o sistemi. Il \textbf{system boundary} divide l'esterno e l'interno del sistema, gli use case dagli attori. Un attore può generalizzare un altro attore. Idem per gli use case. Uno use case può contenere la funzionalità di un altro use case. Uno use case può essere usato per estendere il comportamento di un altro use case, anche con condizioni. Opzionalmente, possiamo includere le molteplicità delle relazioni. 
+\subsection{Class diagram}
+Una classe è rappresentata da un rettangolo che mostra il nome della classe, e opzionalmente il nome degli attributi e delle operazioni. Il nome della classe, gli attributi e le operazioni sono separati in compartimenti. Il simbolo che precede attributi e operazioni ne indica la visibilità: $+$ se pubblico, $-$ se privato, $\#$ se protetto, $~$ se package. Un'\textbf{interfaccia} è una specifica di comportamento che deve essere implementato o, più semplicemente, un \textbf{contract.} Un \textbf{template} definisce un pattern i cui parametri rappresentano tipi, e può essere applicato a classi, packages, operazioni. 
+\subsubsection{Associazione}
+Un'associazione è una relazione tra elementi, che implica che uno dei due sia una variabile dell'altro. Essa è rappresentata da un connettore che può includere ruoli, cardinalità, direzione e constraints. Per più elementi, si può usare un \textbf{diamond}. 
+\subsubsection{Generalization e nesting}
+La generalizzazione indica \textbf{ereditarietà}, disegnata come una freccia che parte dal figlio e arriva al padre. Il connettore di nesting indica che una classe è nested nella classe dove arriva l'operatore. Con ciò, intendiamo che essa è definita all'interno del target. 
+\subsubsection{Dipendenza e realizzazione}
+La \textbf{dipendenza} è una forma debole di relazione, e mostra un'interazione tra un client ed un supplier. La \textbf{realizzazione} è una relazione tra una specifica e la sua implementazione. 
+\subsubsection{Aggregazione e composizione}
+L'aggregazione rappresenta elementi composti da elementi minori. È indicata da un diamante bianco che punta verso il contenitore. I componenti possono essere condivisi da più contenitori. La composizione è rappresentata da un diamante nero. Una classe di associazione rappresenta invece un'associazione più complessa, che ha operazioni e attributi.
+\subsection{Sequence diagram} 
+Il sequence diagram indica, su una \textit{lifeline (aka timeline)} verticale, l'interazione tra le classi. Se il nome della lifeline è \textit{self}, la suddetta rappresenta il classifier a cui appartiene il diagramma. Una \textbf{lifeline} rappresenta un \textit{partecipante} del sequence diagram. Possiamo avere diversi tipi di messaggi tra lifeline: sincroni, asincroni, risposte, persi, trovati, self (ricorsività). Per rappresentare logica procedurale come if, cicli, thread, usiamo i \textbf{fragment}. 
+\subsection{Activity diagram}
+Un \textbf{activity diagram} è un diagramma di flusso che rappresenta un'operazione eseguita sul sistema, con decisioni, I/O, fork/join, timeout/segnali, concorrenza. Possiamo raggruppare alcune attività \textit{related}. 
+Alcuni esempi di activity diagrams strani:
+\begin{itemize}
+    \item \textbf{State machine diagram}, che dà indicazioni a livello hardware
+    \item \textbf{Choice and Junction pseudo state}
+    \item \textbf{Compound state} tramite il quale possiamo separare alcune parti del diagramma e "includerle"
+    \item \textbf{History state and concurrent regions}, con il primo indichiamo un salvataggio dello stato, col secondo due frazioni di diagramma che si svolgono contemporaneamente
+\end{itemize}
+\subsection{Robustness diagram}
+Il \textbf{robustness diagram} è un UML semplificato che ha lo scopo di raffinare gli use case, verificandone correttezza, completezza e requisiti.
+Presenta tre \textbf{object nodes:}
+\begin{itemize}
+    \item \textbf{Boundary}, che permette la comunicazione tra attori e sistema
+    \item \textbf{Control}, intermediario tra boundary ed entity, implementa la logica che gestisce i vari elementi e le loro interazioni
+    \item \textbf{Entity}, rappresenta un'unità informativa del sistema
+\end{itemize}
+
+\section{T6 - Feasability and requirements elicitation}
+Per ottenere le informazioni necessarie, dobbiamo identificare le fonti, acquisire le informazioni, analizzarle e verificarle. Infine, vanno sintetizzate. I vari stakeholder \textit{aka le persone interessate} possono essere così categorizzati con i loro interessi;
+\begin{itemize}
+    \item \textbf{Stakeholder}, interessato nel progetto
+    \item \textbf{Developer}, alta produttività, mancanza di errori, minore sforzo possibile
+    \item \textbf{Marketing sales}, soddisfazione del cliente e vendite
+    \item \textbf{Project management}, budget, scadenze
+    \item \textbf{Investor}, velocizzazione del processo
+    \item \textbf{Customer and user}, usabilità e workflow
+\end{itemize}
+\subsection{Tecniche di elicitation}
+\textit{(elicitation = tirare fuori le informazioni)}
+\subsubsection{Document analysis}
+Bisogna preparare i documenti che possono essere adatti e rilevanti, studiarli, annotare informazioni ed elencare le domande al riguardo. Infine, assieme agli stakeholder, verificare le note, organizzare i requirement e rispondere alle suddette domande. Questa tecnica può essere sfruttata quando non c'è presenza degli stakeholder, o per il cross-checking.
+\subsubsection{Observation of the work environment}
+L'obiettivo è determinare \textbf{chi, cosa, dove, quando, perché e come.} Bisogna ottenere il permesso dai supervisori, informare gli osservati, prendere appunti, evitare di disturbare ma al tempo stesso non dare nulla per scontato. I dati ottenuti sono molto affidabili.
+\subsubsection{Questionario}
+Serve determinare i fatti e le opinioni necessarie, in secundis, da chi reperirli. Determinare quindi le domande, aperte o chiuse, da fare. Può essere conveniente "testare" il questionario su un gruppo piccolo, per poi metterlo a posto e presentarlo a tutti. Questa tecnica restituisce molti dati, è facile da attuare ed affidabile. Non c'è però interazione, e si rischiano risposte incomplete. 
+\subsubsection{Interviste}
+Bisogna, prima di tutto, decidere chi intervistare. In seguito, preparare le domande e porle all'intervistato, con un linguaggio chiaro. Conviene prendere appunti e memo. Questo è un metodo ottimo perché permette di verificare i fatti, coinvolgendo gli end user. Non è però adatto a comprendere i domain requirements.
+\subsubsection{Scenarios and use cases}
+Essi sono esempi IRL di come il sistema verrà usato, basati su situazioni reali su cui gli stakeholder hanno senz'altro qualcosa da dire. Gli \textbf{scenari} sono semplicemente forme strutturare di user stories. Per gli use cases usiamo UML. Queste tecniche sono semplici ed utili, anche per sistemi complessi. È però difficile capire quando fermarsi, e soprattutto non sono utili a capire i \textbf{non-functional requirements.}
+\subsection{Attività di supporto all'elicitation}
+\subsubsection{Brainstorming}
+Composto di due fasi, la prima di \textbf{storm} in cui si generano le idee, la seconda \textbf{calm} in cui vengono filtrate. Necessari due ruoli chiave: uno \textbf{scribe} ed un \textbf{moderatore}.
+Nel filtraggio delle idee è fondamentale: unire idee simili, applicare i criteri di accettabilità, votare con una soglia o votare con dei \textit{campaign speeches.}
+\subsubsection{Focus group}
+Concetto simile al brainstorming ma più strutturato, esplora pro e contro di determinate opzioni. Fondamentale un moderatore.
+\subsubsection{Prototypes}
+Si mostra l'esecuzione di una task, si identificano le alternative, si cerca di estrapolare i possibili problemi. 
 \end{document}

@@ -1,6 +1,9 @@
-# swengnotes
-Riassunti di Ingegneria del Software @UniPR 2019-20
+# Riassunti di Ingegneria del Software
+Riassunti per gli esami teorici del corso di Ingegneria del Software, prof. Poggi, A.A. 2019-20.
+Qualunque correzione/aggiunta è super ben accetta. Per farlo, forkate il progetto, fate le modifiche necessarie, e aprite una pull request.
+Grazie!
 
+## Compilazione
 Siccome questi riassunti utilizzano il package `glossaries`, è necessario compilare il tex con:
 ```
 pdflatex teoria.tex

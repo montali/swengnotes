@@ -4,3 +4,11 @@
 *.log
 *.out
 *.synctex.gz
+res/.DS_Store
+res/teoria/.DS_Store
+teoria.dvi
+teoria.glg
+teoria.glo
+teoria.gls
+teoria.ist
+.DS_Store

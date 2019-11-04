@@ -197,7 +197,53 @@ L'ereditarietà è il meccanismo che permette di ereditare campi e metodi delle 
 \subsection{Method overloading e overriding}
 L'overloading avviene quando abbiamo più implementazioni dello stesso metodo, cambiando gli argomenti ma avendo ugual nome e return type. Un metodo è overridden quando una subclass ridefinisce un metodo con la stessa firma della classe padre. 
 \subsection{Abstract classes}
-Le classi astratte forniscono un'implementazione parziale
+Le classi astratte forniscono un'implementazione parziale. Dovrebbero avere solo costruttori \textit{protected}, possono includere metodi astratti. Se una classe ha metodi astratti, è astratta. Ma non è necessario.
+\subsection{Interfaces}
+Vi sono in realtà 3 definizioni di \textbf{interfaccia.}
+\begin{itemize}
+    \item Software systems: è un confine condiviso tra due componenti separati che scambiano informazioni. Lo scambio può essere tra software, hardware e umani. es. Interfaccia di rete.
+    \item Software engineering: è un principio chiave di design che proibisce l'accesso alle risorse di default, permettendo l'accesso solo tramite entry point definiti. Sono delle specifiche verificabili (contracts) per componenti software, che estendono la definizione ordinaria di tipi di dati astratti tramite l'uso di constraints
+    \item Object-oriented languages: è un tipo astratto che non contiene dati ma definisce comportamenti tramite le firme dei metodi (nome, argomenti, return type)
+\end{itemize}
+\subsubsection{Java interface}
+In Java, le interface sono reference type simili alle classi, che inizialmente contenevano solo metodi astratti e costanti. Da Java8, può contenere metodi default e static con implementazione. I metodi default offrono un'implementazione utilizzata da più subtypes, che possono overridarli, a differenza degli static. Da Java9 le interfacce possono anche contenere metodi privati. Le classi possono implementare \textbf{una o più interfacce}, ereditandone i metodi astratti. Le interfacce possono anche estendere altre interfacce (anche multiple). Per questo, le classi sono meno estensibili: possono farlo con una sola classe.
+\subsection{Ereditarietà e composizione}
+Eredità e composizione definiscono relazioni tra due classi per ridurre la duplicazione di codice e i bug. L'ereditarietà forma una relazione di tipo \textit{is-a}, la composizione \textit{has-a}
+\subsection{Marker interfaces e functional interfaces}
+Le \textbf{marker interfaces} sono interfacce vuote, ossia non contengono metodi e costanti. Le \textbf{functional interfaces} sono interfacce con un singolo metodo astratto.
+\subsection{Inner classes}
+Le \textbf{inner classes} sono classi definite all'interno di un'altra classe, e hanno 4 possibili tipi:
+\begin{itemize}
+    \item \textbf{Non-static inner class} possono accedere a tutte le istanze private della classe esterna
+    \item \textbf{Local inner classes} sono classi non statiche definite all'interno di un metodo
+    \item \textbf{Anonymous inner classes} sono classi non statiche definite senza nome, come subclass o implementazione di un'interfaccia
+    \item \textbf{Static inner classes} non sono tecnicamente inner classes. Sono in realtà un membro statico dell'outer class. Sono meno agganciate alla classe esterna, il che aiuta la qualità del codice, il testing, il refactoring. È in realtà una classe top-level, implementata dentro un'altra per motivazioni di packaging.
+\end{itemize}
+\subsection{Enums}
+Gli \textbf{enums} sono classi speciali rappresentanti gruppi di costanti. È l'abbreviazione di enumeration. È implicitamente final, quindi non può avere subclasses. Le costanti sono public static.
+Gli enums possono essere definiti all'interno di una classe, possono contenere costruttori eseguiti separatamente per ogni costante. Può contenere solo metodi concreti (non astratti); può implementare più interfacce e dichiarare un main. 
+\subsection{Annotations}
+Le \textbf{annotazioni} forniscono informazioni supplementari riguardanti il software. Non ne modificano l'azione, ma aiutano ad associare informazioni ad elementi del programma. Non sono commenti puri, in quanto possono modificare il comportamento del compilatore o la reflection. 
+Alcuni esempi:
+\begin{itemize}
+    \item \textbf{@Deprecated:} suggerisce che il metodo è deprecato ed è stato sostituito da una versione nuova
+    \item \textbf{@FunctionInterface:} suggerisce che l'interfaccia è di tipo functional, e darà errore se non rispettato
+    \item \textbf{@Override:} indica che il metodo è ereditato 
+    \item \textbf{@SafeVarArgs:} sopprime i warning del compilatore quando i parametri sono generics. Non usabile con l'overridde
+    \item \textbf{@SuppressWarnings:} sopprime warning generici
+    \item \textbf{@Documented:} indica che l'annotazione va documentata
+    \item \textbf{@Inherited:} indica che un'annotazione della superclass è ereditata da una subclass
+    \item \textbf{@Repeatable:} indica che la stessa annotazione può essere applicata più di una volta sullo stesso elemento
+    \item \textbf{@Retention:} indica la retention policy
+    \item \textbf{@Target:} indica il tipo di item a cui un'annotazione può essere applicata
+\end{itemize}
+\subsection{Retention Policies}
+Abbiamo più tipi di retention policies:
+\begin{itemize}
+    \item RetentionPolicy.\textbf{SOURCE}: permette, ad esempio, la creazione di file sorgente addizionali durante la compilazione
+    \item RetentionPolicy.\textbf{CLASS}: permette, ad esempio, l'uso di librerie per la manipolazione del bytecode che accedono al bytecode e modificano classi esistenti o ne generano dinamicamente
+    \item RetentionPolicy.\textbf{RUNTIME}: permette l'accesso alle annotazioni tramite Java reflection, può essere usata per dare istruzioni al programma associato
+\end{itemize}
 
 \printglossary
 

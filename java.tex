@@ -273,9 +273,9 @@ I metodi generici sono metodi i quali parametri/return types possono essere gene
 Una \textbf{wildcard} permette di usare più di un tipo di elementi all'interno di una collection. È un meccanismo atto a rendere possibile il cast di collections alla loro subclass/superclass. L'obiettivo è rendere possibile la lettura e l'addizione di una collection generica. 
 Alcuni tipi di wildcard:
 \begin{itemize}
-    \item Unknown wildcards List<?>: identifica una lista di tipo sconosciuto. È possibile la sola lettura, gli elementi vengono trattati come oggetti.
-    \item Extend wildcards List <? extends A>: identifica una lista di elementi che sono sottoclassi di A. È possibile leggere (trattando gli elementi come instanze di A) ma non aggiungere.
-    \item Super wildcards List <? super A>: identifica elementi della classe A o superclassi di A. È sicuro inserire istanze di A o sottoclassi, ma si possono leggere gli elementi solo come oggetti.
+    \item Unknown wildcards List$<$?$>$: identifica una lista di tipo sconosciuto. È possibile la sola lettura, gli elementi vengono trattati come oggetti.
+    \item Extend wildcards List $<$? extends A$>$: identifica una lista di elementi che sono sottoclassi di A. È possibile leggere (trattando gli elementi come instanze di A) ma non aggiungere.
+    \item Super wildcards List $<$? super A$>$: identifica elementi della classe A o superclassi di A. È sicuro inserire istanze di A o sottoclassi, ma si possono leggere gli elementi solo come oggetti.
 \end{itemize}
 \subsection{Generic Class Implementation}
 Ogni classe generica ha una singola implementazione basata sul tipo di oggetto. L'operatore instanceof non può essere utilizzato con un tipo generico. I generic types non possono essere usati per creare costruttori generici. Non si possono creare array generici.
@@ -292,7 +292,7 @@ I suddetti tre metodi sono:
 \end{itemize}
 Le collection hanno alcuni metodi principali: 
 \begin{itemize}
-    \item \textbf{contains(Object o)} e \textbf{ContainsAll(Collection<?> c)} restituiscono true se la collection contiene uno/tutti gli elementi
+    \item \textbf{contains(Object o)} e \textbf{ContainsAll(Collection$<$?$>$ c)} restituiscono true se la collection contiene uno/tutti gli elementi
     \item \textbf{isEmpty()} restituisce true se la collection è vuota 
     \item \textbf{iterator()} restituisce un iterator 
     \item \textbf{size()} restituisce il numero di elementi contenuti
@@ -304,10 +304,10 @@ Le collection hanno alcuni metodi principali:
 L'interfaccia \textbf{List} definisce una struttura dati che gestisce una collezione ordinata di oggetti che possono avere valori duplicati. La classe \textbf{ArrayList} usa un array dinamico per salvare gli elementi, mantenendo l'ordine di inserzione degli elementi. Non è sincronizzato e l'accesso agli elementi è randomico. La classe \textbf{LinkedList} usa una lista doppiamente linkata internamente, mantiene l'ordine di inserimento e non è sincronizzata. La manipolazione di elementi è veloce perché non è necessario shifting. La classe \textbf{Stack} fornisce una struttura Stack aka \gls{lifo}, estendendo la classe vector.
 I principali metodi delle liste sono:
 \begin{itemize}
-    \item \textbf{add(E e), add(int index, E e)} e \textbf{addAll(Collection <? extends E> c)} hanno un compito decisamente ovvio.
+    \item \textbf{add(E e), add(int index, E e)} e \textbf{addAll(Collection $<$? extends E$>$ c)} hanno un compito decisamente ovvio.
     \item \textbf{get(int index)} ha un compito altrettanto ovvio.
     \item \textbf{set(int index, E e)} setta l'elemento index al valore e. \textit{In effetti era abbastanza ovvio pure questo.}
-    \item \textbf{remove(int index), remove(E e), removeAll(Collection <?> c)} \textit{- chissà cosa faranno mai questi -} rimuovono uno o più elementi
+    \item \textbf{remove(int index), remove(E e), removeAll(Collection $<$?$>$ c)} \textit{- chissà cosa faranno mai questi -} rimuovono uno o più elementi
     \item \textbf{indexOf(Object o)} e \textbf{lastIndexOf(Object o)} restituiscono l'indice a cui si trova un elemento, oppure -1 se non c'è.
     \item \textbf{subList(int fromIndex, int toIndex)} genera una sottolista tra \code{fromIndex} (compreso) a \code{toIndex}(escluso)
  \end{itemize}
@@ -318,9 +318,9 @@ I principali metodi delle liste sono:
  \begin{itemize}
      \item \textbf{add(E e)} aggiunge un elemento se non è già presente, e ritorna true se ha fatto.
      \item \textbf{remove(Object o)} rimuove l'elemento e ritorna true se l'ha trovato
-     \item \textbf{addAll(Collection <? extends E> c)} costruisce l'unione tra i due set 
-     \item \textbf{retainAll(Collection<?> c)} costruisce l'intersezione dei due set
-     \item \textbf{removeAll(Collection<?> c)} costruisce la differenza tra i due set
+     \item \textbf{addAll(Collection $<$? extends E$>$ c)} costruisce l'unione tra i due set 
+     \item \textbf{retainAll(Collection$<$?$>$ c)} costruisce l'intersezione dei due set
+     \item \textbf{removeAll(Collection$<$?$>$ c)} costruisce la differenza tra i due set
  \end{itemize}
  Gli HashSet vengono utilizzati quando è necessario inserire, eliminare, localizzare elementi. Il TreeSet è molto utile quando è necessario attraversare gli elementi secondo un ordine. Il LinkedHashSet è una via di mezzo. In base alla dimensione, può essere più veloce aggiungere elementi ad un HashSet piuttosto che convertirlo in un TreeSet.
  \subsection{Maps}
@@ -349,19 +349,19 @@ La LinkedList è una normale coda FIFO. La PriorityQueue viene utilizzata quando
 La classe \textbf{Collections} fornisce un set di metodi statici per la creazione di implementazioni sincronizzate di collection, per la creazione di collection immutabili, per operazioni ricorrenti sulle collection.
 Alcuni metodi:
 \begin{itemize}
-    \item \textbf{unmodifiableCollection(Collection<? extends T> c)} ritorna una view non modificabile della collection. 
-    \item \textbf{synchronizedCollection(Collection<T> c)} ritorna una collection sincronizzata (thread-safe).
-    \item \textbf{checkedCollection(Collection<E> c, Class<E> t)} ritorna una vista dinamica typesafe della collection. Ogni tentativo di inserimento di elementi incoerenti col type throwa exception.
+    \item \textbf{unmodifiableCollection(Collection$<$? extends T$>$ c)} ritorna una view non modificabile della collection. 
+    \item \textbf{synchronizedCollection(Collection$<$T$>$ c)} ritorna una collection sincronizzata (thread-safe).
+    \item \textbf{checkedCollection(Collection$<$E$>$ c, Class$<$E$>$ t)} ritorna una vista dinamica typesafe della collection. Ogni tentativo di inserimento di elementi incoerenti col type throwa exception.
     \item \textbf{Singleton(T o), singletonList(T o), singletonMap(K k, V v)} restituiscono set, liste e mappe con elementi/key-values.
-    \item \textbf{copy(List<? super T> dest, List<? extends T> src)} copiano tutti gli elementi di src in dest 
-    \item \textbf{fill(List<? super T> list, T obj)} riempe la lista con l'elemento specificato 
+    \item \textbf{copy(List$<$? super T$>$ dest, List$<$? extends T$>$ src)} copiano tutti gli elementi di src in dest 
+    \item \textbf{fill(List$<$? super T$>$ list, T obj)} riempe la lista con l'elemento specificato 
     \item \textbf{nCopies(int n, T o)} ritorna una lista immutabile con l'elemento fornito.
-    \item \textbf{replaceAll(List<T> list, T oldVal, T newVal)} restituisce tutte le occorrenze di un valore con l'altro 
-    \item \textbf{reverse(List<?> list)} inverte l'ordine degli elementi
-    \item \textbf{reverse(List<?> list, int distance)} inverte l'ordine fino alla distanza specificata
-    \item \textbf{binarySearch(List<? extends Comparable<? super T>> list, T key)} implementa una ricerca binaria. La lista deve ovviamente essere ordinata. Ritorna l'indice dell'oggetto. \textit{Se non sai cos'è una ricerca binaria googla anche questo. Tutta roba figa.}
-    \item \textbf{frequency, min, max (Collection<?> c, Object o)} restituiscono la frequenza dell'elemento, il minimo, e il massimo
-    \item \textbf{indexOfSubList, lastIndexofSubList(List <?> source, List<?> target)} ritornano la posizione della sublist trovata, o -1 se non c'è. 
+    \item \textbf{replaceAll(List$<$T$>$ list, T oldVal, T newVal)} restituisce tutte le occorrenze di un valore con l'altro 
+    \item \textbf{reverse(List$<$?$>$ list)} inverte l'ordine degli elementi
+    \item \textbf{reverse(List$<$?$>$ list, int distance)} inverte l'ordine fino alla distanza specificata
+    \item \textbf{binarySearch(List$<$? extends Comparable$<$? super T$>$$>$ list, T key)} implementa una ricerca binaria. La lista deve ovviamente essere ordinata. Ritorna l'indice dell'oggetto. \textit{Se non sai cos'è una ricerca binaria googla anche questo. Tutta roba figa.}
+    \item \textbf{frequency, min, max (Collection$<$?$>$ c, Object o)} restituiscono la frequenza dell'elemento, il minimo, e il massimo
+    \item \textbf{indexOfSubList, lastIndexofSubList(List $<$?$>$ source, List$<$?$>$ target)} ritornano la posizione della sublist trovata, o -1 se non c'è. 
 \end{itemize}
 
 

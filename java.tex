@@ -10,15 +10,19 @@
 \makeglossaries
 \newglossaryentry{magic}{
     name={magic number},
-    description={Un magic number è quel numero che metti in una variabile quando è nulla ma non hai il null. Tipo -1}
+    description={quel numero che metti in una variabile quando è nulla ma non hai il null. Tipo -1}
 }
 \newglossaryentry{agnostic}{
     name={platform agnostic},
-    description={Con platform agnostic intendiamo software che può essere eseguito allo stesso modo su diverse piattaforme}
+    description={intendiamo software che può essere eseguito allo stesso modo su diverse piattaforme}
 }
-\newglossaryentry{case}{
-    name={CASE tool},
-    description={Il CASE tool è un software che supporta la progettazione di sistemi software, ad esempio con UML}
+\newglossaryentry{lifo}{
+    name={LIFO},
+    description={con logica Last In, First Out}
+}
+\newglossaryentry{fifo}{
+    name={FIFO},
+    description={con logica First In, First Out}
 }
 \newglossaryentry{constraint}{
     name={constraint},
@@ -244,6 +248,122 @@ Abbiamo più tipi di retention policies:
     \item RetentionPolicy.\textbf{CLASS}: permette, ad esempio, l'uso di librerie per la manipolazione del bytecode che accedono al bytecode e modificano classi esistenti o ne generano dinamicamente
     \item RetentionPolicy.\textbf{RUNTIME}: permette l'accesso alle annotazioni tramite Java reflection, può essere usata per dare istruzioni al programma associato
 \end{itemize}
+\section{J6 - Javadoc}
+\textbf{Javadoc} genera documentazione di codice Java prendendo in input dei file sorgente. L'output generato è un set di file HTML, più pacchetti e file di anteprima. 
+Alcune delle feature principali sono:
+\begin{itemize}
+    \item Combina il source code con la sua documentazione
+    \item Facilita la sincronizzazione tra documentazione e codice
+    \item Genera le specifiche API dal sorgente
+\end{itemize}
+L'approccio di Javadoc è molto semplice: sfrutta commenti con una sintassi specifica, aggiungendo la possibilità di integrare pagine HTML. 
+Alcuni tag, per esempio, sono: \code{@author}, \code{@inheritDoc}, \code{@docRoot}. Abbiamo anche dei tag che fanno riferimento a risorse, ossia \code{@link}, \code{@linkplain} e \code{@see}.
+\section{J7 - Generics}
+I \textbf{generics} sono simili ai template di C++. Permettono a tipi predefiniti o user-defined di essere parametro di metodi, classi, interfacce. Dall'arrivo dei generics bisogna salvare tipi specifici nelle collection. Questo aggiunge stabilità al codice, rendendo i bug più visibili tramite type checks più stretti. Riduce anche la necessità di casting nel codice. Alcune convenzioni di naming:
+\begin{itemize}
+    \item K: key
+    \item N: number 
+    \item T: type
+    \item V: value
+    \item S, U, V: altri...
+\end{itemize}
+\subsection{Metodi generici}
+I metodi generici sono metodi i quali parametri/return types possono essere generics. Hanno una sezione di type parameter delimitata da $<>$ che precede il return type. Ogni sezione contiene uno o più tipi, separati da virgole. Un metodo generico è dichiarato come ogni altro metodo. 
+\subsection{Wildcards}
+Una \textbf{wildcard} permette di usare più di un tipo di elementi all'interno di una collection. È un meccanismo atto a rendere possibile il cast di collections alla loro subclass/superclass. L'obiettivo è rendere possibile la lettura e l'addizione di una collection generica. 
+Alcuni tipi di wildcard:
+\begin{itemize}
+    \item Unknown wildcards List<?>: identifica una lista di tipo sconosciuto. È possibile la sola lettura, gli elementi vengono trattati come oggetti.
+    \item Extend wildcards List <? extends A>: identifica una lista di elementi che sono sottoclassi di A. È possibile leggere (trattando gli elementi come instanze di A) ma non aggiungere.
+    \item Super wildcards List <? super A>: identifica elementi della classe A o superclassi di A. È sicuro inserire istanze di A o sottoclassi, ma si possono leggere gli elementi solo come oggetti.
+\end{itemize}
+\subsection{Generic Class Implementation}
+Ogni classe generica ha una singola implementazione basata sul tipo di oggetto. L'operatore instanceof non può essere utilizzato con un tipo generico. I generic types non possono essere usati per creare costruttori generici. Non si possono creare array generici.
+\section{J8 - Collection Framework}
+Un framework è un environment di software, universale e riutilizzabile, che fornisce alcune funzionalità facenti parte di una piattaforma software più grande, che facilitano lo sviluppo di software. 
+Il \textbf{collection framework} fornisce un'architettura per salvare e manipolare gruppi di oggetti. Include vari tipi di interfacce e classi, e supporta le tipiche operazioni necessarie: ricerca, ordinamento, inserimento, ecc...
+\subsection{Iterator, Iterable, Collection}
+L'interfaccia \textbf{Iterable} è l'interfaccia sorgente di tutte le collection, e ha un metodo che ritorna un \textit{Iterator}. L'interfaccia \textbf{Iterator} fornisce la possibilità di iterare gli elementi in avanti tramite l'uso di tre metodi per verificare la presenza di un elemento, spostarsi, e rimuovere. L'interfaccia \textbf{Collection} estende l'interfaccia \textit{Iterable}, ed è l'interfaccia implementata da tutte le classi del collection framework. Nonostante l'interfaccia fornisca i metodi che le collezioni avranno, alcuni non sono implementati da alcune classi(\textit{contraction}).
+I suddetti tre metodi sono:
+\begin{itemize}
+    \item \textbf{hasNext()} ritorna vero se esiste un elemento dopo il corrente
+    \item \textbf{next()} sposta l'iteratore al prossimo elemento. Se non esiste, throwa un'exception.
+    \item \textbf{remove (E e)} rimuove l'elemento corrente. Può ovviamente essere chiamato una sola volta per elemento.
+\end{itemize}
+Le collection hanno alcuni metodi principali: 
+\begin{itemize}
+    \item \textbf{contains(Object o)} e \textbf{ContainsAll(Collection<?> c)} restituiscono true se la collection contiene uno/tutti gli elementi
+    \item \textbf{isEmpty()} restituisce true se la collection è vuota 
+    \item \textbf{iterator()} restituisce un iterator 
+    \item \textbf{size()} restituisce il numero di elementi contenuti
+    \item \textbf{stream()} ritorna uno stream sequenziale della collection 
+    \item \textbf{toArray()} ritorna un array di oggetti contenente gli elementi della collezione
+    \item \textbf{toArray(T[] a)} ritorna un array del tipo richiesto, contenente gli elementi della collezione 
+\end{itemize}
+\subsection{Lists}
+L'interfaccia \textbf{List} definisce una struttura dati che gestisce una collezione ordinata di oggetti che possono avere valori duplicati. La classe \textbf{ArrayList} usa un array dinamico per salvare gli elementi, mantenendo l'ordine di inserzione degli elementi. Non è sincronizzato e l'accesso agli elementi è randomico. La classe \textbf{LinkedList} usa una lista doppiamente linkata internamente, mantiene l'ordine di inserimento e non è sincronizzata. La manipolazione di elementi è veloce perché non è necessario shifting. La classe \textbf{Stack} fornisce una struttura Stack aka \gls{lifo}, estendendo la classe vector.
+I principali metodi delle liste sono:
+\begin{itemize}
+    \item \textbf{add(E e), add(int index, E e)} e \textbf{addAll(Collection <? extends E> c)} hanno un compito decisamente ovvio.
+    \item \textbf{get(int index)} ha un compito altrettanto ovvio.
+    \item \textbf{set(int index, E e)} setta l'elemento index al valore e. \textit{In effetti era abbastanza ovvio pure questo.}
+    \item \textbf{remove(int index), remove(E e), removeAll(Collection <?> c)} \textit{- chissà cosa faranno mai questi -} rimuovono uno o più elementi
+    \item \textbf{indexOf(Object o)} e \textbf{lastIndexOf(Object o)} restituiscono l'indice a cui si trova un elemento, oppure -1 se non c'è.
+    \item \textbf{subList(int fromIndex, int toIndex)} genera una sottolista tra \code{fromIndex} (compreso) a \code{toIndex}(escluso)
+ \end{itemize}
+ L'utilizzo degli ArrayList è ottimale quando l'accesso è randomico e si aggiunge/rimuove solo dalla fine. La LinkedList, invece, viene usata quando è necessario manipolare anche gli elementi all'interno della lista.
+ \subsection{Sets}
+ L'interfaccia \textbf{Set} rappresenta un set non ordinato di elementi, che non ci permette di inserire duplicati. La classe \textbf{HashSet} rappresenta una collezione che usa una hash table per il salvataggio; l'hashing è utilizzato per il salvataggio. Il \textbf{LinkedHashSet} mantiene inoltre l'ordine di inserimento. Il \textbf{SortedHashSet} rappresenta un set ordinato in ordine crescente. Il \textbf{TreeSet} utilizza un albero per salvare: è molto veloce. \textit{Se l'unico tipo di albero che ti viene in mente è quello sotto casa tua, fai una googlata: è roba figa e ti tornerà utile.} 
+ Elenco ora i metodi principali dei set:
+ \begin{itemize}
+     \item \textbf{add(E e)} aggiunge un elemento se non è già presente, e ritorna true se ha fatto.
+     \item \textbf{remove(Object o)} rimuove l'elemento e ritorna true se l'ha trovato
+     \item \textbf{addAll(Collection <? extends E> c)} costruisce l'unione tra i due set 
+     \item \textbf{retainAll(Collection<?> c)} costruisce l'intersezione dei due set
+     \item \textbf{removeAll(Collection<?> c)} costruisce la differenza tra i due set
+ \end{itemize}
+ Gli HashSet vengono utilizzati quando è necessario inserire, eliminare, localizzare elementi. Il TreeSet è molto utile quando è necessario attraversare gli elementi secondo un ordine. Il LinkedHashSet è una via di mezzo. In base alla dimensione, può essere più veloce aggiungere elementi ad un HashSet piuttosto che convertirlo in un TreeSet.
+ \subsection{Maps}
+L'interfaccia \textbf{Map} fornisce una struttura dati che contiene valori basati su chiave. Ogni coppia chiave-valore è detta \textbf{Entry}. Una Map contiene chiavi univoche. L'\textbf{HashMap} è una mappa non ordinata. La \textbf{LinkedHashMap} è l'implementazione di una mappa, eredita da HashMap ma mantiene l'ordine di inserimento. La \textbf{SortedMap} rappresenta un set di elementi in ordine crescente. La \textbf{TreeMap} è l'implementazione di Map e SortedMap, mantenendo ordine crescente. I metodi principali delle Map sono 
+\begin{itemize}
+    \item \textbf{put(K k, V v)} collega la chiave k al valore v. Se la chiave esiste, ne sovrascrive il valore.
+    \item \textbf{get(K k)} ritorna il valore associato alla chiave, o null se non viene trovata
+    \item \textbf{remove(Object k)} rimuove l'entry collegata. Se trovata, restituisce il valore, altrimenti null.
+    \item \textbf{replace(K k, V v)} sostituisce il valore solo se la chiave viene trovata. Restituisce il valore precedente.
+    \item \textbf{entrySet(), keySet(), values()} restituiscono rispettivamente le entry, le chiavi, i valori.
+\end{itemize}
+L'HashMap è ottimale quando è necessario l'inserimento, l'eliminazione, la localizzazione. La TreeMap è utile quando si necessita un'esplorazione ordinata delle chiavi. La LinkedHashMap è una via di mezzo. A volte, in base alla dimensione, può essere più veloce aggiungere elementi ad una HashMap piuttosto che convertirla ad una TreeMap ed aggiungerli poi.
+
+\subsection{Queues}
+L'interfaccia \textbf{Queue} mantiene l'ordine \gls{fifo}. Può essere definito come lista ordinata, ed è utilizzato per salvare elementi in attesa di processi. La \textbf{PriorityQueue} mantiene elementi che devono essere processari in base alla loro priorità; non ammette valori null. La \textbf{Deque} gli elementi possono essere aggiunti/rimossi da entrambi i lati. L'\textbf{ArrayDeque} e la \textbf{LinkedList} implementano la Deque interface. Questi sono i metodi principali:
+\begin{itemize}
+    \item \textbf{add(E e)} inserisce un elemento nella coda 
+    \item \textbf{offer()} è preferibile ad add(E e), in quanto verifica di non violare restrizioni di capacità. Ritorna true in caso di successo.
+    \item \textbf{peek()} prende il primo elemento della coda senza rimuoverlo. Se vuota, ritorna null.
+    \item \textbf{element()} prende il primo elemento della coda senza rimuoverlo. Se vuota, throwa un'eccezione.
+    \item \textbf{remove()} rimuove il primo elemento e lo restituisce. Se vuota, throwa un'eccezione.
+    \item \textbf{poll()} rimuove il primo elemento e lo ritorna. Se è vuota, returna null.
+\end{itemize}
+La LinkedList è una normale coda FIFO. La PriorityQueue viene utilizzata quando è necessario un comparator.
+\subsection{Collections Class}
+La classe \textbf{Collections} fornisce un set di metodi statici per la creazione di implementazioni sincronizzate di collection, per la creazione di collection immutabili, per operazioni ricorrenti sulle collection.
+Alcuni metodi:
+\begin{itemize}
+    \item \textbf{unmodifiableCollection(Collection<? extends T> c)} ritorna una view non modificabile della collection. 
+    \item \textbf{synchronizedCollection(Collection<T> c)} ritorna una collection sincronizzata (thread-safe).
+    \item \textbf{checkedCollection(Collection<E> c, Class<E> t)} ritorna una vista dinamica typesafe della collection. Ogni tentativo di inserimento di elementi incoerenti col type throwa exception.
+    \item \textbf{Singleton(T o), singletonList(T o), singletonMap(K k, V v)} restituiscono set, liste e mappe con elementi/key-values.
+    \item \textbf{copy(List<? super T> dest, List<? extends T> src)} copiano tutti gli elementi di src in dest 
+    \item \textbf{fill(List<? super T> list, T obj)} riempe la lista con l'elemento specificato 
+    \item \textbf{nCopies(int n, T o)} ritorna una lista immutabile con l'elemento fornito.
+    \item \textbf{replaceAll(List<T> list, T oldVal, T newVal)} restituisce tutte le occorrenze di un valore con l'altro 
+    \item \textbf{reverse(List<?> list)} inverte l'ordine degli elementi
+    \item \textbf{reverse(List<?> list, int distance)} inverte l'ordine fino alla distanza specificata
+    \item \textbf{binarySearch(List<? extends Comparable<? super T>> list, T key)} implementa una ricerca binaria. La lista deve ovviamente essere ordinata. Ritorna l'indice dell'oggetto. \textit{Se non sai cos'è una ricerca binaria googla anche questo. Tutta roba figa.}
+    \item \textbf{frequency, min, max (Collection<?> c, Object o)} restituiscono la frequenza dell'elemento, il minimo, e il massimo
+    \item \textbf{indexOfSubList, lastIndexofSubList(List <?> source, List<?> target)} ritornano la posizione della sublist trovata, o -1 se non c'è. 
+\end{itemize}
+
 
 \printglossary
 

@@ -28,6 +28,14 @@
     name={constraint},
     description={un constraint è un limite che viene posto; restriction, limitation.}
 }
+\newglossaryentry{statement}{
+    name={statement},
+    description={istruzioni del codice e.g. una riga di codice}
+}
+\newglossaryentry{mock}{
+    name={mock},
+    description={da Wikipedia: \textit{"Nella programmazione orientata agli oggetti, i mock object (simulati o mock object) sono degli oggetti simulati che riproducono il comportamento degli oggetti reali in modo controllato. Un programmatore crea un oggetto mock per testare il comportamento di altri oggetti, reali, ma legati ad un oggetto inaccessibile o non implementato. Allora quest'ultimo verrà sostituito da un mock."}}
+}
 \usepackage[normalem]{ulem}
 \newcommand{\code}[1]{\texttt{#1}}
 \newcommand{\numpy}{{\tt numpy}}    % tt font for numpy
@@ -213,7 +221,7 @@ Vi sono in realtà 3 definizioni di \textbf{interfaccia.}
 In Java, le interface sono reference type simili alle classi, che inizialmente contenevano solo metodi astratti e costanti. Da Java8, può contenere metodi default e static con implementazione. I metodi default offrono un'implementazione utilizzata da più subtypes, che possono overridarli, a differenza degli static. Da Java9 le interfacce possono anche contenere metodi privati. Le classi possono implementare \textbf{una o più interfacce}, ereditandone i metodi astratti. Le interfacce possono anche estendere altre interfacce (anche multiple). Per questo, le classi sono meno estensibili: possono farlo con una sola classe.
 \subsection{Ereditarietà e composizione}
 Eredità e composizione definiscono relazioni tra due classi per ridurre la duplicazione di codice e i bug. L'ereditarietà forma una relazione di tipo \textit{is-a}, la composizione \textit{has-a}
-\subsection{Marker interfaces e functional interfaces}
+\subsection{Marker interfaces e functional interfaces}\label{funcint}
 Le \textbf{marker interfaces} sono interfacce vuote, ossia non contengono metodi e costanti. Le \textbf{functional interfaces} sono interfacce con un singolo metodo astratto.
 \subsection{Inner classes}
 Le \textbf{inner classes} sono classi definite all'interno di un'altra classe, e hanno 4 possibili tipi:
@@ -363,6 +371,39 @@ Alcuni metodi:
     \item \textbf{frequency, min, max (Collection$<$?$>$ c, Object o)} restituiscono la frequenza dell'elemento, il minimo, e il massimo
     \item \textbf{indexOfSubList, lastIndexofSubList(List $<$?$>$ source, List$<$?$>$ target)} ritornano la posizione della sublist trovata, o -1 se non c'è. 
 \end{itemize}
+\section{J9 - Functional programming}
+Ci poniamo ora una domanda: qual è la differenza tra programmazione imperativa e funzionale? 
+La \textbf{programmazione imperativa} è un paradigma che utilizza degli \glspl{statement} per modificare lo stato di un programma. La programmazione funzionale, invece, tratta la computazione come valutazione di funzioni matematiche. Uno \textbf{\gls{statement}} assegna variabili, una \textbf{funzione} è eseguita per produrre un valore. Quindi, il focus della programmazione imperativa è \textit{come risolvere}, quello della funzionale è \textit{cosa risolvere}.
+\subsection{Funzioni pure e di higher-order}
+\textit{Come cazzo si traduce higher-order?} Le \textbf{funzioni pure} restituiscono lo stesso risultato quando ricevono gli stessi argomenti, e non causano effetti collaterali. Per questo, sono semplici da debuggare. Inoltre, non fanno \gls{mock}. Le \textbf{funzioni higher-order} \textit{(forse "di ordine maggiore"? Suona veramente male)} prendono funzioni come argomenti e/o ritornano funzioni come risultato. 
+\subsection{Calcolo lambda}
+Il suddetto venne sviluppato da Alonzo Church per studiare la computazione tramite funzioni. Dà, in sintesi, la definizione di cosa è computabile. È un \textit{framework teorico} per descrivere le funzioni, la loro valutazione è basata puramente su manipolazione sintattica di simboli e ricorsione. \textbf{Tutto} ciò che può essere computato tramite calcolo lambda è computabile, e offre la stessa \textit{definitional power} di una macchina di Turing. Il calcolo lambda è la base di tutti i moderni linguaggi di programmazione funzionale. 
+Il functional programming presenta però alcune difficoltà:
+\begin{itemize}
+    \item Scrivere funzioni pure riduce la leggibilità del codice
+    \item Scrivere programmi ricorsivi al post di cicli potrebbe non essere semplice
+    \item Scrivere funzioni pure è semplice, ma combinarle con altro software no
+    \item I valori immutabili e la ricorsione potrebbero ridurre le performance
+\end{itemize} 
+\subsection{Espressioni lambda}
+\textit{Questo è un bel mindfuck.} Le espressioni lambda sono metodi anonimi che possono implementare una functional interface. \textit{Non ricordi cosa siano? Rileggi \ref{funcint}} Il loro tipo è il tipo dell'interfaccia che implementano, e possono essere usate ovunque ci aspettiamo functional interfaces. Possono accedere solo ai field della classe che le racchiude, e alle variabili locali del blocco che le racchiude, solo se \code{final}. Una lambda, in termini pratici, consiste di una lista di parametri, una freccia, un corpo.
+\begin{center}
+    \code{(parameters) $->$ \{statements\}}
+\end{center}
+Parametri e return types possono essere omessi se determinabili dal contesto.
+Le lambda con una sola espressione possono omettere le graffe. Le lambda con un solo parametro possono omettere le tonde. Le lambda senza parametri devono però averle. 
+Alcuni vantaggi delle espressioni lambda:
+\begin{itemize}
+    \item Supportano la programmazione funzionale 
+    \item Permettono di scrivere codice più pulito e compatto 
+    \item Permette di scrivere programmi paralleli
+    \item Fornisce API più generiche, flessibili, riutilizzabili
+    \item Supporta il passaggio di behavior a metodi
+\end{itemize}
+\subsection{Riferimenti ai metodi}
+Spesso le lambda expressions chiamano metodi esistenti. Non è però conveniente e conviene chiamarlo direttamente. I riferimenti a metodi possono 
+
+
 
 
 \printglossary

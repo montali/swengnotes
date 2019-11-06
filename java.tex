@@ -527,8 +527,20 @@ Le classi oggetto atomiche forniscono metodi \textbf{atomici}, quindi le loro is
 \textit{Chiedo scusa per la poca chiarezza di quest'ultima subsection. Non ci si capisce un cazzo.}
 
 \section{J13 - Sockets}
-
-
+I \textbf{socker} forniscono un'interfaccia per programmare reti sul layer di trasporto, con un utilizzo simile all'I/O da file. L'utilizzo è indipendente dal linguaggio di programmazione. 
+Distinguiamo tra TCP e UDP, con le loro caratteristiche: TCP è affidabile, ordinato, bidirezionale, UDP \textit{è una merda.} Il comportamento normale di un server con TCP è il seguente: viene eseguito su un computer specifico, ha un socker collegato ad una porta specifica, rimane in attesa di richieste di connessione, le accetta, e crea un nuovo socker per la connessione su un'altra porta. In Java, per server/client, è sufficiente creare un socker, creare gli stream I/O, comunicare, chiudere il socket. 
+\subsection{Socker su UDP}
+I socker su UDP non necessitano di un \textit{socket di benvenuto}, non hanno streams ma inviano pacchetti contenenti byte da estrarre. 
+\subsection{Oggetti}
+Per inviare oggetti è sufficiente utilizzare degli ObjectInputStream/ObjectOutputStream. 
+\subsection{Eccezioni}
+Vi sono vari tipi di eccezioni possibili:
+\begin{itemize}
+    \item \code{IOException} nell'apertura dello stream o del socket 
+    \item \code{UnknownHostException} nell'apertura di un socket sul client 
+    \item \code{SecurityException} quando è presente un security manager
+    \item \code{ClassNotFoundException} leggendo un oggetto
+\end{itemize}
 
 
 \printglossary

@@ -401,10 +401,61 @@ Alcuni vantaggi delle espressioni lambda:
     \item Supporta il passaggio di behavior a metodi
 \end{itemize}
 \subsection{Riferimenti ai metodi}
-Spesso le lambda expressions chiamano metodi esistenti. Non è però conveniente e conviene chiamarlo direttamente. I riferimenti a metodi possono 
-
-
-
+Spesso le lambda expressions chiamano metodi esistenti. Non è però conveniente e conviene chiamarlo direttamente. I riferimenti a metodi sono, effettivamente, una forma semplice di espressioni lambda. Possono essere utilizzati per metodi statici, di istanza, e costruttori. Ne abbiamo, di conseguenza, tre tipi:
+\begin{itemize}
+    \item Metodo statico: \code{ContainingClass::staticMethodName}
+    \item Metodo di istanza: \code{containingObject::instanceMethodName}
+    \item Costruttore: \code{ClassName::new}
+\end{itemize}
+\subsection{Streams}
+Gli \textbf{stream} sono simili a collections, ma non mantengono i dati. Sono pensati per lavorare bene con le lambda expressions. Sono immutabili, ma processandoli ne possiamo ottenere nuovi. Muovono elementi lungo una sequenza di step di processo, detti \textit{stream pipeline}, formato da chiamate \textit{chaining} a metodi. La pipeline inizia con una sorgente di dati, esegue operazione intermedie, e conclude con un'operazione finale. Le operazione intermedie sono \textit{lazy}: non vengono eseguite fintanto che un'operazione da terminale lo richiede.
+\subsubsection{Produrre streams}
+Ci sono vari metodi per produrre stream:
+\begin{itemize}
+    \item Utilizzare il metodo statico \code{of} e passargli elementi/un array
+    \item Convertire una collection utilizzandone il metodo \code{stream()}
+    \item Convertire le linee di un file in stringhe, ed il file in uno stream di stringhe
+    \item Ogni stream può essere convertito in uno stream parallelo usando il metodo \code{parallel()}
+\end{itemize}
+\subsubsection{Trasformare streams}
+Abbiamo inoltre metodi di trasformazione degli stream:
+\begin{itemize}
+    \item Il metodo \code{map} trasforma uno stream applicandovi una funzione 
+    \item Il metodo \code{filter} trasforma uno stream eliminando gli elementi che non soddisfano una condizione
+    \item Il metodo \code{limit(n)} trattiene i primi n elementi
+    \item Il metodo \code{skip(n)} rimuove i primi n elementi
+    \item Il metodo \code{distinct} rimuove i duplicati 
+    \item Il metodo \code{sorter} ordina gli elementi dello stream 
+\end{itemize}
+\subsubsection{Collectiong results}
+Possiamo anche raccogliere determinati risultati:
+\begin{itemize}
+    \item \code{count}, \code{max}, \code{min}, \code{sum} restituiscono un singolo valore
+    \item Il metodo \code{toArray} restituisce un array 
+    \item Il metodo \code{collect} restituisce una lista o un set
+    \item Il metodo \code{collect}, applicato ad uno stream di stringhe, riunisce tutte le stringhe in una sola
+\end{itemize}
+\section{J10 - Eccezioni}
+\textbf{Eccezioni} ed \textbf{errori} sono eventi indesirati ed inaspettati che accadono durante l'esecuzione del programma, bloccando il normale flusso di esecuzione. Gli \textbf{errori} indicano problemi seri che non andrebbero \textit{catchati}. Le \textbf{eccezioni}, invece, possono essere "recuperate". Quando un'eccezione/errore accade, viene generato un oggetto e viene passato al \textit{runtime system} (aka la JVM). Questo oggetto contiene nome e descrizione dell'errore, e lo stato del programma quando è accaduto.
+\subsection{Espressioni checked e unchecked}
+Qual è la differenza? Le \textbf{eccezioni checked} rappresentano condizioni invalide in aree fuori dal controllo del programma: input dell'utente, database, rete, file mancanti. Queste sono sottoclassi di \code{Exception}, e i metodi sono obbligati a gestirle. Le \textbf{eccezioni unchecked}, invece, rappresentano difetit del programma, come argomenti invalidi passati ad un metodo. Queste sono subclasses di \code{RuntimeException}, ed i metodi non sono obbligati a gestirle. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{res/java/Exceptions.png}
+    \caption{Gerarchia delle eccezioni}
+\end{figure}
+\subsection{Exception handling}
+Gli statement di un programma possono \textit{raisare} un'eccezione contenuta in un \textit{try block}. Se un'eccezione accade in un try block può essere \textit{caught} con un catch block. Bisognerebbe gestire tipi diversi di eccezioni in catch blocks diversi. Codice da eseguire in casi positivi e negativi va inserito in un finally block.
+\subsection{Try with resources}
+Generalmente, quando un try block utilizza risorse come file e connessioni, le suddette vanno chiuse in un finally block. Esiste però un metodo per non doverlo fare: dichiarare esplicitamente le risorse utilizzate tra parentesi prima del try block. La classe deve implementare l'interfaccia \code{AutoCloseable}.
+\subsection{Throws e throw keyword}
+Se il codice di un metodo può raisare \textit{/s scusate. /s} eccezioni ma non vuole gestirle, può "throwarlo" al metodo padre inserendo \code{throws} nella sua firma. Invece, la keyword \code{throw}, solleva esplicitamente un'eccezione.
+\subsection{Convenzioni di coding}
+\begin{itemize}
+    \item \textit{Questo lo abbiamo fatto tutti:} \textbf{evitare catch blocks vuoti.} Questo perché quando accade un'eccezione non ti rendi conto di nulla. Non è ok.
+    \item Essere specifici nella \code{throws} dei metodi 
+    \item Non raggruppare le eccezioni catchando una classe generica
+\end{itemize}
 
 \printglossary
 

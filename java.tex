@@ -456,6 +456,80 @@ Se il codice di un metodo può raisare \textit{/s scusate. /s} eccezioni ma non 
     \item Essere specifici nella \code{throws} dei metodi 
     \item Non raggruppare le eccezioni catchando una classe generica
 \end{itemize}
+\section{J11 - Input and Output}
+\subsection{File class}
+La classe \textbf{File} crea oggetti che forniscono una rappresentazione astratta di file/directory e ne supportnao la gestione. Supporta l'accesso agli attributi di file/directory, l'eliminazione, la rinomina, l'esplorazione di cartelle, i permessi.
+\subsection{Streams}
+Gli stream sono la classe principale del pacchetto \code{java.io}, e rappresentano sorgenti di input e destinazioni di output. Rappresentano diversi tipi di sorgenti/destinazioni, e supportano diversi tipi di dati. Possono passare dati ma anche manipolarli, e rappresentano la sequenza di dati letti/scritti da un programma. Due classi base: \code{InputStream} e \code{OutputStream}. In generale, si processano quattro tipi di dati:
+\begin{itemize}
+    \item Byte streams: 8-bit bytes; FileInputStream, FileOutputStream
+    \item Character streams: 16-bit Unicode; FileReader, FileWriter
+    \item Data streams: dati primitivi; DataInputStream, DataOutputStream
+    \item Object streams: oggetti; ObjectInputStream, ObjectOutputStream
+\end{itemize}
+\subsection{Buffered streams}
+I \textbf{buffered streams} leggono dati da un'aera di memoria detta \textit{buffer}, l'API input nativa viene chiamata quando il buffer è vuoto. Per stream senza buffer, ogni richiesta I/O è gestita dal sistema operativo, perdendo in efficienza. I buffered stream compiono operazioni su stream di byte e caratteri, quindi solitamente wrappano byte/character streams.
+\subsection{Espressioni regolari}
+\textit{Prima o poi le dovrai imparare, eh.} Le \textbf{espressioni regolari} forniscono un metodo "scientifico" per identificare stringhe testuali utilizzando \textit{wild cards}. \textit{Skipperò le spiegazioni, ma se vi interessa consiglio \href{https://regex101.com}{Regex101}}.
+\subsection{Scanner}
+Lo \textbf{scanner}, definito in \code{java.util.Scanner}, è utilizzato per ottenere l'input di dati primitivi e stringhe. La sua funzionalità è basata su tre passi: lettura da fonte, identificazione dei dati tramite delimitatori, processazione. Spezza il suo input in \textit{token} utilizzando dei delimitatori, di default lo spazio.
+\subsection{Standard streams}
+Java fornisce il supporto per I/O standard dove il programma prende input da tastiera e produce output sullo schermo. Java fornisce tre stream standard:
+\begin{itemize}
+    \item \code{System.in} per l'input
+    \item \code{System.out} per l'output
+    \item \code{System.err} è utilizzato per l'output di errori prodotti dal software 
+\end{itemize}
+\subsection{Java NIO}
+Un secondo metodo è il \textbf{New I/O}, che supporta un approccio buffer-oriented e basato sui canali per l'I/O, con supporto a file system e file handling. Venne sviluppato per fornire un supporto ad alta velocità, non-blocking fino a che i dati non sono caricati. Fornisce alcuni oggetti, detti \textbf{selectors}, utilizzati per monitorare i gli eventi dei canali attraverso un singolo thread. 
+\subsubsection{NIO paths and files}
+L'interfaccia \code{Path} rappresenta percorsi del file system, di tipo assoluto o relativo. Le istanze Path possono essere create utilizzando il metodo statico \code{get}, passando la stringa del path. La classe \code{File} fornisce metodi statici per manipolare file e directory.
+\section{J12 - Concorrenza}
+Il problema è sincronizzare le attività di un'applicazione che dovrebbero essere svolte parallelamente, evitando conflitti nell'uso di risorse. La soluzione? Multitasking, multithreading, multiprocessing. 
+\subsection{Differenze tra processo e thread}
+Un processo è un programma eseguibile, con il suo spazio di indirizzi, che esegue un programma, comunica con files, rete, e \textbf{può contenere più thread.} Un thread, invece, è uno stream di istruzioni eseguite in sequenza, che condivide lo spazio degli indirizzi con altri thread, eseguendo una parte di programma. Comunica con accesso condiviso ai dati. 
+\subsection{Metodi principali di un thread}
+\begin{itemize}
+    \item \code{start()} avvia l'esecuzione del thread
+    \item \code{run()} definisce la task del thread 
+    \item \code{yield()} informa lo scheduler che il thread è a disposizione per concedere il suo uso corrente del processore
+    \item \code{interrupt()} interrompe il thread 
+    \item \code{setPriority()} imposta la priorità del thread 
+    \item \code{sleep()} interrompe il thread per un determinato numero di millisecondi
+    \item \code{wait()} interrompe il thread finché non viene risvegliato da un altro processo
+    \item \code{notify()} e \code{notifyAll()} svegliano uno o tutti i thread 
+    \item \code{wait()}, \code{notify()}, \code{notifyAll()} sono ereditati da Object 
+\end{itemize}
+\subsection{Variabili volatile}
+La keywork \code{volatile} tenta di risolvere i problemi di visibilità di variabili. Tutte le modifiche su variabili volatili sono scritte immediatamente in memoria, tutte le letture sono svolte dalla memoria principale. Per questo, le variabili \code{volatile} sono più costose per la CPU. L'accesso a variabili volatili previene il riordinamento delle istruzioni, che viene normalmente svolto per migliorare le performance. 
+\subsection{Problemi di atomicità}
+Un esempio: \code{i++} sembra un'istruzione atomica, ma è in realtà composta da tre operazioni: lettura, modifica, scrittura. C'è quindi un problema quando diversi thread lavorano contemporaneamente sulle stesse risorse. 
+\subsection{Synchronized methods}
+Quando un thread sta eseguendo un metodo \code{synchronized} su un oggetto, tutti gli altri thread che invocano metodi sincronizzati sullo stesso oggetto vengono sospesi fino a quando non finisce. 
+\subsection{Atomic object classes}
+Le classi oggetto atomiche forniscono metodi \textbf{atomici}, quindi le loro istruzioni vengono eseguite insieme, o nessuna viene eseguita. Un metodo atomico modifica il suo oggetto senza effetti collaterali. Queste classi cono definite in \code{java.util.concurrent.atomic}, con i seguenti metodi principali:
+\begin{itemize}
+    \item \code{addAndGet()} aggiunge il valore passato al corrente
+    \item \code{decrementAndGet()} decrementa il valore di 1
+    \item \code{incrementAndGet()} incrementa il valore di 1
+    \item \code{accumulateAndGet()} applica una funzione al valore corrente
+    \item \code{lazySet(i)} setta il valore passato
+\end{itemize}
+\subsection{Classi principali della collection Concurrent}
+\begin{itemize}
+    \item \code{CopyOnWriteArrayList()} è un'implementazione backed-up della copy on write array
+    \item \code{CopyOnwriteArraySet()} come sopra ma con set
+    \item \code{ConcurrentHashMap()} è un'implementazione ad alta concorrenza, alta performance, backed up da un'hash table
+    \item \code{LinkedBlockingQueue}, \code{ArrayBlockingQueue}, \code{PriorityBlockingQueue} attendono i dati 
+    \item \code{DelayQueue} è una queue bloccante di elementi in ritardo, dove un elemento può essere preso solo dopo la scadenza del ritardo
+    \item \code{SynchronousQueue} è una coda bloccante in cui ogni inserimento attende una rimozione da un altro thread
+\end{itemize}
+\textit{Chiedo scusa per la poca chiarezza di quest'ultima subsection. Non ci si capisce un cazzo.}
+
+\section{J13 - Sockets}
+
+
+
 
 \printglossary
 

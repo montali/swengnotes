@@ -57,7 +57,7 @@
 Questo progetto nasce dalla necessità di trovare un metodo di studio per questa materia che, ai più sembra banale. Il problema di fondo è proprio in questa apparente banalità: si finisce per studiarla di fretta pensando di conoscerla, e ci si rende conto troppo tardi di non essere pronti. Mi scuso, anzitutto, per il vocabolario misto italiano-inglese che utilizzerò in queste pagine. Tanti di voi sanno quanto sia complicato esprimere certi concetti in italiano. Ho inserito un piccolo glossario a fine documento. Questo documento ha lo scopo di essere il giusto mezzo tra completezza e sinteticità. Mi scuso, in secundis, per i toni a volte scurrili. Un vero informatico è arrabbiato \textit{/per il codice che non compila/\LaTeX  che fa ciò che vuole/il computer che si impalla/quel piccolo bugfix di Linux che diventa un bagno di sangue/}, e non c'è modo migliore di sfogare le incazzature informatiche che imprecare in riassunti che leggeranno le generazioni a venire. 
 Non so come tu ti sia procurato questo documento, ma se hai 5 minuti da buttare, dai una letta alle cose che ho scritto \href{https://monta.li/appunti}{qui.} Ci troverai anche un'altra valangata di appunti. Buona studiata ed in bocca al lupo per tutto.
 \section{J1 - Java Overview}
-Java è un linguaggio object-oriented, derivato da C/C++, nato per applicazioni web. È semplice, multi-threaded, dinamico. Ha ereditato da C++ la sintassi. Vi è però mancanza di puntatori, garbage collection, mancanza di header files e preprocessori. Rispetto a C++, si avvia più velocemente, richiede meno codice, è indipendente dalla piattaforma e più facile da distribuire. Esistono 3 versioni:
+Java è un linguaggio object-oriented, derivato da C/C++, nato per applicazioni web. È semplice, multi-threaded, dinamico. Ha ereditato da C++ la sintassi. Vi sono però alcune differenze: mancanza di puntatori, garbage collection, mancanza di header files e preprocessori. Rispetto a C++, si avvia più velocemente, richiede meno codice, è indipendente dalla piattaforma e più facile da distribuire. Esistono 3 versioni:
 \begin{itemize}
     \item Java Standard Edition (J2SE): applicazioni stand-alone client-side
     \item Java Enterprise Edition (J2EE): applicazioni server-side
@@ -286,7 +286,7 @@ Alcuni tipi di wildcard:
     \item Super wildcards List $<$? super A$>$: identifica elementi della classe A o superclassi di A. È sicuro inserire istanze di A o sottoclassi, ma si possono leggere gli elementi solo come oggetti.
 \end{itemize}
 \subsection{Generic Class Implementation}
-Ogni classe generica ha una singola implementazione basata sul tipo di oggetto. L'operatore instanceof non può essere utilizzato con un tipo generico. I generic types non possono essere usati per creare costruttori generici. Non si possono creare array generici.
+Ogni classe generica ha una singola implementazione basata sul tipo di oggetto. L'operatore \code{instanceof} non può essere utilizzato con un tipo generico. I generic types non possono essere usati per creare costruttori generici. Non si possono creare array generici.
 \section{J8 - Collection Framework}
 Un framework è un environment di software, universale e riutilizzabile, che fornisce alcune funzionalità facenti parte di una piattaforma software più grande, che facilitano lo sviluppo di software. 
 Il \textbf{collection framework} fornisce un'architettura per salvare e manipolare gruppi di oggetti. Include vari tipi di interfacce e classi, e supporta le tipiche operazioni necessarie: ricerca, ordinamento, inserimento, ecc...

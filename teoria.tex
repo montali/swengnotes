@@ -276,7 +276,7 @@ Uno use case deve definire lo stato iniziale e le precondizioni. Deve definire l
     \item Elencare tutti i possibili use case
     \item Utilizzare un formato standard
     \item Utilizzare i verbi appropriati
-    \item Documentare le eccezionali
+    \item Documentare le situazioni eccezionali
     \item Non rappresentare singoli step come use cases
 \end{itemize}
 \begin{figure}[H]
@@ -363,9 +363,9 @@ Le necessità del requirement management sono:
     \item Supporto del \gls{case}
 \end{itemize}
 \subsubsection{CASE tool support}
-I requirement devono essere salvati in una zona sicura. Il change management deve essere un processo di workflow con passaggi definiti, e, se possibile, automatizzati. \textit{Immaginatelo come un Github Actions, ma nel 95.} Deve inoltre esserci un'automatizzazione dei link tra requirement, rinforzando la tracciabilità.
+I requirement devono essere salvati in una zona sicura. Il change management deve essere un processo di workflow con passaggi definiti, e, se possibile, automatizzati. \textit{Immaginatelo come un Github Actions, ma nel '95.} Deve inoltre esserci un'automatizzazione dei link tra requirement, rinforzando la tracciabilità.
 \subsubsection{Identificazione dei requirement}
-I requirement devono essere identificati univocamente. Potremmo quindi numerare capitoli/sezioni, ma \textit{come fa un po' schifo come approccio.} Per questo, sfruttiamo una numerazione dinamica, identificante i record nel DB. Potremmo sfruttare un'identificazione simbolica, con, ad esempio, sigle. \textit{Se usi degli issue tracker, è lo stesso concetto dei codici tra quadre.}
+I requirement devono essere identificati univocamente. Potremmo quindi numerare capitoli/sezioni, ma \textit{fa un po' schifo come approccio.} Per questo, sfruttiamo una numerazione dinamica, identificante i record nel DB. Potremmo sfruttare un'identificazione simbolica, con, ad esempio, sigle. \textit{Se usi degli issue tracker, è lo stesso concetto dei codici tra quadre.}
 \subsubsection{Stati dei requirement}
 I requirement possono avere degli stati (\textit{Anche qui, aver usato issue tracker può chiarire il concetto}):
 \begin{itemize}
@@ -421,14 +421,16 @@ Elementi fondamentali al planning sono:
 \end{itemize}
 Abbiamo inoltre dei \glspl{constraint} al planning: 
 \begin{itemize}
-    \item \textbf{Numero di requirements}: maggiore è il numero di requirement, più sono necesarie delle policy formali di tracciabilità
-    \item \textbf{Expected system lifetime}: in caso di lunghe lifetime, sono necessarie policy di tracciabilità più comprensive
+    \item \textbf{Numero di requirements}: maggiore è il numero di requirement, più sono necessarie delle policy formali di tracciabilità
+    \item \textbf{Expected system lifetime}: in caso di lunghi tempi di vita, sono necessarie policy di tracciabilità più comprensive
     \item \textbf{Livello di maturità dell'organizzazione}: in organizzazioni con un'elevata maturità di processo vengono usate policy più dettagliate
     \item \textbf{Dimensioni di progetto e team}: maggiori le dimensioni, maggiore la formalità richiesta
     \item \textbf{Tipo di sistema}: sistemi critici come quelli real-time, o richiedenti sicurezza, hanno bisogno di policy di tracciabilità migliori
     \item \textbf{\Gls{constraint} addizionali del cliente}: il cliente può necessitare \gls{constraint} vari, ad esempio standard militari
 \end{itemize}
 \textit{I più svegli di voi si chiederanno perché passo dalla lezione 9 alla 12. La risposta è semplice, la 10 e la 11 sono dei doppioni di 8 e 9.}
+\setcounter{section}{11}
+
 \section{T12 - Object Constraint Language}
 I diagrammi UML spesso non sono abbastanza raffinati per descrivere tutti i constraint sulle relazioni tra entità. Per questo, spesso, essi sono espressi tramite il linguaggio naturale, coi soliti problemi di ambiguità, o con un linguaggio formale, non comprensibile ai più. 
 L'\textbf{Object Constraint Language} fa parte delle specifiche UML, ed è un linguaggio formale con sintassi e semantiche definite. Permette di descrivere espressioni e constraint tramite modelli object-oriented. È semplice da leggere e fu sviluppato da niente meno che \textbf{IBM}. Può essere utilizzato in vari modi:

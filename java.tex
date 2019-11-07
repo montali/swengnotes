@@ -160,7 +160,7 @@ L'\textbf{incapsulamento} è una forma di protezione; il mondo esterno non ha ac
 \end{figure}
 \subsubsection{Methods}
 I metodi sono delle funzioni che eseguono determinate operazioni, permettendo il riutilizzo del codice. Accettano parametri e ne restituiscono altri.
-I \textbf{costruttori} sono metodi speciali che creano istanze di classe. Una classe può avere piò costruttori. Il nome è quello della classe. Se non sono definiti costruttori, viene utilizzato quello di default (vuoto), che viene invocato anche dalle subclasses.
+I \textbf{costruttori} sono metodi speciali che creano istanze di classe. Una classe può avere più costruttori. Il nome è quello della classe. Se non sono definiti costruttori, viene utilizzato quello di default (vuoto), che viene invocato anche dalle subclasses.
 Alcune convenzioni per i metodi:
 \begin{itemize}
     \item Validare gli argomenti prima di utilizzarli: \textit{mai dare per scontato che l'utente non sia una scimmietta incazzata.}
@@ -381,12 +381,12 @@ Il suddetto venne sviluppato da Alonzo Church per studiare la computazione trami
 Il functional programming presenta però alcune difficoltà:
 \begin{itemize}
     \item Scrivere funzioni pure riduce la leggibilità del codice
-    \item Scrivere programmi ricorsivi al post di cicli potrebbe non essere semplice
+    \item Scrivere programmi ricorsivi al posto di cicli potrebbe non essere semplice
     \item Scrivere funzioni pure è semplice, ma combinarle con altro software no
     \item I valori immutabili e la ricorsione potrebbero ridurre le performance
 \end{itemize} 
 \subsection{Espressioni lambda}
-\textit{Questo è un bel mindfuck.} Le espressioni lambda sono metodi anonimi che possono implementare una functional interface. \textit{Non ricordi cosa siano? Rileggi \ref{funcint}} Il loro tipo è il tipo dell'interfaccia che implementano, e possono essere usate ovunque ci aspettiamo functional interfaces. Possono accedere solo ai field della classe che le racchiude, e alle variabili locali del blocco che le racchiude, solo se \code{final}. Una lambda, in termini pratici, consiste di una lista di parametri, una freccia, un corpo.
+\textit{Questo è un bel mindfuck.} Le espressioni lambda sono metodi anonimi che possono implementare una functional interface. \textit{Non ricordi cosa siano? Rileggi \ref{funcint}}. Il loro tipo è il tipo dell'interfaccia che implementano, e possono essere usate ovunque ci aspettiamo functional interfaces. Possono accedere solo ai field della classe che le racchiude, e alle variabili locali del blocco che le racchiude, solo se \code{final}. Una lambda, in termini pratici, consiste di una lista di parametri, una freccia, un corpo.
 \begin{center}
     \code{(parameters) $->$ \{statements\}}
 \end{center}
@@ -438,7 +438,7 @@ Possiamo anche raccogliere determinati risultati:
 \section{J10 - Eccezioni}
 \textbf{Eccezioni} ed \textbf{errori} sono eventi indesirati ed inaspettati che accadono durante l'esecuzione del programma, bloccando il normale flusso di esecuzione. Gli \textbf{errori} indicano problemi seri che non andrebbero \textit{catchati}. Le \textbf{eccezioni}, invece, possono essere "recuperate". Quando un'eccezione/errore accade, viene generato un oggetto e viene passato al \textit{runtime system} (aka la JVM). Questo oggetto contiene nome e descrizione dell'errore, e lo stato del programma quando è accaduto.
 \subsection{Espressioni checked e unchecked}
-Qual è la differenza? Le \textbf{eccezioni checked} rappresentano condizioni invalide in aree fuori dal controllo del programma: input dell'utente, database, rete, file mancanti. Queste sono sottoclassi di \code{Exception}, e i metodi sono obbligati a gestirle. Le \textbf{eccezioni unchecked}, invece, rappresentano difetit del programma, come argomenti invalidi passati ad un metodo. Queste sono subclasses di \code{RuntimeException}, ed i metodi non sono obbligati a gestirle. 
+Qual è la differenza? Le \textbf{eccezioni checked} rappresentano condizioni invalide in aree fuori dal controllo del programma: input dell'utente, database, rete, file mancanti. Queste sono sottoclassi di \code{Exception}, e i metodi sono obbligati a gestirle. Le \textbf{eccezioni unchecked}, invece, rappresentano difetti del programma, come argomenti invalidi passati ad un metodo. Queste sono subclasses di \code{RuntimeException}, ed i metodi non sono obbligati a gestirle. 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{res/java/Exceptions.png}
@@ -449,7 +449,7 @@ Gli statement di un programma possono \textit{raisare} un'eccezione contenuta in
 \subsection{Try with resources}
 Generalmente, quando un try block utilizza risorse come file e connessioni, le suddette vanno chiuse in un finally block. Esiste però un metodo per non doverlo fare: dichiarare esplicitamente le risorse utilizzate tra parentesi prima del try block. La classe deve implementare l'interfaccia \code{AutoCloseable}.
 \subsection{Throws e throw keyword}
-Se il codice di un metodo può raisare \textit{/s scusate. /s} eccezioni ma non vuole gestirle, può "throwarlo" al metodo padre inserendo \code{throws} nella sua firma. Invece, la keyword \code{throw}, solleva esplicitamente un'eccezione.
+Se il codice di un metodo può raisare \textit{(scusate)} eccezioni ma non vuole gestirle, può "throwarlo" al metodo padre inserendo \code{throws} nella sua firma. Invece, la keyword \code{throw}, solleva esplicitamente un'eccezione.
 \subsection{Convenzioni di coding}
 \begin{itemize}
     \item \textit{Questo lo abbiamo fatto tutti:} \textbf{evitare catch blocks vuoti.} Questo perché quando accade un'eccezione non ti rendi conto di nulla. Non è ok.
@@ -468,7 +468,7 @@ Gli stream sono la classe principale del pacchetto \code{java.io}, e rappresenta
     \item Object streams: oggetti; ObjectInputStream, ObjectOutputStream
 \end{itemize}
 \subsection{Buffered streams}
-I \textbf{buffered streams} leggono dati da un'aera di memoria detta \textit{buffer}, l'API input nativa viene chiamata quando il buffer è vuoto. Per stream senza buffer, ogni richiesta I/O è gestita dal sistema operativo, perdendo in efficienza. I buffered stream compiono operazioni su stream di byte e caratteri, quindi solitamente wrappano byte/character streams.
+I \textbf{buffered streams} leggono dati da un'area di memoria detta \textit{buffer}, l'API input nativa viene chiamata quando il buffer è vuoto. Per stream senza buffer, ogni richiesta I/O è gestita dal sistema operativo, perdendo in efficienza. I buffered stream compiono operazioni su stream di byte e caratteri, quindi solitamente wrappano byte/character streams.
 \subsection{Espressioni regolari}
 \textit{Prima o poi le dovrai imparare, eh.} Le \textbf{espressioni regolari} forniscono un metodo "scientifico" per identificare stringhe testuali utilizzando \textit{wild cards}. \textit{Skipperò le spiegazioni, ma se vi interessa consiglio \href{https://regex101.com}{Regex101}}.
 \subsection{Scanner}
@@ -501,7 +501,7 @@ Un processo è un programma eseguibile, con il suo spazio di indirizzi, che eseg
     \item \code{wait()}, \code{notify()}, \code{notifyAll()} sono ereditati da Object 
 \end{itemize}
 \subsection{Variabili volatile}
-La keywork \code{volatile} tenta di risolvere i problemi di visibilità di variabili. Tutte le modifiche su variabili volatili sono scritte immediatamente in memoria, tutte le letture sono svolte dalla memoria principale. Per questo, le variabili \code{volatile} sono più costose per la CPU. L'accesso a variabili volatili previene il riordinamento delle istruzioni, che viene normalmente svolto per migliorare le performance. 
+La keyword \code{volatile} tenta di risolvere i problemi di visibilità di variabili. Tutte le modifiche su variabili volatili sono scritte immediatamente in memoria, tutte le letture sono svolte dalla memoria principale. Per questo, le variabili \code{volatile} sono più costose per la CPU. L'accesso a variabili volatili previene il riordinamento delle istruzioni, che viene normalmente svolto per migliorare le performance. 
 \subsection{Problemi di atomicità}
 Un esempio: \code{i++} sembra un'istruzione atomica, ma è in realtà composta da tre operazioni: lettura, modifica, scrittura. C'è quindi un problema quando diversi thread lavorano contemporaneamente sulle stesse risorse. 
 \subsection{Synchronized methods}
@@ -518,19 +518,19 @@ Le classi oggetto atomiche forniscono metodi \textbf{atomici}, quindi le loro is
 \subsection{Classi principali della collection Concurrent}
 \begin{itemize}
     \item \code{CopyOnWriteArrayList()} è un'implementazione backed-up della copy on write array
-    \item \code{CopyOnwriteArraySet()} come sopra ma con set
+    \item \code{CopyOnWriteArraySet()} come sopra ma con set
     \item \code{ConcurrentHashMap()} è un'implementazione ad alta concorrenza, alta performance, backed up da un'hash table
     \item \code{LinkedBlockingQueue}, \code{ArrayBlockingQueue}, \code{PriorityBlockingQueue} attendono i dati 
-    \item \code{DelayQueue} è una queue bloccante di elementi in ritardo, dove un elemento può essere preso solo dopo la scadenza del ritardo
+    \item \code{DelayQueue} è una queue bloccante di elementi ritardati, dove un elemento può essere preso solo dopo la scadenza del ritardo
     \item \code{SynchronousQueue} è una coda bloccante in cui ogni inserimento attende una rimozione da un altro thread
 \end{itemize}
 \textit{Chiedo scusa per la poca chiarezza di quest'ultima subsection. Non ci si capisce un cazzo.}
 
 \section{J13 - Sockets}
-I \textbf{socker} forniscono un'interfaccia per programmare reti sul layer di trasporto, con un utilizzo simile all'I/O da file. L'utilizzo è indipendente dal linguaggio di programmazione. 
-Distinguiamo tra TCP e UDP, con le loro caratteristiche: TCP è affidabile, ordinato, bidirezionale, UDP \textit{è una merda.} Il comportamento normale di un server con TCP è il seguente: viene eseguito su un computer specifico, ha un socker collegato ad una porta specifica, rimane in attesa di richieste di connessione, le accetta, e crea un nuovo socker per la connessione su un'altra porta. In Java, per server/client, è sufficiente creare un socker, creare gli stream I/O, comunicare, chiudere il socket. 
-\subsection{Socker su UDP}
-I socker su UDP non necessitano di un \textit{socket di benvenuto}, non hanno streams ma inviano pacchetti contenenti byte da estrarre. 
+I \textbf{socket} forniscono un'interfaccia per programmare reti sul layer di trasporto, con un utilizzo simile all'I/O da file. L'utilizzo è indipendente dal linguaggio di programmazione. 
+Distinguiamo tra TCP e UDP, con le loro caratteristiche: TCP è affidabile, ordinato, bidirezionale, UDP \textit{è una merda.} Il comportamento normale di un server con TCP è il seguente: viene eseguito su un computer specifico, ha un socket collegato ad una porta specifica, rimane in attesa di richieste di connessione, le accetta, e crea un nuovo socket per la connessione su un'altra porta. In Java, per server/client, è sufficiente creare un socket, creare gli stream I/O, comunicare, chiudere il socket. 
+\subsection{Socket su UDP}
+I socket su UDP non necessitano di un \textit{socket di benvenuto}, non hanno streams ma inviano pacchetti contenenti byte da estrarre. 
 \subsection{Oggetti}
 Per inviare oggetti è sufficiente utilizzare degli ObjectInputStream/ObjectOutputStream. 
 \subsection{Eccezioni}

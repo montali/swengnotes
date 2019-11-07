@@ -250,11 +250,11 @@ Alcuni esempi:
     \item \textbf{@Target:} indica il tipo di item a cui un'annotazione può essere applicata
 \end{itemize}
 \subsection{Retention Policies}
-Abbiamo più tipi di retention policies:
+La retention policy definisce quando le annotazioni verranno scartate. Abbiamo più tipi di retention policies:
 \begin{itemize}
-    \item RetentionPolicy.\textbf{SOURCE}: permette, ad esempio, la creazione di file sorgente addizionali durante la compilazione
-    \item RetentionPolicy.\textbf{CLASS}: permette, ad esempio, l'uso di librerie per la manipolazione del bytecode che accedono al bytecode e modificano classi esistenti o ne generano dinamicamente
-    \item RetentionPolicy.\textbf{RUNTIME}: permette l'accesso alle annotazioni tramite Java reflection, può essere usata per dare istruzioni al programma associato
+    \item RetentionPolicy.\textbf{SOURCE}: le annotazioni verranno tenute nella source, e scartate durante la compilazione. Permette, ad esempio, la creazione di file sorgente addizionali durante la compilazione
+    \item RetentionPolicy.\textbf{CLASS}: le annotazioni verranno tenute durante la compilazione, ma scartate per il runtime. Permette, ad esempio, l'uso di librerie per la manipolazione del bytecode che accedono al bytecode e modificano classi esistenti o ne generano dinamicamente
+    \item RetentionPolicy.\textbf{RUNTIME}: le annotazioni saranno disponibili anche alla JVM. Permette l'accesso alle annotazioni tramite Java reflection, può essere usata per dare istruzioni al programma associato
 \end{itemize}
 \section{J6 - Javadoc}
 \textbf{Javadoc} genera documentazione di codice Java prendendo in input dei file sorgente. L'output generato è un set di file HTML, più pacchetti e file di anteprima. 

@@ -87,7 +87,7 @@ Il \textbf{garbage collector} controlla la memoria e trova quali oggetti non son
 \subsection{Build tools}
 I \textbf{build tools} vengono utilizzati per compilare e costruire immagini software dal source code. Richiedono due componenti: un build script che definisce le task da eseguire, ed un eseguibile che lo processa. Gli script dovrebbero essere \gls{agnostic}.
 \subsubsection{Maven}
-\textbf{Maven} è un tool di software project management che fornisce un setup di progeto semplice, con dipendenze e management di release e distribuzione. Incoraggia l'uso di una repository centrale di JAR e dipendenze. Permette la scrittura di plugin. I build files sono scritti in XML utilizzando il formato \textit{Project Object Model} (POM), i pom.xml.
+\textbf{Maven} è un tool di software project management che fornisce un setup di progetto semplice, con dipendenze e management di release e distribuzione. Incoraggia l'uso di una repository centrale di JAR e dipendenze. Permette la scrittura di plugin. I build files sono scritti in XML utilizzando il formato \textit{Project Object Model} (POM), i pom.xml.
 \subsection{Static Analysis Tools}
 Questi tool possono trovare bug ispezionando il codice senza eseguirlo. Alcuni esempi sono Checkstyle, PMD, SpotBugs. Si overlappano in parte, ma si distinguono tra loro. Idealmente, andrebbero usati tutti. 
 \begin{itemize}
@@ -282,7 +282,7 @@ Una \textbf{wildcard} permette di usare più di un tipo di elementi all'interno 
 Alcuni tipi di wildcard:
 \begin{itemize}
     \item Unknown wildcards List$<$?$>$: identifica una lista di tipo sconosciuto. È possibile la sola lettura, gli elementi vengono trattati come oggetti.
-    \item Extend wildcards List $<$? extends A$>$: identifica una lista di elementi che sono sottoclassi di A. È possibile leggere (trattando gli elementi come instanze di A) ma non aggiungere.
+    \item Extend wildcards List $<$? extends A$>$: identifica una lista di elementi che sono sottoclassi di A. È possibile leggere (trattando gli elementi come istanze di A) ma non aggiungere.
     \item Super wildcards List $<$? super A$>$: identifica elementi della classe A o superclassi di A. È sicuro inserire istanze di A o sottoclassi, ma si possono leggere gli elementi solo come oggetti.
 \end{itemize}
 \subsection{Generic Class Implementation}

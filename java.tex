@@ -408,7 +408,7 @@ Spesso le lambda expressions chiamano metodi esistenti. Non è però conveniente
     \item Costruttore: \code{ClassName::new}
 \end{itemize}
 \subsection{Streams}
-Gli \textbf{stream} sono simili a collections, ma non mantengono i dati. Sono pensati per lavorare bene con le lambda expressions. Sono immutabili, ma processandoli ne possiamo ottenere nuovi. Muovono elementi lungo una sequenza di step di processo, detti \textit{stream pipeline}, formato da chiamate \textit{chaining} a metodi. La pipeline inizia con una sorgente di dati, esegue operazione intermedie, e conclude con un'operazione finale. Le operazione intermedie sono \textit{lazy}: non vengono eseguite fintanto che un'operazione da terminale lo richiede.
+Gli \textbf{streams} sono simili a collections, ma non mantengono i dati. Sono pensati per lavorare bene con le lambda expressions. Sono immutabili, ma processandoli ne possiamo ottenere nuovi. Muovono elementi lungo una sequenza di step di processo, detti \textit{stream pipeline}, formato da chiamate \textit{chaining} a metodi. La pipeline inizia con una sorgente di dati, esegue operazione intermedie, e conclude con un'operazione finale. Le operazione intermedie sono \textit{lazy}: non vengono eseguite fintanto che un'operazione da terminale lo richiede.
 \subsubsection{Produrre streams}
 Ci sono vari metodi per produrre stream:
 \begin{itemize}
@@ -418,7 +418,7 @@ Ci sono vari metodi per produrre stream:
     \item Ogni stream può essere convertito in uno stream parallelo usando il metodo \code{parallel()}
 \end{itemize}
 \subsubsection{Trasformare streams}
-Abbiamo inoltre metodi di trasformazione degli stream:
+Abbiamo inoltre metodi di trasformazione degli streams:
 \begin{itemize}
     \item Il metodo \code{map} trasforma uno stream applicandovi una funzione 
     \item Il metodo \code{filter} trasforma uno stream eliminando gli elementi che non soddisfano una condizione
@@ -460,7 +460,7 @@ Se il codice di un metodo può raisare \textit{(scusate)} eccezioni ma non vuole
 \subsection{File class}
 La classe \textbf{File} crea oggetti che forniscono una rappresentazione astratta di file/directory e ne supportnao la gestione. Supporta l'accesso agli attributi di file/directory, l'eliminazione, la rinomina, l'esplorazione di cartelle, i permessi.
 \subsection{Streams}
-Gli stream sono la classe principale del pacchetto \code{java.io}, e rappresentano sorgenti di input e destinazioni di output. Rappresentano diversi tipi di sorgenti/destinazioni, e supportano diversi tipi di dati. Possono passare dati ma anche manipolarli, e rappresentano la sequenza di dati letti/scritti da un programma. Due classi base: \code{InputStream} e \code{OutputStream}. In generale, si processano quattro tipi di dati:
+Gli streams sono la classe principale del pacchetto \code{java.io}, e rappresentano sorgenti di input e destinazioni di output. Rappresentano diversi tipi di sorgenti/destinazioni, e supportano diversi tipi di dati. Possono passare dati ma anche manipolarli, e rappresentano la sequenza di dati letti/scritti da un programma. Due classi base: \code{InputStream} e \code{OutputStream}. In generale, si processano quattro tipi di dati:
 \begin{itemize}
     \item Byte streams: 8-bit bytes; FileInputStream, FileOutputStream
     \item Character streams: 16-bit Unicode; FileReader, FileWriter
@@ -528,7 +528,7 @@ Le classi oggetto atomiche forniscono metodi \textbf{atomici}, quindi le loro is
 
 \section{J13 - Sockets}
 I \textbf{socket} forniscono un'interfaccia per programmare reti sul layer di trasporto, con un utilizzo simile all'I/O da file. L'utilizzo è indipendente dal linguaggio di programmazione. 
-Distinguiamo tra TCP e UDP, con le loro caratteristiche: TCP è affidabile, ordinato, bidirezionale, UDP \textit{è una merda.} Il comportamento normale di un server con TCP è il seguente: viene eseguito su un computer specifico, ha un socket collegato ad una porta specifica, rimane in attesa di richieste di connessione, le accetta, e crea un nuovo socket per la connessione su un'altra porta. In Java, per server/client, è sufficiente creare un socket, creare gli stream I/O, comunicare, chiudere il socket. 
+Distinguiamo tra TCP e UDP, con le loro caratteristiche: TCP è affidabile, ordinato, bidirezionale, UDP \textit{è una merda.} Il comportamento normale di un server con TCP è il seguente: viene eseguito su un computer specifico, ha un socket collegato ad una porta specifica, rimane in attesa di richieste di connessione, le accetta, e crea un nuovo socket per la connessione su un'altra porta. In Java, per server/client, è sufficiente creare un socket, creare gli streams I/O, comunicare, chiudere il socket. 
 \subsection{Socket su UDP}
 I socket su UDP non necessitano di un \textit{socket di benvenuto}, non hanno streams ma inviano pacchetti contenenti byte da estrarre. 
 \subsection{Oggetti}

@@ -3,6 +3,9 @@ Riassunti per gli esami teorici del corso di Ingegneria del Software, prof. Pogg
 Qualunque correzione/aggiunta è super ben accetta. Per farlo, forkate il progetto, fate le modifiche necessarie, e aprite una pull request.
 Grazie!
 
+## Sans Forgetica
+Per ogni file vi è anche una versione realizzata con il font Sans Forgetica, dategli una chance. NB: per motivi implementativi, qui manca il glossario.
+
 ## Compilazione
 Siccome questi riassunti utilizzano il package `glossaries`, è necessario compilare il tex con:
 ```

@@ -541,6 +541,12 @@ Vi sono vari tipi di eccezioni possibili:
     \item \code{SecurityException} quando è presente un security manager
     \item \code{ClassNotFoundException} leggendo un oggetto
 \end{itemize}
+\section{J14 - Reflection}
+La \textbf{reflection} è un processo tramite cui un software può osservarsi e modificarsi durante l'esecuzione. In Java permette di scoprire informazioni riguardanti campi, metodi, costruttori, classi, e operare sulle istanze stesse.
+Delle classi possiamo scoprire il qualified name, interfacce e superclassi, costruttori pubblici, campi e metodi, annotazioni. Di un costruttore possiamo ottenere il nome, la classe dichiarante, modificatori, parametri, annotazioni. Per i modifier, utilizziamo i metodi \code{is\[modifier\]}. Dei campi possiamo ottenere nome, tipo, classe dichiarante, modificatori, annotazioni. Possiamo creare istanze di classi/costruttori, gettare/settare valori, chiamare metodi. Gli scopi della reflection sono svariati: binding dinamico, browser di classe, visual development, debuggers, test tools. Ha però dei lati negativi: peggiora le performance e la sicurezza, espone parti interne, è difficile da manutenere.
+
+
+
 
 
 \printglossary

@@ -4,7 +4,7 @@ Qualunque correzione/aggiunta è super ben accetta. Per farlo, forkate il proget
 Grazie!
 
 ## Sans Forgetica
-Per ogni file vi è anche una versione realizzata con il font Sans Forgetica, dategli una chance. NB: per motivi implementativi, qui manca il glossario.
+Per ogni file vi è anche una versione realizzata con il font [Sans Forgetica](https://sansforgetica.rmit/), dategli una chance. NB: per motivi implementativi, qui manca il glossario.
 
 ## Compilazione
 Siccome questi riassunti utilizzano il package `glossaries`, è necessario compilare il tex con:

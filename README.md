@@ -1,4 +1,7 @@
 # Riassunti di Ingegneria del Software
+>By the way, ALL software projects are done by iterative prototyping.
+>Some companies call their prototypes "releases", that's all.
+
 Riassunti per gli esami teorici del corso di Ingegneria del Software, prof. Poggi, A.A. 2019-20.
 Qualunque correzione/aggiunta è super ben accetta. Per farlo, forkate il progetto, fate le modifiche necessarie, e aprite una pull request.
 Grazie!

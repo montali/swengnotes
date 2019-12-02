@@ -7,6 +7,7 @@ Qualunque correzione/aggiunta è super ben accetta. Per farlo, forkate il proget
 Grazie!
 ## Useful resources
 * [Refactoring Guru - Design patterns](https://refactoring.guru/design-patterns)
+* [From STUPID to SOLID code!](https://williamdurand.fr/2013/07/30/from-stupid-to-solid-code/)
 
 ## Sans Forgetica
 Per ogni file vi è anche una versione realizzata con il font [Sans Forgetica](https://sansforgetica.rmit/), dategli una chance. NB: per motivi implementativi, qui manca il glossario.

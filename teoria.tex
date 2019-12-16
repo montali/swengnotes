@@ -462,6 +462,173 @@ Abbiamo svariati tipi di constraint:
     \item \textbf{Guard}: deve essere vero prima che una transazione possa accadere, quindi è una specie di pre-condition
 \end{itemize}
 La sintassi è semplice: \code{[termine del constraint][nome del constraint]:[espressione booleana]}. I termini per i constraint suddetti sono \code{inv}, \code{pre}, \code{post}, \code{pre/post…implies oclInState}.
+\section{T13 - Design Process}
+Il \textbf{design process} è il processo che permette di trovare come implementare il sistema, partendo dai requirements e tenendo conto dei \textbf{design general principles}. L'obiettivo è un \textbf{modello} ragionevole e realizzabile. 
+\subsection{Linee guida}
+\begin{itemize}
+    \item Esibire un'organizzazione modulare che fa un uso intelligente di controllo tra i componenti
+    \item Partizionare logicamente in componenti che realizzano compiti
+    \item Descrivere sia dati, che procedure 
+    \item Arrivare ad interfacce che riducono la complessità
+    \item Derivare utilizzando un metodo ripetibile che fa uso delle informazioni dei requirements 
+\end{itemize}
+Un buon design deve implementare tutti i requirement espliciti del modello di analisi, e tutti quelli impliciti desiderati dal cliente. Dev'essere leggibile e comprensibile, sia per chi scrive codice, sia per chi lo testa e supporta. In generale, dovrebbe dare un'immagine generale del software, indicandone i dati, i domini funzionali e \textit{behavioral} dal punto di vista dell'implementazione. 
+\subsection{Stadi del design process}
+Il primo passo è la \textbf{comprensione del problema}, che richiede di osservare il problema da punti di vista differenti, per riconoscere i design requirements. Il secondo è \textbf{identificare una o più soluzioni}, valutando quelle possibili e scegliendo la più appropriata, in base all'esperienza del designer ed alle risorse disponibili. Il design process è un \textbf{processo iterativo ed incrementale}. 
+\subsection{Design as series of decisions}
+Il design può essere visto come una serie di decisioni, scomponendolo in più sottoproblemi, ognuno dei quali presentante diverse soluzioni, tra cui bisogna decidere. 
+Alcuni tradeoff possono essere:
+\begin{itemize}
+    \item Funzionalità vs. Usabilità
+    \item Costo vs. Robustezza 
+    \item Efficienza vs. Portabilità 
+    \item Velocità di sviluppo vs. Funzionalità 
+    \item Costo vs. Riutilizzabilità 
+    \item Compatibilità col vecchio vs. Leggibilità 
+\end{itemize}
+
+Gli step per le priority based decision sono:
+\begin{enumerate}
+    \item Elencare le alternative possibili
+    \item Elencare i pro e i contro di ogni alternativa, rispetto agli obiettivi e alle priorità 
+    \item Determinare se alcune alternative impediscono il raggiungimento degli obiettivi 
+    \item Scegliere l'alternativa che permette di coprire più obiettivi 
+    \item Aggiustare le priorità per le decisioni future
+\end{enumerate}
+Alcuni strumenti utilizzabili durante questo processo sono la \textit{concept table}, la \textit{concept fan}, la \textit{decision matrix}.
+\subsubsection{Approcci}
+Abbiamo tre possibili tipi di approccio:
+\begin{itemize}
+    \item Approccio \textbf{top-down}: prima, si \textit{designa} la struttura di alto livello del sistema, poi si prendono le decisioni man mano più specifiche 
+    \item Approccio \textbf{bottom-up}: qui, prima si decidono le utilities di basso livello riutilizzabili, poi il modo di integrarle insieme 
+    \item Approccio \textbf{mixed}: si utilizza il \textit{top-down} per decidere la struttura, ed il \textit{bottom-up} per i componenti riutilizzabili 
+\end{itemize}
+\subsubsection{Attività, rischi e obiettivi}
+Distinguiamo tre attività nel design:
+\begin{itemize}
+    \item Design dell'architettura, dove si decidono i sottosistemi ed i componenti e la loro interazione 
+    \item USer interface design 
+    \item Component/class design, dove si decidono le strutture dati ed i meccanismi computazionali
+\end{itemize}
+Il design è però un'attività che richiede notevole esperienza, e pertanto un solo ingegnere non dovrebbe mai tentare il design di sistemi grandi, ma piuttosto studiare quelli di altri sistemi. Infatti, un cattivo design potrebbe portare a manutenzione costosa, mentre un buon design dovrebbe essere tenuto in conto per tutta la vita del software, in modo flessibile, documentato, e con una buona gestione delle modifiche. 
+In conclusione, un buon design è \textbf{flessibile}, \textbf{dettagliato al punto giusto}, \textbf{ben documentato}, e con \textbf{un buon change management}.
+\section{T14 - Design concepts}
+Un sistema software ha diversi, possibili, problemi: 
+\begin{itemize}
+    \item \textbf{Rigidità}: quando il codice è difficile da cambiare, il management è riluttante al cambiamento 
+    \item \textbf{Fragilità}: quando anche cambiamenti minimali creano effetti a cascata, rompendo il codice in punti inaspettati 
+    \item \textbf{Immobilità}: il codice è così intricato da rendere impossibile il riutilizzo di componenti, che sarebbe più costoso della realizzazione da zero
+    \item \textbf{Viscosità}: molto più semplice l'hack del mantenimento del design originale
+\end{itemize}
+\subsection{Software design concepts}
+\subsubsection{Abstraction}
+L'\textbf{astrazione} permette di focalizzarsi su aspetti importanti di un problema ad un livello particolare, senza l'offuscamento dovuto a dettagli non importanti. Permette la descrizione di un sistema come struttura a livelli 
+\subsubsection{Refinement} 
+Il raffinamento \textit{(?)} è un processo top-down dove, in ogni passo, una o più istruzioni sono decomposte in istruzioni più dettagliate, partendo da una specifica di alto livello e dividendola in sottoproblemi ricorsivamente ,finché i sottoproblemi non hanno soluzioni immediate. Questo non è appropriato per sistemi di larga scala o distribuiti, ma piuttosto per il design di metodi. 
+\subsubsection{Information hiding}
+Il design richiede una serie di decisioni, e per ognuna di queste, dobbiamo chiederci chi deve sapere e chi no. L'information hiding è strettamente legato a:
+\begin{itemize}
+    \item \textbf{Abstraction}: se qualcosa è nascosto, l'utente può astrarre da quell'informazione \textit{Scusate.}
+    \item \textbf{Coupling}: un segreto diminuisce il coupling tra un modulo ed il suo environment 
+    \item \textbf{Cohesion}: il segreto è ciò che unisce le parti del modulo 
+\end{itemize}
+\subsubsection{Modularity}
+La modularità è basata sull'integrazione di componenti separati in moduli, per risolvere requirements di problemi. 
+È basata sull'uso di unità linguistiche modulari, poche interfacce semplici ed esplicite, offuscamento delle informazioni. Un metodo di design può essere detto modulare solo se supporta:
+\begin{itemize}
+    \item \textbf{Decomposability}: un problema software può essere diviso in un piccolo numero di piccoli sottoproblemi connessi da una struttura semplice, ed abbastanza indipendenti da permettere lavoro separato su ogni componente. 
+    \item \textbf{Composability}: alcuni elementi software possono essere combinati tra loro per produrre nuovi sistemi, possibilmente in ambienti diversi da quello di sviluppo 
+    \item \textbf{Understandability}: un lettore umano può comprendere ogni modulo senza dover conoscere gli altri, o conoscerne una minima parte 
+    \item \textbf{Continuity}: una piccola modifica nella specifica modificherà un solo modulo, o una minima parte 
+    \item \textbf{Protection}: l'effetto di una condizione anormale durante l'esecuzione coinvolgerà un solo modulo, o verrà propagata ad una minima parte 
+\end{itemize}
+I principi per il design modulare sono: \textbf{linguistic modular units} (i moduli devono corrispondere alle unità del linguaggio, come pacchetti o moduli), \textbf{poche interfacce}, \textbf{poco scambio di informazioni tra moduli}, \textbf{interfacce esplicite} (se due moduli comunicano, dev'essere ovvio), \textbf{information hiding}(tutte le informazioni di un modulo dovrebbero essere private, se non specificatamente dichiarato il contrario, e per l'accesso bisogna utilizzare interfacce). 
+\subsubsection{Cohesion}
+La coesione misura la \textit{chiusura} di una relazione tra elementi di un componente/classe. Una coesione forte è desiderabile perché semplifica le correzioni, le modifiche, le estensioni, riduce il testing e promuove il riutilizzo. 
+Abbiamo più livelli di coesione (dal più basso al più alto):
+\begin{itemize}
+    \item \textbf{Coincidental}: gli elementi non hanno relazioni ma sono uniti per convenienza
+    \item \textbf{Logical}: elementi che svolgono funzioni simili (input simile, error handling)
+    \item \textbf{Temporal}: elementi che sono attivati allo stesso tempo e hanno avvio e fine comuni 
+    \item \textbf{Procedural}: elementi che compongono una singola sequenza di controllo 
+    \item \textbf{Communicational}: elementi che operano sullo stesso input o producono lo stesso output
+    \item \textbf{Sequential}: elementi che condividono o operano sugli stessi dati (l'output di uno è l'input dell'altro)
+    \item \textbf{Functional}: elementi che sopperiscono a un singolo functional requirement
+    \item \textbf{Object}: solo operazioni tra oggetti permettono modifiche o ispezioni agli oggetti 
+\end{itemize}
+\subsubsection{Coupling}
+Misura l'interconnessione tra moduli. Quando è debole, i moduli sono fortemente indipendenti. Livelli di coupling dal più debole al più forte:
+\begin{itemize}
+    \item \textbf{No direct}: nessuna dipendenza
+    \item \textbf{Data}: solo i dati necessari sono passati come argomenti
+    \item \textbf{Stamp}: le strutture dati sono passate per lista di argomenti e solo una parte è utilizzata 
+    \item \textbf{Control}: si interfaccia passando flags e altri parametri 
+    \item \textbf{External}: è legato a device o device drivers
+    \item \textbf{Premature}: utilizza numeri o altri valori attraverso il programma 
+    \item \textbf{Content}: modifica gli statement/dati dell'altro modulo o si ramifica nel mezzo di un modulo
+\end{itemize}
+Il tradeoff qui è:
+\begin{itemize}
+    \item \textbf{Coupling elevato}: i componenti sono difficili da comprendere autonomamente, le modifiche causano problemi negli altri moduli, il riutilizzo è scoraggiato. In compenso, migliori performance 
+    \item \textbf{Coupling ridotto}: aumenta i costi in performance, ma è più veloce da sviluppare e mantenere.
+\end{itemize}
+\section{T15 - Object oriented design principles}
+Illustriamo in questa lezione i principi \textbf{SOLID}.
+\subsection{Principi dell'Object-Oriented Design}
+\subsubsection{SRP - Single Responsibility Principle}
+Il principio di singola responsabilità afferma che una classe deve avere una sola ragione di cambiare. Le modifiche ai requirements solitamente si mappano sulle responsabilità. Più responsabilità equivalgono a più probabilità di cambiare. Le responsabilità nella stessa classe sono coupled.
+Tante classi con responsabilità distinte equivalgono a un design più flessibile. 
+\begin{center}
+    \textit{In programming, the Single Responsibility Principle states that every module or class should have responsibility over a single part of the functionality provided by the software.}
+\end{center}
+\subsubsection{OCP - Open Closed Principle}
+Un modulo o componente dev'essere \textbf{aperto verso l'estensione}, ma \textbf{chiuso verso la modifica}. In questo modo, si possono aggiungere nuovi comportamenti, ma le modifiche non sono richieste. Ogni modifica può introdurre bug e richiede lavoro addizionale. Al contrario, scrivere nuove classi più difficilmente genera problemi. 
+\begin{center}
+    \textit{In programming, the open/closed principle states that software entities (classes, modules, functions, etc.) should be open for extensions, but closed for modification.
+    If you have a general understanding of OOP, you probably already know about polymorphism. We can make sure that our code is compliant with the open/closed principle by utilizing inheritance and/or implementing interfaces that enable classes to polymorphically substitute for each other.}
+\end{center}
+\subsubsection{Liskov Substitution Principle}
+Le subclasses dovrebbero essere sostituibili dalle loro base classes: le classi derivate devono onorare i contratti delle loro classi base, estendendone le funzionalità senza modificarle. Altrimenti, le classi derivate producono effetti indesiderati quando usate con moduli esistenti. 
+\begin{center}
+    \textit{More generally it states that objects in a program should be replaceable with instances of their subtypes without altering the correctness of that program.}
+\end{center}
+\subsubsection{ISP - Interface Segregation Principle}
+Avere multiple interfacce client-specific è molto meglio di averne una generica. In questo modo, le interfacce sono semplici e focalizzate. Per questo è consigliabile un refactor delle interfacce grandi in più sottointerfacce, in modo da non forzare il client a dipendere da cose di cui non ha bisogno. 
+\begin{center}
+    \textit{In programming, the interface segregation principle states that no client should be forced to depend on methods it does not use.
+    Put more simply: Do not add additional functionality to an existing interface by adding new methods.
+    Instead, create a new interface and let your class implement multiple interfaces if needed.}
+\end{center}
+\subsubsection{DIP - Dependency Inversion Principle}
+I moduli di alto livello non dovrebbero dipendere da moduli di basso livello. Entrambi dovrebbero dipendere da astrazioni. Le astrazioni non devono dipendere da dettagli, ma i dettagli dovrebbero dipendere da astrazioni. Bisognerebbe inoltre evitare di derivare, associare o dipendere da classi concrete o componenti. 
+\subsection{Principi di package cohesion}
+\subsubsection{REP - Release/Reuse Equivalency Principle}
+L'unità di riuso è l'unità di release: il codice non dovrebbe essere riutilizzato ricopiandolo e incollandolo. In questo modo, una modifica alla libreria originale verrebbe persa. Invece, il codice dovrebbe essere inserito tramite una release della libreria, in modo da poterla mantenere aggiornata. Un pacchetto costituito da classi riutilizzabili è più utile e riutilizzabile a sua volta. Pacchetti che non c'entrano nulla non dovrebbero essere inclusi. 
+\subsubsection{CCP - Common Closure Principle}
+Le classi che cambiano insieme, devono stare insieme: questo minimizza l'impatto delle modifiche. Le classi dovrebbero essere \textit{packaged} con coesione, indirizzando la stessa area funzionale o comportamentale, ed essendo inseparabili ed interdipendenti. 
+\subsubsection{CRP - Common Reuse Principle}
+Le classi che non sono riutilizzabili insieme non dovrebbero essere raggruppate, quelle raggruppate dovrebbero cambiare per gli stessi motivi. 
+\subsection{Package Coupling Principles}
+\subsubsection{ADP - Acyclic Dependencies Principle}
+Non bisogna permettere cicli nel grafico delle dipendenze. Non bisogna interferire con i programmatori. \textit{Sono gente cattiva.}
+\subsubsection{SDP - Stable Dependencies Principle}
+Le dipendenze tra componenti dovrebbero essere nella direzione della stabilità: un componente deve dipendere solo da componenti più stabili. Ogni volta che un pacchetto cambia, tutti i pacchetti che ne dipendono devono essere validati per assicurare che lavorino correttamente dopo la modifica. Più pacchetti dipendono da un pacchetto instabile, più grande è il danno quando cambia.
+\subsubsection{SAP - Stable Abstractions Principle}
+Un pacchetto dev'essere tanto più astratto quanto è stabile. I pacchetti astratti dovrebbero essere responsabili e indipendenti, quelli concreti irresponsabili e dipendenti. Un'architettura ideale ha la seguente struttura: pacchetti instabili in cima, pacchetti stabili alla base. 
+\subsection{Attività per un buon design}
+\begin{itemize}
+    \item \textbf{Dividi e conquista}: avere a che fare con qualcosa di grande tutto in una volta è molto più difficile di avere a che fare coi sottoproblemi. 
+    \item \textbf{Aumentare la coesione} quando possibile: un sistema con alta coesione tiene insieme cose che devono stare insieme e tiene fuori il resto
+    \item \textbf{Ridurre il coupling}, ossia le interdipendenze tra moduli
+    \item \textbf{Aumentare l'astrazione} il più possibile, allo scopo di nascondere i dettagli e ridurre la complessità
+    \item \textbf{Aumentare la riutilizzabilità} quando possibile
+    \item \textbf{Riutilizzare design e codice esistenti}
+    \item Pensare alla \textbf{flessibilità}: anticipare le modifiche future è un buon investimento a lungo termine
+    \item \textbf{Anticipare l'obsolescenza}: pianificare modifiche nella tecnologia o nell'environment del futuro 
+    \item Pensare alla \textbf{portabilità}
+    \item Pensare alla \textbf{testabilità}
+    \item Rimanere sempre sulla \textbf{difensiva}: non sappiamo mai se l'utente farà davvero ciò che deve.
+\end{itemize}
 
 
 

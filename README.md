@@ -1,7 +1,14 @@
 # Riassunti di Ingegneria del Software
+>By the way, ALL software projects are done by iterative prototyping.
+>Some companies call their prototypes "releases", that's all.
+
 Riassunti per gli esami teorici del corso di Ingegneria del Software, prof. Poggi, A.A. 2019-20.
 Qualunque correzione/aggiunta è super ben accetta. Per farlo, forkate il progetto, fate le modifiche necessarie, e aprite una pull request.
 Grazie!
+## Useful resources
+* [Refactoring Guru - Design patterns](https://refactoring.guru/design-patterns)
+* [From STUPID to SOLID code!](https://williamdurand.fr/2013/07/30/from-stupid-to-solid-code/)
+* [Object Calisthenics - Non necessario ma interessante](https://williamdurand.fr/2013/06/03/object-calisthenics)
 
 ## Sans Forgetica
 Per ogni file vi è anche una versione realizzata con il font [Sans Forgetica](https://sansforgetica.rmit/), dategli una chance. NB: per motivi implementativi, qui manca il glossario.

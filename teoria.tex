@@ -629,10 +629,304 @@ Un pacchetto dev'essere tanto più astratto quanto è stabile. I pacchetti astra
     \item Pensare alla \textbf{testabilità}
     \item Rimanere sempre sulla \textbf{difensiva}: non sappiamo mai se l'utente farà davvero ciò che deve.
 \end{itemize}
+\section{T16 - Design Patterns}
+\textit{Si, hai letto bene. Sei fottuto. \textbf{Cominciamo.}}
+\subsection{Creational Patterns}
+\subsubsection{Factory Method}
+\paragraph{Scopo}
+Il metodo Factory fornisce un'interfaccia per creare oggetti in una subclass, permettendole di modificare il tipo di oggetti creati.
+\paragraph{Problema}
+Immaginiamo di dover creare un'applicazione che gestisca un servizio di logistica. La prima versione utilizza solo trasporto su ruota, quindi la maggior parte del codice sta nella classe \code{Truck}. Dopo un po', l'app diventa popolare. Decidi di implementare anche il trasporto via mare. Aggiungere la classe \code{Ship} richiederebbe modifiche in tutto il codice. Aggiungerne altre, pure.
+\paragraph{Soluzione}
+Il metodo Factory permette di sostituire la creazione di nuovi oggetti (con \code{new}) con chiamate a un metodo factory. Gli oggetti generati da questo metodo sono detti \textbf{prodotti.} C'è un vincolo da rispettare: i prodotti devono implementare un'interfaccia comune.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{res/teoria/Factory.png}
+    \caption{Esempio generico}
+\end{figure}
+\paragraph{Applicabilità}
+\begin{itemize}
+    \item Una classe non può anticipare la classe degli oggetti da creare
+    \item Una classe delega responsabilità a delle helper subclasses
+\end{itemize}
+\subsubsection{Abstract Factory}
+\paragraph{Scopo}
+L'\textbf{abstract factory} permette di creare famiglie di oggetti related senza specificarne le classi concrete.
+\paragraph{Problema}
+Immaginiamo di voler creare un simulatore di negozio di arredamenti. Il codice consiste di classi rappresentanti 1) una famiglia di prodotti (sedia, divano, tavolo) 2) varianti di questa famiglia. 
+Serve un modo di creare oggetti in modo da matcharli con altri arredamenti della stessa famiglia. Non vogliamo inoltre modificare il codice esistente quando aggiungiamo nuovi prodotti o famiglie. 
+\paragraph{Soluzione}
+Prima di tutto, dichiariamo le interfacce di ogni distinto prodotto, avendo come sottoclassi le varianti del suddetto. In secundis, dichiariamo l'abstract factory, un'interfaccia con una lista di metodi di creazione facenti parte di una famiglia di prodotti. Questi metodi ritornano prodotti astratti. A questo punto, estendiamo l'abstract factory con le factory concrete per ogni variante. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{res/teoria/AbstractFactory.png}
+    \caption{Struttura}
+\end{figure}
+\paragraph{Applicabilità}
+Quando i client non possono anticipare gruppi di classi da istanziare.
+\subsubsection{Builder}
+\paragraph{Scopo}
+Il \textbf{builder} permette di costruire oggetti un pezzo alla volta. Il pattern permette di produrre tipologie e rappresentazioni diverse di un oggetto, utilizzando lo stesso codice di costruzione.
+\paragraph{Problema}
+Immaginiamo un oggetto complesso che richiede inizializzazioni step-by-step di molti campi e oggetti annidati. Questo porterebbe ad un gigante costruttore con molti parametri. \textit{Bella merda.} Per esempio, se avessimo un oggetto \code{House}, dovremmo costruire 4 muri, installare una porta, le finestre, un tetto. Se volessimo però qualche caratteristica in più, come un garage, dovremmo inserire un boolean tipo \code{hasGarage} nel costruttore.
+\paragraph{Soluzione}
+Il builder pattern suggerisce di estrarre il codice di costruzione dell'oggetto fuori dalla sua classe, ad oggetti detti \textbf{builders.} Possiamo andare oltre e creare una classe che chiama gli step dei builder, detta \textbf{director}, che definisce l'ordine delle chiamate, mentre i builder si occupano dell'implementazione. 
+Il director non è strettamente necessario.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{res/teoria/AbstractFactory.png}
+    \caption{Struttura}
+\end{figure}
+\paragraph{Applicabilità}
+Si applica quando l'algoritmo di creazione dell'oggetto deve essere indipendente dalle parti che lo compongono e come vengono assemblate. Insomma, quando il processo di costruzione deve permettere prodotti diversi.
+\subsubsection{Prototype}
+\paragraph{Scopo}
+Il \textbf{prototype} permette di copiare oggetti esistenti senza dover rendere il codice dipendente dalla classe effettiva.
+\paragraph{Problema}
+Immaginiamo di avere un oggetto, e volerne creare una copia esatta. Come fare? Farlo dall'esterno non è ideale: ci perderemmo tutti i dati privati! Inoltre, per fare il duplicato dobbiamo conoscere la classe concreta dell'oggetto. \textit{Not stonks.}
+\paragraph{Soluzione}
+Il prototype pattern delega il processo di clonazione all'oggetto effettivo che stiamo copiando. Dichiariamo un'interfaccia comune, tipo \code{Clonable}, che contenga il metodo \code{clone()}. In questo modo, implementando il metodo \code{clone()} in tutte le classi (saranno metodi simili) abbiamo la possibilità di clonare oggetti. Un oggetto che supporta la clonazione è detto \textit{prototype.}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{res/teoria/Prototype.png}
+    \caption{Struttura}
+\end{figure}
+\paragraph{Applicabilità}
+Il pattern è applicabile quando le classi sono specificate a runtime, per evitare di costruire gerarchie di factories parallele alle gerarchie dei prodotti. Si può utilizzare quando le istanze di oggetti possono avere un numero finito di stati.
 
+\subsubsection{Singleton}
+\paragraph{Scopo}
+Un \textbf{singleton} permette di assicurarsi che una classe abbia una sola istanza, fornendone un punto di accesso globale.
+\paragraph{Problema}
+Il singleton pattern risolve due problemi allo stesso tempo, ma \textbf{violando il Single Responsibility Principle}:
+\begin{enumerate}
+    \item Si assicura che una classe abbia una sola istanza: questo torna utile quando, ad esempio, lavoriamo su dati di una risorsa condivisa, sia essa un DB, un file...
+    \item Fornisce un punto di accesso globale alla risorsa
+\end{enumerate}
+\paragraph{Soluzione}
+Tutte le implementazioni del singleton hanno questi due step in comune:
+\begin{itemize}
+    \item Rendere il costruttore di default privato, in modo da non poter istanziare oggetti da fuori il singleton 
+    \item Creare un metodo di \code{getInstance} che faccia da costruttore. Se esiste già un'istanza la restituisce, altrimenti la crea e restituisce.
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{res/teoria/Singleton.png}
+    \caption{Struttura}
+\end{figure}
+\paragraph{Applicabilità}
+Lo utilizziamo quando è necessaria una sola istanza di una classe, che deve essere globalmente accessibile. 
 
+\subsection{Structural Patterns}
+\subsubsection{Adapter}
+\paragraph{Scopo}
+L'\textbf{adapter} permette ad oggetti con interfacce incompatibili di collaborare.
 
+\paragraph{Problema}
+Immaginiamo di star creando un'app di monitoraggio del mercato in borsa. L'app scarica i dati in XML da un'API. Ad un certo punto, vogliamo integrare un'altra API, che però restituisce dati in JSON. Potremmo cambiare questa libreria, ma sarebbe un casino. 
+\paragraph{Soluzione}
+Creiamo un adattatore, che converta l'interfaccia di un oggetto in un'altra, in modo da farla comprendere all'oggetto. Un adapter wrappa l'oggetto in modo da nasconderne la complessità: chi lo utilizza non è neanche al corrente del fatto che sia un adapter. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{res/teoria/Adapter.png}
+    \caption{Struttura}
+\end{figure}
+\paragraph{Applicabilità}
+Lo utilizziamo quando una classe esistente fornisce la funzionalità richiesta in parte, ma non implementa l'interfaccia necessaria.
+
+\subsubsection{Bridge}
+\paragraph{Scopo}
+Il \textbf{bridge} permette di splittare un grande numero di classi in due gerarchie separate, astrazione e implementazione, sviluppabili indipendentemente. 
+
+\paragraph{Problema}
+Ipotizziamo di avere una classe \code{Shape} con due subclasses: \code{Circle} e \code{Square}. Vogliamo estendere questa gerarchia per incorporare i colori, quindi inizialmente proponiamo di creare sottoclassi \code{RedCircle}, \code{BlueCircle}, \code{RedSquare}, \code{BlueSquare}. È palese che questo approccio non sia sostenibile per il futuro. 
+\paragraph{Soluzione}
+Semplicemente, facciamo diventare il colore una proprietà dell'oggetto \code{Shape}. In questo modo, switchamo da ereditarietà a composizione. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{res/teoria/Bridge.png}
+    \caption{Esempio}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{res/teoria/BridgeStructure.png}
+    \caption{Struttura}
+\end{figure}
+\paragraph{Applicabilità}
+Utilizziamo il bridge quando interfaccia ed implementazione devono variare indipendentemente. Richiede un'interfaccia comune tra gerarchie intercambiabili di classi. 
+\subsubsection{Adapter vs. Bridge}
+Entrambi sono utilizzati per nascondere dettagli implementativi. L'adapter fa lavorare insieme componenti incompatibili, mentre il bridge permette ad astrazioni ed implementazioni di variare indipendentemente.
+\subsubsection{Composite}
+\paragraph{Scopo}
+Il \textbf{composite pattern} permette di comporre oggetti in strutture ad albero e lavorare su queste strutture come oggetti individuali. 
+
+\paragraph{Problema}
+Utilizzare il composite pattern ha senso solo quando il core del software è rappresentabile da un albero. Per esempio, immaginiamo di avere due tipi di oggetti: \code{Prodotto} e \code{Scatola}. Le scatole contengono, ovviamente, più oggetti, oppure altre scatole. Potremmo tentare un approccio diretto, ma sarebbe computazionalmente \textit{una merda.}
+\paragraph{Soluzione}
+Il composite pattern suggerisce di lavorare su prodotti e scatole attraverso un'unica interfaccia, che dichiara un metodo per calcolare il costo totale. In un prodotto, restituirebbe il costo del prodotto. In una scatola, restituisce la chiamata ricorsiva a tutti i contenuti. \textit{Avete già capito dove voglio arrivare.} In questo modo, basta chiamare il metodo di calcolo sulla scatola grande e verrà chiamato ricorsivamente su tutti i nodi. \textit{Spaventosamente elegante.}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{res/teoria/Composite.png}
+    \caption{Struttura}
+\end{figure}
+\paragraph{Applicabilità}
+È utile quando vogliamo rimuovere responsabilità a singoli oggetti dinamicamente, ove l'estensione per subclasses non è pratica.
+\subsubsection{Decorator}
+\paragraph{Scopo}
+Il decorator permette di \textit{agganciare} nuovi comportamenti ad oggetti, inserendoli in oggetti \textit{wrapper} che contengono questi nuovi behaviors.
+\paragraph{Problema}
+Immaginiamo di stare lavorando ad una libreria per notifiche, che permette ad altri software di notificare gli utenti. La versione iniziale è basata sulla classe \code{Notifier} che ha pochi field, un costruttore, ed un singolo metodo \code{send()}. Questo metodo accetta un messaggio e lo invia agli utenti specificati nel costruttore. Ad un certo punto, realizzi di voler implementare altri tipi di notifiche, come messaggi Telegram o sms. Estendi quindi la classe \code{Notifier} con delle subclasses, come \code{FacebookNotifier} o \code{SMSNotifier}. Ti chiedono, però, di poterne usare più di uno alla volta, e sarebbe da idioti cominciare a fare subclasses per ogni combinazione di notificatori.
+\paragraph{Soluzione}
+L'ereditarietà, in questo caso, non è la soluzione. Ci spostiamo sulla aggregazione/composizione. Il pattern Decorator è detto anche \textbf{Wrapper}. Questo esprime chiaramente l'idea di fondo: creiamo un oggetto wrapper che contiene i metodi del \textit{target} e li chiama, però svolge operazioni che alterano il risultato, prima o dopo la chiamata. Generiamo così una struttura in cui \code{Notifier} possiede un oggetto di interfaccia \code{BaseDecorator}, che ha come subclasses i vari decorator. Generiamo così uno stack, che passiamo alla generazione di un nuovo decorator. Esso, tramite \code{super}, chiama i vari decordator della stack \textit{in salita.} L'unico decorator che effettivamente viene chiamato è sempre l'ultimo. 
+\begin{figure}[H]
+    \includegraphics[width=0.5\linewidth]{res/teoria/Decorator1.png}
+    \includegraphics[width=0.5\linewidth]{res/teoria/Decorator2.png}
+    \caption{Struttura}
+\end{figure}
+\paragraph{Applicabilità}
+Lo utilizziamo quando è utile aggiungere/rimuovere comportamenti agli oggetti \textbf{dinamicamente}, e l'estensione per subclasses non è conveniente.
+
+\subsubsection{Facade}
+\paragraph{Scopo}
+Una \textbf{facade} è un pattern che fornisce un'interfaccia semplificata ad una libreria, un framework, o qualsiasi altro set complesso di classi.
+\paragraph{Problema}
+Immaginiamo di dover far funzionare il nostro codice con un set molto grande di oggetti che appartengono ad un sofisticato framework. Dovremmo, prima di tutto, inizializzare tutti gli oggetti, tenere traccia delle dipendenze, eseguire metodi nell'ordine corretto, e via dicendo. Il funzionamento del software diventerebbe quindi molto dipendente da questo framework.
+\paragraph{Soluzione}
+Una facade è una classe che fornisce una semplice interfaccia a un sottosistema complesso che contiene molti componenti. Essa fornisce funzionalità limitate, ma sufficienti all'utilizzo specifico che serve. 
+\paragraph{Applicabilità}
+La utilizziamo per fornire un'interfaccia semplice a un sottosistema complesso, e \textit{decouplare} le classi del subsystem dal nostro software.
+\paragraph{Struttura ideale di un subsystem}
+Un buon subsystem è basato su:
+\begin{itemize}
+    \item Un'interfaccia
+    \item Oggetti di controllo
+    \item Oggetti di entità
+\end{itemize}
+E fa utilizzo di design pattern, come Adapter e Bridge.
+
+\subsubsection{Flyweight}
+\paragraph{Scopo}
+Il \textbf{flyweight} permette di ridurre lo spazio di memoria necessario al salvataggio di oggetti, salvando le parti in comune.  
+\paragraph{Problema}
+Immaginiamo di dover creare un videogioco sparatutto. Decidiamo di implementare un sistema di particelle complesso, in modo che proiettili, missili, detriti siano gestiti da oggetti. Avremmo quindi una struttura in cui ogni particella occupa molto spazio in memoria:
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{res/teoria/FlyweightProblem.png}
+    \caption{Struttura iniziale}
+\end{figure}
+\paragraph{Soluzione}
+Notiamo però che molte informazioni sono ripetute! Infatti, ad esempio, colore e sprite, che occupano moltissima memoria, contengono quasi sempre gli stessi dati. Decidiamo, allora, di salvare le informazioni comuni in una classe a parte, in modo da salvare solo il minimo indispensabile per le singole particelle. 
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{res/teoria/FlyweightSolution.png}
+    \caption{La soluzione usando il Flyweight pattern}
+\end{figure}
+\paragraph{Applicabilità}
+Utilizziamo questo pattern quando abbiamo un \textbf{grande numero di oggetti}, con costi in memoria alti, stati che possono essere estratti dall'oggetto, ed un'applicazione che non dipende dall'identità degli oggetti. 
+\subsubsection{Proxy}
+\paragraph{Scopo}
+Il \textbf{proxy} permette di avere un sostituto ad un oggetto, controllandone l'accesso da parte degli altri, e potendo eseguire operazioni prima e dopo. 
+\paragraph{Problema}
+Perché dovremmo controllare l'accesso? Per esempio, se avessimo un oggetto che usa molte risorse di sistema ma che non utilizziamo sempre, sarebbe utile avere un \textit{lazy loading}, ossia un'istanziazione solo quando necessario. 
+
+\paragraph{Soluzione}
+Creiamo quindi una classe proxy che abbia la stessa interfaccia dell'oggetto desiderato. In questo modo, agli oggetti che lo richiedono, lo passiamo al posto dell'oggetto vero e proprio. Il proxy crea quindi l'oggetto vero solo dopo la prima richiesta. Se, inoltre, volessimo filtrare i risultati ottenuti, potremmo farlo, un po' come accade in un Decorator.
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{res/teoria/Proxy.png}
+    \caption{La soluzione usando il Flyweight pattern}
+\end{figure}
+\paragraph{Applicabilità}
+Lo utilizziamo quando abbiamo necessità di \textbf{controllare l'accesso} ad un oggetto, e necessitiamo di una reference sofisticata al suddetto.
+\paragraph{Tipologie}
+Abbiamo più tipologie di proxy:
+\begin{itemize}
+    \item Virtual proxy (expensive objects) 
+    \item Cache proxy (temporary objects) 
+    \item Remote proxy (remote objects)
+    \item Protection proxy (shared objects)
+    \item Smart reference (pointer extension)
+\end{itemize}
+\subsection{Behavioral patterns}
+A volte è necessario eseguire richieste agli oggetti senza conoscenze sull'operazione richiesta o il destinatario della stessa. Un esempio possono essere le librerie grafiche per bottoni e menù, che non implementano l'azione ma passano la richiesta. I behavioral patterns si occupano di questo: gestiscono l'assegnamento di responsabilità tra oggetti.
+\subsubsection{Chain of responsibility}
+\paragraph{Scopo}
+La \textbf{chain of responsibility} permette di passare richieste attraverso una catena di \textit{handlers}. Quando riceve una richiesta, ogni handler decide se processarla o passarla al prossimo handler della catena.
+\paragraph{Problema}
+Immaginiamo di lavorare a un sistema di ordini online. Vogliamo restringere l'accesso al sistema, in modo che solo gli utenti autenticati possano ordinare. Vogliamo inoltre degli amministratori, che possano vedere tutti gli ordini. Decidiamo che questi controlli devono essere fatti in sequenza: se l'autenticazione fallisce, non è necessario fare altre verifiche. Col tempo, si aggiungono altre verifiche: un sanitizing dei dati, una verifica degli IP, un motore di caching. Ad ogni verifica aggiunta, il codice diventa un porcilaio.
+\paragraph{Soluzione}
+Trasformiamo quindi queste verifiche in \textit{handlers}: ognuna avrà un metodo \code{check}, ed un campo per il prossimo handler della catena. Ad ogni richiesta, l'handler eseguirà le sue verifiche: se è tutto ok, passerà la richiesta al prossimo handler, altrimenti fermerà il tutto. È fondamentale che tutti gli handler implementino una stessa interfaccia. 
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{res/teoria/Handler.png}
+    \caption{La soluzione}
+\end{figure}
+\paragraph{Applicabilità}
+Utilizziamo questo pattern quando più di un oggetto deve eseguire un comando, l'handler non è conosciuto in anticipo e non può ssere determinato automaticamente.
+\subsubsection{Command}
+\paragraph{Scopo}
+Il \textbf{command} trasforma una richiesta in un oggetto \textit{stand-alone} che contiene tutte le informazioni che la riguardano. Questo pattern può essere utilizzato per \textit{decouplare} i boundary e control objects.
+\paragraph{Problema}
+Immaginiamo di lavorare ad un software di text editing. Vogliamo creare una toolbar che contenga tasti per le operazioni più importanti, con una classe \code{Button}. Cominciamo a creare subclasses per ogni bottone necessario: \code{OKButton}, \code{SaveButton}, \code{ApplyButton}, ed ogni tasto che si aggiunge, \textit{la nostra voglia di vivere cala.} Dev'esserci un modo più furbo.
+\paragraph{Soluzione}
+Estraiamo i dati della richiesta tramite un oggetto dall'interfaccia \code{Command}, che avrà come implementazioni i vari tipi di comando possibili, aventi un solo metodo \code{execute}. In questo modo, ogni bottone chiamerà l'\code{execute} del suo \code{Command}, ma non solo: i comandi potrebbero anche essere chiamati da scorciatoie da tastiera!
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{res/teoria/Handler.png}
+    \caption{Soluzione usando un Command}
+\end{figure}
+\paragraph{Applicabilità}
+Lo utilizziamo per parametrizzare oggetti con un'azione da eseguire, specificando le queue di azioni ed eseguire richieste in tempi diversi. Supportiamo così l'undo/redo.
+\subsubsection{Interpreter}
+\paragraph{Scopo}
+L'\textbf{interpreter}, dato un linguggio, definisce una rappresentazione per la sua grammatica ed un modo di interpretarne le frasi. Mappa un dominio ad un linguaggio, il linguaggio ad una grammatica, e la grammatica ad un design object-oriented gerarchico.
+\paragraph{Problema}
+Abbiamo una classe di problemi appartenenti ad un dominio ben definito. Se il dominio è caratterizzato da un linguaggio, il problema può essere risolto tramite un interprete. 
+\paragraph{Soluzione}
+Modelliamo il dominio con una grammatica ricorsiva ad albero, in cui ogni regola è un nodo o una foglia. 
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{res/teoria/Interpreter.png}
+    \caption{Struttura di un interpreter}
+\end{figure}
+\paragraph{Applicabilità}
+Utilizzabile quando abbiamo un linguaggio facilmente mappabile con un albero, con grammatica semplice ed efficienza non importante.
+\subsubsection{Iterator}
+\paragraph{Scopo}
+L'\textbf{iterator} permette di attraversare gli elementi di una colleciton senza esporne le logiche di rappresentazione.
+\paragraph{Problema}
+Creiamo un nostro oggetto di collection per salvare dati, con una struttura \textit{cazzutissima} ed ultra segreta, che ci permetterà di diventare milionari grazie all'intelligentissimo metodo di esplorazione dei dati che ho. Abbiamo ora un problema: non vogliamo esporre le logiche con cui esploriamo la collection. 
+\paragraph{Soluzione}
+Estraiamo l'esplorazione della collection tramite un oggetto \textit{iterator}. Potremmo addirittura avere più iterators, che implementino un'interfaccia costituita da: un metodo \code{getNext}, un metodo \code{hasNext}, ed un campo che salvi l'elemento corrente. 
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{res/teoria/Iterator.png}
+    \caption{Struttura di un iterator multiplo}
+\end{figure}
+\paragraph{Applicabilità}
+Lo utilizziamo per accedere ad una collection senza esporne l'implementazione, supportando esplorazioni simultanee, e fornendo un'unica interfaccia per l'esplorazione di collections diverse.
+\subsubsection{Mediator}
+\paragraph{Scopo}
+Il \textbf{mediator} permette di ridurre le caotiche dipendenze tra oggetti. Esso restringe la comunciazione diretta tra gli oggetti e li forza a collaborare solo tramite un oggetto mediator. 
+
+\paragraph{Problema}
+Immaginiamo di avere un dialogo di creazione e modifica dei profili utente, composto da textfields, checkboxes, bottoni. Alcuni di questi elementi devono collaborare: ad esempio, selezionando la checkbox "Sono Guido Soncini", il titolo diventerà "Reggio Merda". Applicare questa logica all'interno degli elementi è un bagno di sangue.
+\paragraph{Soluzione}
+Creiamo quindi un oggetto \code{Mediator} che regoli la comunicazione tra questi oggetti, chiamato dai suddetti a necessità. Nel nostro esempio, la classe \code{Dialog} potrebbe fungere da mediator. A questo punto, cambiamo la logica degli elementi: essi non avranno più verifiche e implementazioni al loro interno, ma semplicemente notificheranno \code{Dialog} delle loro modifiche di stato. 
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{res/teoria/Mediator.png}
+    \caption{Struttura del dialog}
+\end{figure}
+\paragraph{Applicabilità}
+Lo utilizziamo quando un set di oggetti deve comunicare in modo definito ma complesso, ed il riutilizzo degli oggetti è complesso perché sono pieni di logica. Un behavior distribuito tra diverse classi dovrebbe essere customizzabile senza troppo subclassing. 
+
+\subsubsection{Memento}
+\paragraph{Scopo}
+Il \textbf{Memento} permette di salvare e ripristinare lo stato di oggetti senza rivelarne i dettagli implementativi. 
+\paragraph{Problema}
+Immaginiamo di creare un software di text editing. Sarebbe molto comodo avere un tasto undo per annullare le operazioni. Per salvare però lo stato dell'editor, dovremmo salvare tutti i suoi fields. Il problema risulta ovvio: non possiamo accedere a field privati dall'esterno. 
+\paragraph{Soluzione}
+Creiamo allora una classe \code{Snapshot}, che contenga i dati necessari al salvataggio, ed abbia oggetti generati dal protagonista del salvataggio, che avrà un metodo \code{makeSnapshot} ed un metodo \code{restore}. In questo modo, potremmo decidere di lasciare pubbliche alcuni metadata dello snapshot, come la data o l'utente, senza pubblicarne il contenuto. Possiamo ora salvare gli snapshot all'interno di oggetti detti \textit{caretakers}. 
+\paragraph{Applicabilità}
+Utilizziamo il pattern quando vogliamo salvare lo stato di un oggetto per ripristinarlo, senza però rendere pubblici dati privati. 
 
 \printglossary
+%\paragraph{Scopo}
+%\paragraph{Problema}
+%\paragraph{Soluzione}
+%\paragraph{Applicabilità}
 
 \end{document}

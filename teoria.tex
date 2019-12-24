@@ -631,7 +631,17 @@ Un pacchetto dev'essere tanto più astratto quanto è stabile. I pacchetti astra
 \end{itemize}
 \section{T16 - Design Patterns}
 \textit{Si, hai letto bene. Sei fottuto. \textbf{Cominciamo.}}
+La modellazione richiede di superare i nostri limiti mentali; un buon modello lo fa: è facile da ricordare, poco complesso, astratto, strutturato. Per comunicare un modello utilizziamo la navigazione e la riduzione di complessità, partendo da un modello molto semplice decorato di mano in mano. Per ridurre la complessità, cerchiamo ereditarietà e patterns. Nel OOP abbiamo strutture ricorrenti che promuovono astrazione, flessibilità, modularità, eleganza. Queste strutture sono un'importante conoscenza per lo sviluppo di ogni tipo di sistema, il problema è trovare il modo giusto di esprimerle. 
+Un \textbf{design pattern} è una soluzione ricorrente ad un problema comune, che può essere usata in modi diversi. È dipendente da linguaggio ed implementazione. I design patterns hanno vari obiettivi:
+\begin{itemize}
+    \item Codificare un buon design
+    \item Dare nomi espliciti alle strutture
+    \item Catturare e preservare le informazioni sul design 
+    \item Facilitare la ristrutturazione/refactoring 
+\end{itemize}
+Abbiamo due forme possibili: \textbf{Alexandrian} e \textbf{GoF}.
 \subsection{Creational Patterns}
+I creational patterns permettono la creazione flessibile di oggetti per rendere il sistema indipendente dagli oggetti creati. Ogni famiglia e le classi istanziate possono essere conosciute solo a runtime. 
 \subsubsection{Factory Method}
 \paragraph{Scopo}
 Il metodo Factory fornisce un'interfaccia per creare oggetti in una subclass, permettendole di modificare il tipo di oggetti creati.
@@ -923,10 +933,75 @@ Creiamo allora una classe \code{Snapshot}, che contenga i dati necessari al salv
 \paragraph{Applicabilità}
 Utilizziamo il pattern quando vogliamo salvare lo stato di un oggetto per ripristinarlo, senza però rendere pubblici dati privati. 
 
+\subsubsection{Observer}
+\paragraph{Scopo}
+L'\textbf{observer} è un pattern che permette di defininire un meccanisco di \textit{iscrizione} per notificare più oggetti di eventi che accadono.
+\paragraph{Problema}
+Immaginiamo due tipi di oggetto, \code{Customer} e \code{Store}. Il customer è interessato all'uscita di un nuovo modello di telefono: potrebbe visitare il negozio tutti i giorni per verificarne la disponibilità, ma questo, in termini prestazionali, fa cagare.
+Il negozio potrebbe, invece, inviare avvisi a tutti i clienti, anche quelli non interessati, ma questo farebbe arrrabbiare i clienti.
+\paragraph{Soluzione}
+Il pattern Observer suggerisce di aggiungere un meccanismo di subscription in modo da poter iscrivere determinati clienti alle notifiche. In questo modo, il publisher avrà una lista di subscribers, aventi un metodo \code{update()} utile alla notifica di eventi. 
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{res/teoria/Observer.png}
+    \caption{Struttura}
+\end{figure}
+\paragraph{Applicabilità}
+Lo utilizziamo quando un'astrazione ha due aspetti, uno dipendente dall'altro, ed un cambiamento ad uno degli oggetti richiede cambiamenti all'altro. 
+
+\subsubsection{State}
+\textit{Questo non è nelle slide.}
+\paragraph{Scopo}
+Lo \textbf{State} permette ad un oggetto di alterare il suo comportamento alla modifica del suo stato. All'apparenza, l'oggetto sembra aver cambiato classe.
+\paragraph{Problema}
+Lo state pattern è molto legato al concetto di macchina a stati finiti. L'idea di fondo è che in ogni momento esiste un numero \textbf{finito} di stati possibili per il programma. Immaginiamo di avere una classe \code{Document}, avente tre stati: \code{Draft}, \code{Moderation} e \code{Published}. Solitamente vengono utilizzati degli \code{switch..case} per modificare il comportamento in base alla proprietà \code{state}.
+\paragraph{Soluzione}
+L'alternativa è creare un interfaccia \code{State} implementata da tutti i possibili stati dell'oggetto, e dare all'oggetto una proprietà \code{state}. In questo modo, lo state potrà contenere i metodi variabili.  
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{res/teoria/State.png}
+    \caption{Struttura}
+\end{figure}
+\subsubsection{Strategy}
+\paragraph{Scopo}
+Lo \textbf{strategy} è un pattern che permette di definire una famiglia di algoritmi, inserirli in classi separate, e renderne gli oggetti intercambiabili. 
+\paragraph{Problema}
+Stiamo creando un'app di navigazione per viaggiatori. Vogliamo implementare una funzione di calcolo itinerari, in cui l'utente possa trovare l'itinerario più veloce da un punto A ad un punto B. In una prima versione, implementiamo solo il calcolo per auto. Gli amanti della bicicletta, però, si incazzano. Cominciamo ad implementare vari metodi di calcolo di percorsi, ma a breve la nostra classe \code{Navigator} diventa uno schifo. 
+\paragraph{Soluzione}
+Lo strategy pattern suggerisce di estrarre i vari modi di eseguire un'operazione in una classe separata. In questo modo, il \textbf{context}, ossia la classe originale, avrà un campo che salvi uno di questi oggetti. Nel nostro esempio di prima creeremmo un'interfaccia \code{RouteStrategy}, implementata, ad esempio, da \code{RoadStrategy}, \code{BikeStrategy} ed implementante un metodo \code{BuildRoute}. 
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{res/teoria/Strategy.png}
+    \caption{Struttura}
+\end{figure}
+\paragraph{Applicabilità}
+Lo utilizziamo quando un oggetto può essere configurato per utilizzare algoritmi multipli incapsulabili e ricopribili da una sola interfaccia.
+
+\subsubsection{Template}
+\paragraph{Scopo}
+Il \textbf{template} è un pattern che permette di definire lo scheletro di un algoritmo nella sua superclasse, ma permette alle subclasses di overridare passaggi specifici dell'algoritmo senza modificarne la struttura.  
+\paragraph{Problema}
+Stiamo creando un'app di data mining che analizza documenti di vario tipo: DOC, CSV, PDF. Ad un certo punto notiamo che queste classi hanno molto codice in comune. 
+\paragraph{Soluzione}
+Il template pattern suggerisce di dividere un metodo in più step, in modo da poter overridare solo il necessario. Gli steps potrebbero essere implementati o abstract. 
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{res/teoria/Template.png}
+    \caption{Struttura}
+\end{figure}
+\paragraph{Applicabilità}
+Lo utilizziamo per implementare aspetti invarianti di un algoritmo quando le subclasses ne definiscono solo alcuni passaggi. In questo modo aumentiamo il riutilizzo del codice, e controlliamo le estensioni di subclass.
+
+\subsubsection{Visitor}
+\paragraph{Scopo}
+Il \textbf{visitor} permette di separare gli algoritmi dagli oggetti su cui operano. 
+\paragraph{Problema}
+Immaginiamo di dover creare un'app che funziona con informazioni geografiche strutturate in un grande grafo. Ogni nodo può essere rappresentato da un'entità complessa, o atomica. I nodi sono connessi ad altri da strade. Vogliamo però esportare il grafo in XML, fattibile, ad esempio, aggiungendo un metodo \code{export} ai nodi. Il PM non vuole però farci modificare il codice dei nodi. 
+\paragraph{Soluzione}
+Il pattern \textbf{visitor} suggerisce di inserire il nuovo comportamento in una classe detta \textit{visitor}, che abbia più metodi per ogni classe dei tipi possibili. Questo però crea un problema: come fare a scegliere il metodo giusto? Implementiamo nei nodi un metodo \code{accept}, che prende in input il visitor e ne chiama il metodo adatto. Abbiamo sì modificato la classe nodo, ma in un modo poco distruttivo. 
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{res/teoria/Visitor.png}
+    \caption{Struttura}
+\end{figure}
+\paragraph{Applicabilità}
+Lo utilizziamo quando operazioni simili devono essere eseguite su un gruppo di oggetti di diversi tipi, ma salvati nella stessa struttura. La struttura degli oggetti è difficilmente modificata, ma è probabile avere nuove operazioni. 
 \printglossary
-%\paragraph{Scopo}
-%\paragraph{Problema}
-%\paragraph{Soluzione}
-%\paragraph{Applicabilità}
+
 
 \end{document}

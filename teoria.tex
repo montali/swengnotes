@@ -1001,7 +1001,174 @@ Il pattern \textbf{visitor} suggerisce di inserire il nuovo comportamento in una
 \end{figure}
 \paragraph{Applicabilità}
 Lo utilizziamo quando operazioni simili devono essere eseguite su un gruppo di oggetti di diversi tipi, ma salvati nella stessa struttura. La struttura degli oggetti è difficilmente modificata, ma è probabile avere nuove operazioni. 
+\section{T17 - Architectural design}
+Il \textbf{design architetturale} permette di comprendere l'organizzazione ed il design della struttura generale di un sistema software. È il collegamento tra design e requirements engineering. Identifica i componenti strutturali e le loro relazioni in un processo creativo, quindi differente da sistema a sistema, ottenendo uno o più \textbf{modelli architetturali}. L'architettura è un modello di alto livello che descrive gli aspetti critici del sistema ed è comprensibile alla maggior parte degli stakeholders, permettendo la valutazione delle proprietà di sistema prima della sua esistenza. fornisce strumenti e tecniche per costruire il sistema. 
+\subsection{Software architecture}
+I risultati principali della \textbf{software architecture} sono gli aspetti rilevanti dell'architettura, una rappresentazione comprensibile, l'implementazione di strumenti e tecniche. Essa è una traccia che identifica componenti, interazioni, interconnessioni ed è definita in modo formale o informale. È fondamentale avere un vocabolario condiviso e ricco. 
+\subsection{Elementi architetturali}
+Un subsystem è un sistema unico, le quali operazioni sono indipendenti dai servizi di altri subsystems. Un modulo è un componente di sistema che fornisce servizi ad altri componenti, ma non può essere considerato un subsystem.
+\paragraph{Componenti} Essi sono unità di computazione o data stores: clients, servers, databases, filtri, layers. Possono essere semplici o composti(subsystem). Un architettura consistente in più componenti compositi è un sistema di sistemi. 
+\paragraph{Connettori} Sono elementi architetturali che modellano le interazioni tra componenti e le regole che le governano. Le interazioni si dividono in semplici (chiamate procedurali, variabili condivise) e complesse/semantically rich (client-server, database access, async, piped data streams)
+\paragraph{Configurazioni} Sono grafi connessi di componenti e connettori che descrivono strutture architetturali identificanti connettività, proprietà concorrenti/distribuite, aderenza ad euristiche/stili. I componenti compositi sono configurazioni.
+\subsection{Architectural design process}
+Tre fasi:
+\begin{itemize}
+    \item \textbf{System structuring}: il sistema è decomposto in sottosistemi, e viene identificata la comunicazione tra sottosistemi
+    \item \textbf{Control modeling}: stabilire un modello delle relazioni di controllo tra le parti 
+    \item \textbf{Modular decomposition}: i subsystem identificati sono decomposti in moduli 
+\end{itemize}
+\subsubsection{Box and line diagrams}
+Sono diagrammi semplici ed informali che mostrano i subsystem e le loro relazioni. Mancano di semantica, non mostrando i tipi di relazioni o le proprietà. I requisiti per la semantica dei modelli dipendono da come il modello è usato. 
+\subsubsection{Software architecture views}
+\begin{itemize}
+    \item \textbf{Logical view}: mostra le astrazioni chiave del sistema come oggetti o classi (class/state diagrams)
+    \item \textbf{Process view}: mostra come i processi interagiscono a runtime, quindi gli aspetti dinamici e le attività, la concorrenza e sincronizzazione. Usa activity, sequence e communication diagrams.
+    \item \textbf{Development view}: mostra come il software verrà decomposto per lo sviluppo, dalla prospettiva del programmatore. Utilizza component e package diagrams.
+    \item \textbf{Physical view}: mostra l'hardware di sistema e come il software è distribuito tra processori/nodi. Utilizza deployment diagrams.
+\end{itemize}
+Gli step per questo design sono \textbf{capire i requirements}, \textbf{definire l'architettura}, \textbf{rappresentare e comunicare l'architettura}, \textbf{valutare l'architettura}. Si utilizzano implementazione, miglioramento e manutenzione. 
+\subsubsection{Non functional requirements}
+\begin{itemize}
+    \item \textbf{Performance}: localizzare operazioni critiche e minimizzare la comunicazione 
+    \item \textbf{Security}: utilizzare un'architettura a strati 
+    \item \textbf{Safety}: localizzare feature con possibili falle di sicurezza, in un numero ridotto di subsystems
+    \item \textbf{Availability}: includere componenti ridondanti e meccanismi di fault tolerance
+    \item \textbf{Maintainability}: usare componenti \textit{fine-grain} e sostituibili
+\end{itemize}
+\subsubsection{Euristica dei subsystem}
+Bisogna assegnare oggetti identificati nello stesso use case, allo stesso subsystem. Creare un subsystem dedicato per oggetti atti al movimento di dati tra subsystems. Minimizzare il numero di associazioni tra subsystem boundaries. Tutti gli oggetti nello stesso subsystem devono essere funzionalmente collegati. 
+\subsubsection{Layering and partitioning}
+Sono tecniche utili ad ottenere un basso coupling, che permettono di suddividere un sistema in subsystems. Il layering divide il sistema in strati che forniscono servizi allo strato più alto. Così, uno strato dipende solo da livelli più bassi e non conosce quelli più alti. Il partitioning divide un sistema in subsystems indipendenti. 
+\subsubsection{Architecture reuse}
+I sistemi nello stesso dominio spesso hanno architetture simili: nascono quindi dei pattern/stili che catturano l'essenza di un'architettura.
+\subsection{Architectural patterns}
+Sono descrizioni di una buona pratica di design, testata in diversi ambienti, ed includono informazioni sul loro utilizzo. Sono rappresentati da tabelle e grafici.
+\subsubsection{Model-View-Controller}
+Utilizziamo l'\textbf{MVC} quando abbiamo più modi di vedere ed interagire coi dati, e non abbiamo conoscenza dei futuri requirements dell'interazione coi dati. I dati e le rappresentazioni possono così cambiare indipendentemente, e abbiamo più views degli stessi dati. Aumenta però la complessità del codice. Abbiamo tre componenti:
+\begin{itemize}
+    \item \textbf{Model}: mantiene i dati e li gestisce, riceve input dal controller.
+    \item \textbf{View}: si occupa della presentazione dei dati all'utente
+    \item \textbf{Controller}: risponde all'input dell'utente e interagisce coi modelli.
+\end{itemize}
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{res/teoria/MVC.png}
+    \caption{Struttura dell'MVC}
+\end{figure}
+\subsubsection{Layered Architecture}
+Qui, ogni layer fornisce dei servizi a quello sopra. Il più basso contiene i core services. Si utilizza quando dobbiamo creare nuove parti sopra sistemi esistenti, e lo sviluppo è basato su vari team che lavorano a funzionalità diverse. Risolve anche i requirements di sicurezza multi-level. È un ottimo sostituto dei layer di implementazione, supporta la ridondanza, ma ha problemi di performance e rende difficile separare nettamente i layers.
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{res/teoria/LayeredArchitecture.png}
+\end{figure}
+\subsubsection{Repository}
+La repository è accessibile a tutti i componenti, che non interagiscono tra loro ma solo con la repository, che gestisce tutti i dati. Viene utilizzato quando abbiamo grandi volumi di informazioni e l'inclusione di dati nella repo triggera un'azione. Ha componenti indipendenti, propagazione dei cambiamenti, data management consistente, ma rischio di failure, comunicazione inefficiente e difficoltà di distribuzione della repo. 
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{res/teoria/Repository.jpg}
+\end{figure}
+\subsubsection{Client-Server}
+Utilizziamo client-server quando i dati devono essere accessibili da più posizioni, ed il carico è variabile (distribuzione dei server). Facilita la distribuzione di server e funzionalità, ma ogni server è un punto di failure, abbiamo performance imprevedibili, e problemi di gestione quando i server hanno diversi proprietari.
+\paragraph{Thin e Fat client} un thin client implementa l'interfaccia grafica, delegando al server ed alla rete le operazioni più pesanti. Un fat client, invece, esegue l'applicazione localmente, ed è quindi più complesso e potente. Gli aggiornamenti vanno installati su tutti i clients.
+\paragraph{Three tier architecture}Qui, abbiamo due strati di server, ad esempio un web server che si connette ad un database server.
+\subsubsection{Pipe and filter}
+Il processo dei dati in un sistema è organizzato tramite una sequenza di componenti di processing, ognuno dei quali esegue una tipologia di trasformazione dei dati, i quali scorrono da un componente all'altro. Si utilizza in applicazioni di data processing nelle quali gli input sono processati in stadi separati per generare output. Un esempio sono i compilatori. Si prestano bene al riutilizzo ed ai business processes. Hanno evoluzione semplice e implementazione sequenziale/parallela. Devono però avere un formato di data transfer condiviso, e codificare/decodificare i dati. 
+\subsection{Application architectures}
+I sistemi di applicazioni possono essere raggruppati per il tipo di business. Siccome i business hanno molto in comune, i loro sistemi applicativi tendono ad avere un'architettura comune che riflette i requirements.
+Un'architettura generica può essere configurata e adattata per creare un sistema che ha specifici requirements. Le application architectures sono un punto di partenza per il design, utilizzabili come checklist, come modalità organizzativa, come mezzo di riutilizzo, come vocabolario. 
+\subsubsection{Centralized vs Decentralized}
+Il design centralizzato rende facili le modifiche nella control structure, penalizzando però le performance del singolo control object. Quello decentralizzato divide le responsabilità, funziona bene con l'Object-Oriented e permette di dividere il carico. Per scegliere, osserviamo i sequence diagrams ed i control objects, verificandone la partecipazione. Se il sequence diagram assomiglia a una forchetta, centralizzato, se assomiglia a una sedia, decentralizzato. \textit{C'è scritto veramente?}
+I sequence diagrams sono derivati dagli use case.
+\begin{figure}[H]
+    \includegraphics[width=0.5\linewidth]{res/teoria/Fork.png}
+    \includegraphics[width=0.5\linewidth]{res/teoria/Stair.png}
+    \caption{Fork and Stair}
+\end{figure}
+Nella decentralizzata, le operazioni hanno forte connessione e sono eseguite sempre nello stesso ordine. Nella centralizzata, le operazioni possono cambiare ordine o quantità.
+\subsubsection{Procedure vs Event Driven}
+Nel procedure driven, il controllo è nel codice  del programma e l'utente ha poco controllo. Nell'event driven, il controllo risiede in un disparcher che chiama funzioni via callbacks; l'utente ha qui molto controllo. 
+\subsubsection{Vantaggi di una system architecture esplicita}
+\begin{itemize}
+    \item Comunicazione tra stakeholder: permette di discutere del sistema
+    \item Analisi del sistema: permette di verificare i non functional requirements e fornire soluzioni
+    \item Riutilizzo in larga scala: l'architettura è riutilizzabile su molti sistemi, la documentazione è di qualità, possiamo sviluppare product-line architectures 
+    \item Definisce una struttura di divisione del lavoro e permette le stime
+\end{itemize}
+Il design dell'architettura è uno dei primi passi della metodologia agile, perché il refactor futuro è molto costoso.
+
+\section{T18 - User Interface Design}
+Gli utenti di un sistema spesso giudicano più l'interfaccia delle funzionalità: un'interfaccia realizzata male può causare errori o far disinstallare il software. Nel design, bisogna considerare i fattori umani: memoria a breve termine limitata, errori, capacità differenti, preferenze di interazione diverse. Dobbiamo quindi matchare le skills, esperienze ed aspettative degli utenti, considerandone però anche i limiti e le possibilità di errore. È utile basarsi su un set di design principles:
+\begin{itemize}
+    \item \textbf{User familiarity}: l'interfaccia dovrebbe essere basata su termini user-oriented e concetti, piuttosto che su concetti informatici.
+    \item \textbf{Consistency}: il sistema dovrebbe avere un buon livello di consistenza, ad esempio comandi e menù nello stesso formato
+    \item \textbf{Minimal surprise}: se un comando funziona in maniera conosciuta, l'utente dovrebbe poterne prevedere i risultati 
+    \item \textbf{Recoverability}: il sistema dovrebbe fornire resilienza agli errori umani
+    \item \textbf{User guidance}: bisognerebbe fornire sistemi di aiuto, manuali online\dots
+    \item \textbf{User diversity}: bisognerebbe permettere una personalizzazione dell'interfaccia, ad esempio scegliendo la dimensione del font 
+    \item \textbf{Real world mapping}: le informazioni dovrebbero essere presentate in un layout familiare
+    \item \textbf{Consistency}: feature simili dovrebbero rimanere nello stesso posto e lavorare allo stesso modo 
+    \item \textbf{Less is more}: le feature meno importanti non devono essere in mezzo ai coglioni
+    \item \textbf{Anticipation}: nascondere feature inaccessibili
+    \item \textbf{Customization}: fornire agli utenti esperti feature avanzate
+    \item \textbf{Transparency}: l'interfaccia non dovrebbe coprire altri contenuti 
+    \item \textbf{Contiguity}: inserire testi esplicativi vicino agli elementi grafici 
+    \item \textbf{Memory load}: ricordare all'utente i dettagli 
+    \item \textbf{User control}: identificare il responsabile delle azioni
+    \item \textbf{Speak user's language}: istruzioni comprensibili, feedback, messaggi di errore 
+\end{itemize}
+Abbiamo diversi issues: come passare informazioni dall'utente al computer? Come passare informazioni dal computer all'utente? Sfruttiamo metafore per il design: un set di componenti visuali, azioni e procedure che ricordano conoscenze già acquisite dall'utente in altri domini. Alcuni tipi di componenti:
+\begin{itemize}
+    \item Windows: permettono di mostrare informazioni sullo schermo
+    \item Icons: rappresentano diversi tipi di informazioni 
+    \item Menus e pulsanti: selezionano comandi 
+    \item Pointing: permette di selezionare in un menù 
+    \item Graphics elements: mixabili con testo sulla stessa finestra 
+\end{itemize}
+Abbiamo più tipi di interazione: diretta, menu, form fill-in, comandi, linguaggio naturale. 
+\paragraph{Direct manipulation} L'utente si sente in controllo del computer, ci mette poco ad imparare, ottiene feedback immediati. Però, la derivazione di un information space model è difficile, la navigazione può essere complessa e quindi richiedere molte risorse. 
+\paragraph{Menu} I comandi sono presentati in una lista, lo sforzo di scrittura è minimale, gli errori improbabili. È possibile fornire aiuto contestuale. Però, le azioni complesse (and/or) sono difficili da rappresentare. I menù sono adatti a poche opzioni ed utenti non esperti, che preferiscono i comandi testuali. 
+\paragraph{Form} Il form permette semplice data-entry, facilità di apprendimento, possibilità di verifica. Però richiede molto spazio a schermo e causa problemi quando l'utente non richiede esattamente ciò che è presente a schermo.
+\paragraph{Command language} I comandi permettono uno sviluppo rapido, di complessità arbitraria ed interfacce minimali. Però, gli utenti dovranno ricordare il linguaggio: non è adatto ad utenti saltuari. Faranno inoltre errori, e sarà richiesta la possibilità di scrittura.
+\paragraph{Linguaggio naturale} Esso è accessibile ad utenti inesperti ed estensibile facilmente. Però, il vocabolario è limitato e confinato a domini specifici. La tecnologia non è del tutto adatta a rendere queste interfacce accessibili ad utenti principianti (\textit{questa slide probabilmente è stata scritta nel 2004, quando Siri e Google Assistant non esistevano. Un aggiornamento non sarebbe male eh}), ma gli utenti esperti odiano dover scrivere molto. È necessario poter scrivere. 
+\subsection{Design process}
+Per il design è utile sviluppare un prototipo low-fidelity, che sia semplice ed economico anche nella modifica, in modo da far capire le caratteristiche principali senza concentrarsi sulle piccolezze estetiche. Bisogna spiegare le convenzioni agli utenti ed è difficile mostrare i comportamenti. Il prcoesso di design consiste in:
+\begin{enumerate}
+    \item Analisi e comprensione delle attività dell'utente 
+    \item Produzione di un prototipo su carta e valutazione con gli utenti 
+    \item Design del prototipo dinamico e valutazione
+    \item Design di un prototipo eseguibile, valutazione e implementazione finale 
+\end{enumerate}
+\subsubsection{Information presentation}
+L'information presentation è costituita dallo studio di come presentare le informazioni all'utente, direttamente o trasformandole. L'MVC è una modalità che supporta più presentazioni di dati. 
+Dobbiamo così porci più domande: 
+\begin{itemize}
+    \item L'utente è interessato alle informazioni o alle loro relazioni?
+    \item Quando rapidamente variano?
+    \item L'utente deve poter rispondere ai cambiamenti?
+    \item È necessaria una manipolazione diretta?
+    \item L'informazione è testuale o numerica? 
+\end{itemize}
+Distinguiamo tra presentazione digitale ed analogica: la prima è compatta e precisa, la seconda più instantanea alla vista. 
+È utile sfruttare i colori come una dimensione aggiuntiva, ad esempio per evidenziare eventi eccezionali. Bisogna però stare attenti a non usarli troppo, limitandone il numero. Utilizziamo il cambiamento di colore per evidenziare cambiamenti nel sistema. Sfruttiamo i colori per supportare le attività dell'utente in maniera intelligente e consistente, stando attenti anche agli accostamenti. 
+\paragraph{Messaggi di errore} Una corretta rappresentazione degli errori è fondamentale. I messaggi devono essere educati, coincisi, consistenti e costruttivi. Bisogna considerare anche altri fattori:
+\begin{itemize}
+    \item Contesto: il messaggio deve riflettere il contesto attuale
+    \item Esperienza: un utente esperto ha bisogno di errori più concisi, un principiante di errori più \textit{verbose}
+    \item Skill level: il messaggio deve riflettere le skill dell'utente
+    \item Stile: i messaggi dovrebbero essere positivi 
+    \item Culture: i messaggi dovrebbero essere familiari con la cultura del paese dove viene utilizzato il software
+\end{itemize} 
+\paragraph{Sistema di aiuto} Il sistema di aiuto non dev'essere un semplice manuale online: dobbiamo sfruttare le caratteristiche dinamiche dello schermo.
+\subsection{Valutazione della user interface}
+Dopo il lavoro di design, bisogna valutarlo vs. le specifiche di usability, seguendo parametri come \textit{learnability}, \textit{speed of operation}, \textit{robustness}, \textit{recoverability}, \textit{adaptability}. Utilizziamo più tecniche di valutazione:
+\begin{itemize}
+    \item Expert reviews 
+    \item Questionari 
+    \item Registrazioni video dell'utilizzo 
+    \item Strumentazione di raccolta informazioni 
+    \item Feedback online dagli utenti 
+    \item Competitive usability testing
+\end{itemize}
+
+
+
+
 \printglossary
-
-
 \end{document}

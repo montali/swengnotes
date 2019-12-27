@@ -1166,9 +1166,175 @@ Dopo il lavoro di design, bisogna valutarlo vs. le specifiche di usability, segu
     \item Feedback online dagli utenti 
     \item Competitive usability testing
 \end{itemize}
+\section{T19 - UML Diagrams for system design}
+\subsection{Component Diagram}
+Il \textbf{component diagram} mostra gli elementi concettuali del business process (in UML1 erano componenti fisici), che forniscono o utilizzano interfacce per l'interazione con altri costrutti del sistema.
+\paragraph{Component} Unità logica del sistema, ha interfacce definite ed è rappresentato da un rettangolo.
+\paragraph{Interface} Descrive un gruppo di operazioni usate o create dai componenti. Un cerchio intero rappresenta un'interfaccia creata, mezzo ne rappresenta una required.
+\paragraph{Dependencies} Le dipendenze sono indicate da frecce tratteggiate.
+\paragraph{Ports} Le porte sono rappresentate da quadrati sul bordo. Sono usate per supportare l'esposizione di un'interfaccia required/created.
+\subsubsection{Internal View}
+Possiamo anche decidere di rappresentare l'interno di un componente come sottodiagramma
 
+\subsection{Package Diagram}
+Il \textbf{package diagram} rappresenta l'organizzazione degli elementi del modello in progetti di grandi dimensioni. I packages sono utilizzati per suddividere il sistema in entità logiche contenenti classi relazionate. Mostriamo i pacchetti come dei rettangoli con una sezione aggiunta in alto, e le dipendenze con frecce tratteggiate. Il nome viene inserito nella \textit{tab} in alto. Tramite le frecce, definiamo anche \textit{Merge}, \textit{Import}, \textit{Access}, \textit{Use}.
 
+\subsection{Deployment Diagram}
+Il \textbf{deployment diagram} mostra l'architettura di esecuzione del software, quindi processori, nodi, devices, le loro connessioni e la distribuzione dei file. Utilizziamo questi diagrammi per mostrare l'hardware e software di esecuzione. 
+\paragraph{Node} Il nodo rappresenta l'entità principale, che esegue componenti. Può essere hardware o software.
+\paragraph{Artifact} Gli artifacts sono elementi concreti che vengono causati dal processo di sviluppo. Possono essere librerie, configurazioni, archivi\dots
+\paragraph{Communication Path} Mostra la connessione tra due nodi.
+\paragraph{Manifest and deployment specification} Sono file che contengono configurazioni, ad esempio in XML.
 
+\section{T20 - Object Oriented Design}
+L'\textbf{Object Oriented Design} ha lo scopo di aggiungere dettagli alla requirements analysis e all'architecture model, prendendo decisioni riguardanti l'implementazione. Prepara l'implementazione attraverso decisioni sul design, ottimizza il system model, investiga alternative implementative. Gli obiettivi sono soprattutto non-functional. Esiste un gap tra il requirements gap ed il system design, ed è proprio l'\textbf{object design gap}. Vogliamo costruire un Object Design Model che realizzi il modello Use Case, come base per l'implementazione. Vi sono però dei rischi di \textbf{incompletezza} e la presenza di attività \textbf{soggette ad errori.}
+Gli obiettivi sono:
+\begin{itemize}
+    \item Riutilizzare le conoscenze del passato
+    \item Riutilizzare funzionalità disponibili
+    \item Supportare la definizione di robustezza e adattabilità
+    \item Sviluppare nuove funzionalità
+    \item Adattare un sistema esistente ad un nuovo ambiente/cliente
+\end{itemize}
+Notiamo \textbf{4 step fondamentali:}
+\begin{enumerate}
+    \item \textbf{Identificazione di soluzioni esistenti}: utilizzando l'ereditarietà, sfruttiamo componenti, soluzioni, design patterns.
+    \item \textbf{Interface specification}: descriviamo precisamente ogni class interface.
+    \item \textbf{Object Model Restructuring}: miglioriamo la comprensibilità ed estensibilità.
+    \item \textbf{Object Model Optimization}: miglioriamo le performance
+\end{enumerate}
+\begin{figure}[H]
+    \includegraphics[width=0.6\linewidth]{res/teoria/OOD1.png}
+    \includegraphics[width=0.6\linewidth]{res/teoria/OOD2.png}
+\end{figure}
+\subsection{Refactoring}
+Il \textbf{refactoring} è un processo che cambia la struttura interna di un software senza cambiarne il comportamento. L'obiettivo è quello di rendere il software più facile da capire, più economico da modificare, e migliorarne l'aderenza ai requirements. Si può applicare sia ai design models che al codice. Viene spesso detto \textbf{remodeling}, quando applicato ai design models. Perché lo facciamo? \textbf{Migliora il design del software}, velocizzandolo, \textbf{rende il design più comprensibile}, \textbf{rende il debugging più facile}, \textbf{permette di programmare più velocemente}. Teniamo in conto tre principi:
+\begin{itemize}
+    \item Bisogna \textbf{evitare di aggiungere funzionalità durante il refactoring}
+    \item Bisogna \textbf{verificare l'esistenza di test ottimali prima del refactoring}
+    \item Procedere a \textbf{piccoli passi} localizzati
+\end{itemize}
+\subsection{Tecniche di riutilizzo}
+\subsubsection{Ereditarietà}
+Distinguiamo due utilizzi:
+\begin{enumerate}
+    \item Descrizione delle tassonomie: utilizzata durante la requirements analysis, identifica oggetti del dominio che hanno una relazione, allo scopo di rendere l'analysis model più comprensibile. 
+    \item Specifica delle interfacce: usata durante l'object design, identifica le signatures degli oggetti identificati, allo scopo di aumentare il riutilizzo, la modificabilità, l'estensione.
+\end{enumerate}
+Distinguiamo, inoltre, tra \textbf{inheritance} (white-box reuse), e \textbf{composition} (black-box reuse). Nella prima i prodotti dello sviluppo (modelli, system/object design, codice) devono essere disponibili, e sfruttiamo implementation e specification. La seconda necessita solo di alcuni prodotti, al minimo gli eseguibili, e crea gli oggetti come aggregazione di quelli esistenti. Abbiamo più ragioni per le quali può essere necessaria la creazione di oggetti:
+\begin{itemize}
+    \item I boundary objects necessitano di componenti della GUI 
+    \item Gli entity objects necessitano di componenti di data management specifici 
+    \item L'implementazione di algoritmi potrebbe necessitare di oggetti per salvare valori 
+    \item Le operazioni di alto livello potrebbero essere decomposte in operazioni di basso livello 
+    \item Gli use case actors dovrebbero essere definiti da interfacce 
+    \item Alcune classi di data collection potrebbero essere definite per salvare dati sugli attori 
+    \item Almeno una classe di avvio deve esistere per far partire il software
+    \item Potrebbero essere necessarie classi controller e coordinator per regolare l'esecuzione 
+\end{itemize}
+Vi è anche la possibilità di unire oggetti, per scelte di design: implementare un'entità come attributo, o come classe separata con associazioni ad altre classi. Le associazioni sono più flessibili degli attributi, ma spesso introducono indirection (mancanza di chiarezza) non necessaria. Troviamo ereditarietà per generalizzazione (ossia partendo dalle subclasses) o per specializzazione (partendo dalle superclasses). Per aumentare l'ereditarietà, riarrangiamo le classi per prepararle, cerchiamo di trasformare le superclasses in interfacce astratte (bridge pattern), verifichiamo se è possibile mappare le classi di un subsystem in una gerarchia di ereditarietà. Possiamo trovare dei problemi durante questo processo: non dobbiamo infatti esagerare implementando interfacce con metodi inutilizzati.
+\subsubsection{Delegation}
+La \textbf{delegation} è un modo di rendere la composizione potente quanto l'ereditarietà. Nella delegation, due oggetti sono coinvolti nella gestione di una richiesta del client: il \textbf{receiver} delega le operazioni al \textbf{delegate}, assicurandosi che il client non utilizzi il delegate in modo errato. I due metodi diversi hanno pro e contro: la delegation è più flessibile ma inefficiente, l'inheritance è facile da usare, supportata da più linguaggi, ma espone una subclass ai dettagli della classe parent, ed ogni modifica nel parent costringe le subclasses a cambiare.
+\paragraph{Contraction}
+Il goal della contraction è rendere le operazioni della superclass invisibili, implementando metodi nella superclasse ed overridandoli con metodi vuoti nella subclass. Questo processo andrebbe evitato, perché la superclass contiene operazioni che non hanno senso nella subclass, non \textit{fitta} nella tassonomia della superclasse, e viola il principio di sostituzione di Liskov. 
+\paragraph{Raffinare le associazioni con l'aggregazione}
+Aggiungiamo molteplicità e ruoli, decidendo \textit{whole} e \textit{part}, poi guardiamo alla molteplicità del whole: se è 1, usiamo la composizione, altrimenti aggregazione. Aggiungiamo infine la navigabilità dal whole alla part.
+\paragraph{Raffinare le associazioni con la reification} 
+La \textbf{reification} riguarda il trattamento di una cosa astratta come se fosse concreta; nei termini object-oriented, intendiamo la caratterizzazione di qualcosa nei termini di \textbf{oggetto}. Nel contesto del design, il concetto è applicato alle relazioni tra oggetti o stati di un oggetto. 
+\subsection{Packaging design}
+Il \textbf{packaging design} impacchetta il design in unità discrete che possono essere modificate, compilate, collegate, riutilizzate. Costruiscono moduli fisici, idealmente un pacchetto per subsystem. La system decomposition potrebbe non essere buona per l'implementazione. Due principi base: minimizzare il coupling, massimizzare la cohesion. Come fare?
+\begin{enumerate}
+    \item Partire con un'interfaccia per ogni subsystem 
+    \item Limitare il numero di operazioni dell'interfaccia ($7 \mp 2$)
+    \item Se l'interfaccia ha troppe operazioni, riconsideriamo il numero di interfacce 
+    \item Se abbiamo troppe poche interfacce, riconsideriamo il numero di subsystems
+\end{enumerate}
+Per definire le classi, aggiungiamo prima gli attributi, poi i metodi, e li inseriamo nell'object model. Infine aggiungiamo gli invariants. Per i metodi, invece, decidiamo le pre-conditions, le post-conditions, e lavoriamo su pseudocode, flowcharts, UML per specificare l'algoritmo.
+\subsection{Information hiding}
+Per ottenere un buon \textbf{information hiding}, definiamo interfacce pubbliche, applicando il "need to know" principle: meno dettagli una classe deve sapere, più facile è cambiarla/non rovinarla con cambiamenti. Il tradeoff qui è information hiding vs efficiency. Elenchiamo alcuni principi:
+\begin{itemize}
+    \item Solo le operazioni di una classe ne possono manipolare gli attributi 
+    \item Nascondere gli oggetti esterni al subsystem boundary: definire le interfacce astratte che mediano tra il mondo esterno ed il sistema
+    \item Non applicare ad un'operazione i risultati di un'altra operazione
+\end{itemize}
+\section{T22 - Testing}
+Distinguiamo in 4 componenti:
+\begin{itemize}
+    \item Test plan
+    \item Test specification 
+    \item Test oracle
+    \item Test cases
+\end{itemize}
+\subsection{Componenti del testing}
+\subsubsection{Test Plan}
+Il \textbf{text plan} è utilizzato per dimostrare che il software è privo di falle e si comporta come richiesto dai requirements. Decompone il processo in test specifici, utilizzando specifici data items e valori. 
+\subsubsection{Test Specification}
+Documenta lo scopo di un test; in caso di test compositi, documenta la relazione tra le parti ed il whole test. Descrive le condizioni che indicano quando il test è completo. In generale, è un modo per valutare i risultati. 
+\subsubsection{Test Oracle}
+È un set di risultati predetti per un set di test, e si usa per determinare il successo del testing. È estremamente difficile da creare, attraverso la requirements specification. 
+\subsubsection{Test Cases}
+È un set di input al sistema. Un testing di successo è basato sulla scelta dei giusti test cases.
 
+\subsection{Test suite}
+Ovviamente bisogna testare il codice per farlo funzionare la prima volta, facendo \textit{ad hoc testing} o costruendo una test suite. La seconda riduce il numero totale di bug, rende il codice più mantenibile e refactorabile, ma richiede più programmazione e tempo. Distinguiamo tra due tecniche di testing: \textbf{glass box testing}, in cui esaminiamo il codice, e \textbf{black box testing}, basato sulla conoscenza del risultato atteso. 
+\subsection{Tipologie di testing}
+\begin{figure}[H]
+    \includegraphics[width=0.7\linewidth]{res/teoria/TestingTypes.png}
+\end{figure}
+\subsubsection{Unit testing}
+Lo \textbf{unit testing} testa le singole unità che compongono il sistema, allo scopo di trovare falle in algoritmi, dati, sintassi. Definiamo un set di test cases e ne valutiamo i risultati. Questo test è fatto dagli sviluppatori per assicurarsi che l'unità sia codificata correttamente e funzioni come ci si aspetta.
+Dinstinguiamo, anzitutto, tra \textbf{static testing}(analisi, code review) e \textbf{dynamic testing} (black-box, white-box).
+\paragraph{Black-box testing} Questo tipo di testing si concentra sul comportamento I/O, e richiede un test oracle. L'obiettivo è ridurre il numero di test cases  tramite equivalence partitioning. Dividiamo input validi ed invalidi in classi di equivalenza, scegliamo i test cases per ogni classe di equivalenza. Per scegliere i test case, notiamo che l'input è valido in un range di valori, e scegliamo i test case da quelli sotto il range, nel range, oltre il range. L'input è valido solo se facente parte di un set discreto: prendiamo un test case valido, uno invalido. 
+\paragraph{White-box testing} Non è possibile testare tutti i percorsi, cerchiamo di assicurarci che ogni linea di codice sia testata. Il glass-box testing ha dei limiti: un pezzo di codice definisce più execution paths, ed un buon test case deve provarli tutti, arrivando a quantità di test case enormi. 
+\paragraph{Euristiche} Per ottenere gli unit tests:
+\begin{enumerate}
+    \item Definiamo gli unit tests
+    \item Creiamo i test cases 
+    \item Eliminiamo duplicati tra i test cases 
+    \item Controlliamo staticamente il codice 
+    \item Creiamo un test harness, i.e. una collezione di test cases 
+    \item Descriviamo il test oracle 
+    \item Eseguiamo i test cases 
+    \item Compariamo i risultati con il test oracle
+\end{enumerate}
+Per la selezione dei test cases, utilizziamo la conoscenza dei functional requirements, il design knowledge del sistema, delle data structures, degli algoritmi. Utilizziamo anche la conoscenza dell'implementazione di algoritmi e strutture dati. 
+\subsubsection{Integration testing}
+L'integration testing testa un gruppo di subsystems, ed eventualmente l'intero sistema. È fatto dagli sviluppatori per testare le interfacce tra subsystems. L'intero sistema è visto come una collezione di subsystems, determinati durante il system e object design. L'obiettivo è testare tutte le interfacce tra subsystems e la loro interazione, strategizzando l'ordine con cui i subsystems sono testati. Perché lo facciamo? Gli unit tests funzionano solo in isolazione, ma spesso le falle sono nell'interazione. Spesso molti componenti riutilizzati non possono essere unit tested. Le falle non trovate durante l'integration testing verranno scovate in produzione, il che non va mai bene.
+Definiamo alcune componenti:
+\paragraph{Driver} È un componente che chiama l'unità testata e controlla i test cases 
+\paragraph{Stub/Double} è un componente che simula la presenza di un altro, rispondendo alle chiamate con dati falsi. Non deve comportarsi esattamente come chi sostituisce, ma deve fornire circa la stessa API. Ne distinguiamo 4 tipi: 
+\begin{itemize}
+    \item \textbf{Dummy}: è utilizzato come segnaposto, passato come parametro ma mai utilizzato 
+    \item \textbf{Stub}: è un oggetto che forza il sistema verso il path che vogliamo testare
+    \item \textbf{Mock}: ritorna valori hardcoded o precaricati 
+    \item \textbf{Fake}: rimpiazza l'originale con un'implementazione alternativa 
+\end{itemize}
+\paragraph{Integration testing strategies}
+Distinguiamo inoltre varie strategie di integration testing:
+\begin{itemize}
+    \item \textbf{Big Bang Integration}: porta difficoltà nella fault isolation, ma non necessita di drivers o stubs, è una pratica comune dell'agile
+    \item \textbf{Bottom-Up Integration}: testa i sistemi più importanti per ultimi, necessita di driver ma non stubs, è utile per i sistemi object-oriented e real time 
+    \item \textbf{Top-Down Integration}: i test cases possono essere definiti sulla base di funzionalità di sistema, non c'è bisogno di drivers ma gli stub sono difficoltosi e in grande quantità. In secundis, le utilità di basso livello sono testate tardi.
+    \item \textbf{Sandwich Testing}: top e bottom sono fatti insieme, senza testare i subsystem singoli e le loro interfacce prima dell'integrazione. È meno sistematico degli altri due e rende più complicata la failure isolation
+    \item \textbf{Modified Sandwich}: Testa in parallelo il middle layer con driver e stubs, il top layer con stubs, il bottom layer con drivers. Testa in parallelo il top layer che accede al middle, ed il middle che accede al bottom. 
+\end{itemize}
+
+\subsubsection{System Testing}
+Il system testing testa l'intero sistema, ed è fatto dagli sviluppatori allo scopo di determinare se il sistema rispetta i requirements funzionali e di performance. I test cases sono creati partendo dal requirements analysis document o dallo user manual. I test cases sono centrati attorno ai requirements e alle funzioni chiave, ed il sistema è trattato come una black box. Gli unit test cases sono riutilizzati, ed i nuovi test cases vanno sviluppati. 
+\paragraph{Performance testing} Il goal è tentare di violare i non-functional requirements, testando come il sistema si comporta quando è sovraccaricato, o in ordini non usuali di esecuzione, o con grandi volumi di dati. Citiamo, ad esempio: stress testing, security testing, volume testing, configuration testing, quality testing, recovery testing\dots
+\paragraph{Acceptance Testing} Il goal è dimostrare che il sistema è pronto per l'utilizzo, con test e svolti scelti dal cliente. Distinguiamo tra \textbf{alpha test}, in cui si testa nell'ambiente di sviluppo, e \textbf{beta test}, in cui si testa nell'ambiente del cliente.
+\subsection{Object-Oriented testing}
+I componenti testati sono classi, istanziate come oggetti. Meno granulare di test su funzioni individuali, quindi gli approcci al white-box testing vanno estesi. Non c'è inoltre un "top" ovvio per il top-down. Distinguiamo 4 livelli: test delle operazioni associate alle classi, test delle classi, test di cluster di oggetti cooperanti, test del sistema completo. 
+\paragraph{Object Class Testing} Un test completo di una classe testa tutte le operazioni associate, gli attributi, tutti gli stati. L'ereditarietà rende questo test più complesso.
+\paragraph{Object Integration}
+I livelli di integrazione sono meno distinti nei sistemi object-oriented. Il cluster testing si occupa di integrare e testare cluster di oggetti, identificati tramite la conoscenza delle operazioni e le feature implementate nel cluster. Distinguiamo tre approcci: \textbf{use-case or scenario testing}, basato sulle interazioni utente, \textbf{thread testing}, basato sulle risposte del sistema, \textbf{object interaction testing}, testante le interazioni che si fermano quando un'istanza non chiama servizi di un altro oggetto. 
+\paragraph{Ereditarietà, polimorfismo, dynamic binding}
+\begin{itemize}
+    \item Ereditarietà: i metodi ereditati devono essere ritestati nelle subclasses: il contesto delle superclasses potrebbe essere incompleto 
+    \item Polimorfismo: i parametri devono avere più di un set di valori e un'operazione deve essere implementata da più di un metodo 
+    \item Dynamic binding: i metodi che implementano un'operazione sono sconosciuti fino al runtime 
+\end{itemize}
+\paragraph{Continuous testing}
+Il continuous testing consiste in build e relativo testing ogni giorno, in modo che il sistema sia sempre eseguibile. Richiede dei tool di supporto, come un continuous build server, test automatizzati, tool supported refactoring, issue tracking\dots
 \printglossary
 \end{document}

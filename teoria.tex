@@ -507,7 +507,7 @@ Abbiamo tre possibili tipi di approccio:
 Distinguiamo tre attività nel design:
 \begin{itemize}
     \item Design dell'architettura, dove si decidono i sottosistemi ed i componenti e la loro interazione 
-    \item USer interface design 
+    \item User interface design 
     \item Component/class design, dove si decidono le strutture dati ed i meccanismi computazionali
 \end{itemize}
 Il design è però un'attività che richiede notevole esperienza, e pertanto un solo ingegnere non dovrebbe mai tentare il design di sistemi grandi, ma piuttosto studiare quelli di altri sistemi. Infatti, un cattivo design potrebbe portare a manutenzione costosa, mentre un buon design dovrebbe essere tenuto in conto per tutta la vita del software, in modo flessibile, documentato, e con una buona gestione delle modifiche. 
@@ -684,7 +684,7 @@ Il builder pattern suggerisce di estrarre il codice di costruzione dell'oggetto 
 Il director non è strettamente necessario.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{res/teoria/AbstractFactory.png}
+    \includegraphics[width=\linewidth]{res/teoria/Builder.png}
     \caption{Struttura}
 \end{figure}
 \paragraph{Applicabilità}
@@ -698,7 +698,7 @@ Immaginiamo di avere un oggetto, e volerne creare una copia esatta. Come fare? F
 Il prototype pattern delega il processo di clonazione all'oggetto effettivo che stiamo copiando. Dichiariamo un'interfaccia comune, tipo \code{Clonable}, che contenga il metodo \code{clone()}. In questo modo, implementando il metodo \code{clone()} in tutte le classi (saranno metodi simili) abbiamo la possibilità di clonare oggetti. Un oggetto che supporta la clonazione è detto \textit{prototype.}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{res/teoria/Prototype.png}
+    \includegraphics[width=0.7\linewidth]{res/teoria/Prototype.png}
     \caption{Struttura}
 \end{figure}
 \paragraph{Applicabilità}
@@ -776,7 +776,7 @@ Utilizzare il composite pattern ha senso solo quando il core del software è rap
 Il composite pattern suggerisce di lavorare su prodotti e scatole attraverso un'unica interfaccia, che dichiara un metodo per calcolare il costo totale. In un prodotto, restituirebbe il costo del prodotto. In una scatola, restituisce la chiamata ricorsiva a tutti i contenuti. \textit{Avete già capito dove voglio arrivare.} In questo modo, basta chiamare il metodo di calcolo sulla scatola grande e verrà chiamato ricorsivamente su tutti i nodi. \textit{Spaventosamente elegante.}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{res/teoria/Composite.png}
+    \includegraphics[width=0.6\linewidth]{res/teoria/Composite.png}
     \caption{Struttura}
 \end{figure}
 \paragraph{Applicabilità}
@@ -787,7 +787,7 @@ Il decorator permette di \textit{agganciare} nuovi comportamenti ad oggetti, ins
 \paragraph{Problema}
 Immaginiamo di stare lavorando ad una libreria per notifiche, che permette ad altri software di notificare gli utenti. La versione iniziale è basata sulla classe \code{Notifier} che ha pochi field, un costruttore, ed un singolo metodo \code{send()}. Questo metodo accetta un messaggio e lo invia agli utenti specificati nel costruttore. Ad un certo punto, realizzi di voler implementare altri tipi di notifiche, come messaggi Telegram o sms. Estendi quindi la classe \code{Notifier} con delle subclasses, come \code{FacebookNotifier} o \code{SMSNotifier}. Ti chiedono, però, di poterne usare più di uno alla volta, e sarebbe da idioti cominciare a fare subclasses per ogni combinazione di notificatori.
 \paragraph{Soluzione}
-L'ereditarietà, in questo caso, non è la soluzione. Ci spostiamo sulla aggregazione/composizione. Il pattern Decorator è detto anche \textbf{Wrapper}. Questo esprime chiaramente l'idea di fondo: creiamo un oggetto wrapper che contiene i metodi del \textit{target} e li chiama, però svolge operazioni che alterano il risultato, prima o dopo la chiamata. Generiamo così una struttura in cui \code{Notifier} possiede un oggetto di interfaccia \code{BaseDecorator}, che ha come subclasses i vari decorator. Generiamo così uno stack, che passiamo alla generazione di un nuovo decorator. Esso, tramite \code{super}, chiama i vari decordator della stack \textit{in salita.} L'unico decorator che effettivamente viene chiamato è sempre l'ultimo. 
+L'ereditarietà, in questo caso, non è la soluzione. Ci spostiamo sulla aggregazione/composizione. Il pattern Decorator è detto anche \textbf{Wrapper}. Questo esprime chiaramente l'idea di fondo: creiamo un oggetto wrapper che contiene i metodi del \textit{target} e li chiama, però svolge operazioni che alterano il risultato, prima o dopo la chiamata. Generiamo così una struttura in cui \code{Notifier} possiede un oggetto di interfaccia \code{BaseDecorator}, che ha come subclasses i vari decorator. Generiamo così uno stack, che passiamo alla generazione di un nuovo decorator. Esso, tramite \code{super}, chiama i vari decorator della stack \textit{in salita.} L'unico decorator che effettivamente viene chiamato è sempre l'ultimo. 
 \begin{figure}[H]
     \includegraphics[width=0.5\linewidth]{res/teoria/Decorator1.png}
     \includegraphics[width=0.5\linewidth]{res/teoria/Decorator2.png}
@@ -820,13 +820,15 @@ Il \textbf{flyweight} permette di ridurre lo spazio di memoria necessario al sal
 \paragraph{Problema}
 Immaginiamo di dover creare un videogioco sparatutto. Decidiamo di implementare un sistema di particelle complesso, in modo che proiettili, missili, detriti siano gestiti da oggetti. Avremmo quindi una struttura in cui ogni particella occupa molto spazio in memoria:
 \begin{figure}[H]
+    \centering
     \includegraphics[width=\linewidth]{res/teoria/FlyweightProblem.png}
     \caption{Struttura iniziale}
 \end{figure}
 \paragraph{Soluzione}
 Notiamo però che molte informazioni sono ripetute! Infatti, ad esempio, colore e sprite, che occupano moltissima memoria, contengono quasi sempre gli stessi dati. Decidiamo, allora, di salvare le informazioni comuni in una classe a parte, in modo da salvare solo il minimo indispensabile per le singole particelle. 
 \begin{figure}[H]
-    \includegraphics[width=\linewidth]{res/teoria/FlyweightSolution.png}
+    \centering
+    \includegraphics[width=0.6\linewidth]{res/teoria/FlyweightSolution.png}
     \caption{La soluzione usando il Flyweight pattern}
 \end{figure}
 \paragraph{Applicabilità}
@@ -864,7 +866,8 @@ Immaginiamo di lavorare a un sistema di ordini online. Vogliamo restringere l'ac
 \paragraph{Soluzione}
 Trasformiamo quindi queste verifiche in \textit{handlers}: ognuna avrà un metodo \code{check}, ed un campo per il prossimo handler della catena. Ad ogni richiesta, l'handler eseguirà le sue verifiche: se è tutto ok, passerà la richiesta al prossimo handler, altrimenti fermerà il tutto. È fondamentale che tutti gli handler implementino una stessa interfaccia. 
 \begin{figure}[H]
-    \includegraphics[width=\linewidth]{res/teoria/Handler.png}
+    \centering
+    \includegraphics[width=0.6\linewidth]{res/teoria/Handler.png}
     \caption{La soluzione}
 \end{figure}
 \paragraph{Applicabilità}
@@ -875,9 +878,10 @@ Il \textbf{command} trasforma una richiesta in un oggetto \textit{stand-alone} c
 \paragraph{Problema}
 Immaginiamo di lavorare ad un software di text editing. Vogliamo creare una toolbar che contenga tasti per le operazioni più importanti, con una classe \code{Button}. Cominciamo a creare subclasses per ogni bottone necessario: \code{OKButton}, \code{SaveButton}, \code{ApplyButton}, ed ogni tasto che si aggiunge, \textit{la nostra voglia di vivere cala.} Dev'esserci un modo più furbo.
 \paragraph{Soluzione}
-Estraiamo i dati della richiesta tramite un oggetto dall'interfaccia \code{Command}, che avrà come implementazioni i vari tipi di comando possibili, aventi un solo metodo \code{execute}. In questo modo, ogni bottone chiamerà l'\code{execute} del suo \code{Command}, ma non solo: i comandi potrebbero anche essere chiamati da scorciatoie da tastiera!
+Estraiamo i dati della richiesta tramite un oggetto dall'interfaccia \code{Command}, che avrà come implementazioni i vari tipi di comando possibili, aventi un solo metodo \code{execute}. In questo modo, ogni bottone chiamerà l'\code{execute} del suo \code{Command}, ma non solo: i comandi potrebbero, ad esempio, anche essere chiamati da scorciatoie da tastiera!
 \begin{figure}[H]
-    \includegraphics[width=\linewidth]{res/teoria/Handler.png}
+    \centering
+    \includegraphics[width=0.6\linewidth]{res/teoria/Command.png}
     \caption{Soluzione usando un Command}
 \end{figure}
 \paragraph{Applicabilità}
@@ -897,13 +901,14 @@ Modelliamo il dominio con una grammatica ricorsiva ad albero, in cui ogni regola
 Utilizzabile quando abbiamo un linguaggio facilmente mappabile con un albero, con grammatica semplice ed efficienza non importante.
 \subsubsection{Iterator}
 \paragraph{Scopo}
-L'\textbf{iterator} permette di attraversare gli elementi di una colleciton senza esporne le logiche di rappresentazione.
+L'\textbf{iterator} permette di attraversare gli elementi di una collection senza esporne le logiche di rappresentazione.
 \paragraph{Problema}
 Creiamo un nostro oggetto di collection per salvare dati, con una struttura \textit{cazzutissima} ed ultra segreta, che ci permetterà di diventare milionari grazie all'intelligentissimo metodo di esplorazione dei dati che ho. Abbiamo ora un problema: non vogliamo esporre le logiche con cui esploriamo la collection. 
 \paragraph{Soluzione}
 Estraiamo l'esplorazione della collection tramite un oggetto \textit{iterator}. Potremmo addirittura avere più iterators, che implementino un'interfaccia costituita da: un metodo \code{getNext}, un metodo \code{hasNext}, ed un campo che salvi l'elemento corrente. 
 \begin{figure}[H]
-    \includegraphics[width=\linewidth]{res/teoria/Iterator.png}
+    \centering
+    \includegraphics[width=0.6\linewidth]{res/teoria/Iterator.png}
     \caption{Struttura di un iterator multiplo}
 \end{figure}
 \paragraph{Applicabilità}
@@ -1066,7 +1071,7 @@ La repository è accessibile a tutti i componenti, che non interagiscono tra lor
 \end{figure}
 \subsubsection{Client-Server}
 Utilizziamo client-server quando i dati devono essere accessibili da più posizioni, ed il carico è variabile (distribuzione dei server). Facilita la distribuzione di server e funzionalità, ma ogni server è un punto di failure, abbiamo performance imprevedibili, e problemi di gestione quando i server hanno diversi proprietari.
-\paragraph{Thin e Fat client} un thin client implementa l'interfaccia grafica, delegando al server ed alla rete le operazioni più pesanti. Un fat client, invece, esegue l'applicazione localmente, ed è quindi più complesso e potente. Gli aggiornamenti vanno installati su tutti i clients.
+\paragraph{Thin e Fat client} Un thin client implementa l'interfaccia grafica, delegando al server ed alla rete le operazioni più pesanti. Un fat client, invece, esegue l'applicazione localmente, ed è quindi più complesso e potente. Gli aggiornamenti vanno installati su tutti i clients.
 \paragraph{Three tier architecture}Qui, abbiamo due strati di server, ad esempio un web server che si connette ad un database server.
 \subsubsection{Pipe and filter}
 Il processo dei dati in un sistema è organizzato tramite una sequenza di componenti di processing, ognuno dei quali esegue una tipologia di trasformazione dei dati, i quali scorrono da un componente all'altro. Si utilizza in applicazioni di data processing nelle quali gli input sono processati in stadi separati per generare output. Un esempio sono i compilatori. Si prestano bene al riutilizzo ed ai business processes. Hanno evoluzione semplice e implementazione sequenziale/parallela. Devono però avere un formato di data transfer condiviso, e codificare/decodificare i dati. 
@@ -1083,7 +1088,7 @@ I sequence diagrams sono derivati dagli use case.
 \end{figure}
 Nella decentralizzata, le operazioni hanno forte connessione e sono eseguite sempre nello stesso ordine. Nella centralizzata, le operazioni possono cambiare ordine o quantità.
 \subsubsection{Procedure vs Event Driven}
-Nel procedure driven, il controllo è nel codice  del programma e l'utente ha poco controllo. Nell'event driven, il controllo risiede in un disparcher che chiama funzioni via callbacks; l'utente ha qui molto controllo. 
+Nel procedure driven, il controllo è nel codice  del programma e l'utente ha poco controllo. Nell'event driven, il controllo risiede in un dispatcher che chiama funzioni via callbacks; l'utente ha qui molto controllo. 
 \subsubsection{Vantaggi di una system architecture esplicita}
 \begin{itemize}
     \item Comunicazione tra stakeholder: permette di discutere del sistema
@@ -1123,12 +1128,12 @@ Abbiamo diversi issues: come passare informazioni dall'utente al computer? Come 
 \end{itemize}
 Abbiamo più tipi di interazione: diretta, menu, form fill-in, comandi, linguaggio naturale. 
 \paragraph{Direct manipulation} L'utente si sente in controllo del computer, ci mette poco ad imparare, ottiene feedback immediati. Però, la derivazione di un information space model è difficile, la navigazione può essere complessa e quindi richiedere molte risorse. 
-\paragraph{Menu} I comandi sono presentati in una lista, lo sforzo di scrittura è minimale, gli errori improbabili. È possibile fornire aiuto contestuale. Però, le azioni complesse (and/or) sono difficili da rappresentare. I menù sono adatti a poche opzioni ed utenti non esperti, che preferiscono i comandi testuali. 
+\paragraph{Menu} I comandi sono presentati in una lista, lo sforzo di scrittura è minimale, gli errori improbabili. È possibile fornire aiuto contestuale. Però, le azioni complesse (and/or) sono difficili da rappresentare. I menù sono adatti a poche opzioni ed utenti non esperti, perché gli esperti preferiscono i comandi testuali. 
 \paragraph{Form} Il form permette semplice data-entry, facilità di apprendimento, possibilità di verifica. Però richiede molto spazio a schermo e causa problemi quando l'utente non richiede esattamente ciò che è presente a schermo.
 \paragraph{Command language} I comandi permettono uno sviluppo rapido, di complessità arbitraria ed interfacce minimali. Però, gli utenti dovranno ricordare il linguaggio: non è adatto ad utenti saltuari. Faranno inoltre errori, e sarà richiesta la possibilità di scrittura.
 \paragraph{Linguaggio naturale} Esso è accessibile ad utenti inesperti ed estensibile facilmente. Però, il vocabolario è limitato e confinato a domini specifici. La tecnologia non è del tutto adatta a rendere queste interfacce accessibili ad utenti principianti (\textit{questa slide probabilmente è stata scritta nel 2004, quando Siri e Google Assistant non esistevano. Un aggiornamento non sarebbe male eh}), ma gli utenti esperti odiano dover scrivere molto. È necessario poter scrivere. 
 \subsection{Design process}
-Per il design è utile sviluppare un prototipo low-fidelity, che sia semplice ed economico anche nella modifica, in modo da far capire le caratteristiche principali senza concentrarsi sulle piccolezze estetiche. Bisogna spiegare le convenzioni agli utenti ed è difficile mostrare i comportamenti. Il prcoesso di design consiste in:
+Per il design è utile sviluppare un prototipo low-fidelity, che sia semplice ed economico anche nella modifica, in modo da far capire le caratteristiche principali senza concentrarsi sulle piccolezze estetiche. Bisogna spiegare le convenzioni agli utenti ed è difficile mostrare i comportamenti. Il processo di design consiste in:
 \begin{enumerate}
     \item Analisi e comprensione delle attività dell'utente 
     \item Produzione di un prototipo su carta e valutazione con gli utenti 
@@ -1187,7 +1192,7 @@ Il \textbf{deployment diagram} mostra l'architettura di esecuzione del software,
 \paragraph{Manifest and deployment specification} Sono file che contengono configurazioni, ad esempio in XML.
 
 \section{T20 - Object Oriented Design}
-L'\textbf{Object Oriented Design} ha lo scopo di aggiungere dettagli alla requirements analysis e all'architecture model, prendendo decisioni riguardanti l'implementazione. Prepara l'implementazione attraverso decisioni sul design, ottimizza il system model, investiga alternative implementative. Gli obiettivi sono soprattutto non-functional. Esiste un gap tra il requirements gap ed il system design, ed è proprio l'\textbf{object design gap}. Vogliamo costruire un Object Design Model che realizzi il modello Use Case, come base per l'implementazione. Vi sono però dei rischi di \textbf{incompletezza} e la presenza di attività \textbf{soggette ad errori.}
+L'\textbf{Object Oriented Design} ha lo scopo di aggiungere dettagli alla requirements analysis e all'architecture model, prendendo decisioni riguardanti l'implementazione. Prepara l'implementazione attraverso decisioni sul design, ottimizza il system model, investiga alternative implementative. Gli obiettivi sono soprattutto non-functional. Esiste un gap tra il requirements gap ed il system gap, ed è proprio l'\textbf{object design gap}. Vogliamo costruire un Object Design Model che realizzi il modello Use Case, come base per l'implementazione. Vi sono però dei rischi di \textbf{incompletezza} e la presenza di attività \textbf{soggette ad errori.}
 Gli obiettivi sono:
 \begin{itemize}
     \item Riutilizzare le conoscenze del passato
@@ -1204,8 +1209,8 @@ Notiamo \textbf{4 step fondamentali:}
     \item \textbf{Object Model Optimization}: miglioriamo le performance
 \end{enumerate}
 \begin{figure}[H]
-    \includegraphics[width=0.6\linewidth]{res/teoria/OOD1.png}
-    \includegraphics[width=0.6\linewidth]{res/teoria/OOD2.png}
+    \includegraphics[width=0.5\linewidth]{res/teoria/OOD1.png}
+    \includegraphics[width=0.5\linewidth]{res/teoria/OOD2.png}
 \end{figure}
 \subsection{Refactoring}
 Il \textbf{refactoring} è un processo che cambia la struttura interna di un software senza cambiarne il comportamento. L'obiettivo è quello di rendere il software più facile da capire, più economico da modificare, e migliorarne l'aderenza ai requirements. Si può applicare sia ai design models che al codice. Viene spesso detto \textbf{remodeling}, quando applicato ai design models. Perché lo facciamo? \textbf{Migliora il design del software}, velocizzandolo, \textbf{rende il design più comprensibile}, \textbf{rende il debugging più facile}, \textbf{permette di programmare più velocemente}. Teniamo in conto tre principi:
@@ -1267,7 +1272,7 @@ Distinguiamo in 4 componenti:
 \end{itemize}
 \subsection{Componenti del testing}
 \subsubsection{Test Plan}
-Il \textbf{text plan} è utilizzato per dimostrare che il software è privo di falle e si comporta come richiesto dai requirements. Decompone il processo in test specifici, utilizzando specifici data items e valori. 
+Il \textbf{test plan} è utilizzato per dimostrare che il software è privo di falle e si comporta come richiesto dai requirements. Decompone il processo in test specifici, utilizzando specifici data items e valori. 
 \subsubsection{Test Specification}
 Documenta lo scopo di un test; in caso di test compositi, documenta la relazione tra le parti ed il whole test. Descrive le condizioni che indicano quando il test è completo. In generale, è un modo per valutare i risultati. 
 \subsubsection{Test Oracle}
@@ -1283,7 +1288,7 @@ Ovviamente bisogna testare il codice per farlo funzionare la prima volta, facend
 \end{figure}
 \subsubsection{Unit testing}
 Lo \textbf{unit testing} testa le singole unità che compongono il sistema, allo scopo di trovare falle in algoritmi, dati, sintassi. Definiamo un set di test cases e ne valutiamo i risultati. Questo test è fatto dagli sviluppatori per assicurarsi che l'unità sia codificata correttamente e funzioni come ci si aspetta.
-Dinstinguiamo, anzitutto, tra \textbf{static testing}(analisi, code review) e \textbf{dynamic testing} (black-box, white-box).
+Distinguiamo, anzitutto, tra \textbf{static testing}(analisi, code review) e \textbf{dynamic testing} (black-box, white-box).
 \paragraph{Black-box testing} Questo tipo di testing si concentra sul comportamento I/O, e richiede un test oracle. L'obiettivo è ridurre il numero di test cases  tramite equivalence partitioning. Dividiamo input validi ed invalidi in classi di equivalenza, scegliamo i test cases per ogni classe di equivalenza. Per scegliere i test case, notiamo che l'input è valido in un range di valori, e scegliamo i test case da quelli sotto il range, nel range, oltre il range. L'input è valido solo se facente parte di un set discreto: prendiamo un test case valido, uno invalido. 
 \paragraph{White-box testing} Non è possibile testare tutti i percorsi, cerchiamo di assicurarci che ogni linea di codice sia testata. Il glass-box testing ha dei limiti: un pezzo di codice definisce più execution paths, ed un buon test case deve provarli tutti, arrivando a quantità di test case enormi. 
 \paragraph{Euristiche} Per ottenere gli unit tests:

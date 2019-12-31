@@ -524,7 +524,7 @@ Un sistema software ha diversi, possibili, problemi:
 \subsubsection{Abstraction}
 L'\textbf{astrazione} permette di focalizzarsi su aspetti importanti di un problema ad un livello particolare, senza l'offuscamento dovuto a dettagli non importanti. Permette la descrizione di un sistema come struttura a livelli 
 \subsubsection{Refinement} 
-Il raffinamento \textit{(?)} è un processo top-down dove, in ogni passo, una o più istruzioni sono decomposte in istruzioni più dettagliate, partendo da una specifica di alto livello e dividendola in sottoproblemi ricorsivamente ,finché i sottoproblemi non hanno soluzioni immediate. Questo non è appropriato per sistemi di larga scala o distribuiti, ma piuttosto per il design di metodi. 
+Il raffinamento \textit{(?)} è un processo top-down dove, in ogni passo, una o più istruzioni sono decomposte in istruzioni più dettagliate, partendo da una specifica di alto livello e dividendola in sottoproblemi ricorsivamente, finché i sottoproblemi non hanno soluzioni immediate. Questo non è appropriato per sistemi di larga scala o distribuiti, ma piuttosto per il design di metodi. 
 \subsubsection{Information hiding}
 Il design richiede una serie di decisioni, e per ognuna di queste, dobbiamo chiederci chi deve sapere e chi no. L'information hiding è strettamente legato a:
 \begin{itemize}
@@ -888,7 +888,7 @@ Estraiamo i dati della richiesta tramite un oggetto dall'interfaccia \code{Comma
 Lo utilizziamo per parametrizzare oggetti con un'azione da eseguire, specificando le queue di azioni ed eseguire richieste in tempi diversi. Supportiamo così l'undo/redo.
 \subsubsection{Interpreter}
 \paragraph{Scopo}
-L'\textbf{interpreter}, dato un linguggio, definisce una rappresentazione per la sua grammatica ed un modo di interpretarne le frasi. Mappa un dominio ad un linguaggio, il linguaggio ad una grammatica, e la grammatica ad un design object-oriented gerarchico.
+L'\textbf{interpreter}, dato un linguaggio, definisce una rappresentazione per la sua grammatica ed un modo di interpretarne le frasi. Mappa un dominio ad un linguaggio, il linguaggio ad una grammatica, e la grammatica ad un design object-oriented gerarchico.
 \paragraph{Problema}
 Abbiamo una classe di problemi appartenenti ad un dominio ben definito. Se il dominio è caratterizzato da un linguaggio, il problema può essere risolto tramite un interprete. 
 \paragraph{Soluzione}

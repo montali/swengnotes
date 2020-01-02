@@ -564,7 +564,7 @@ Misura l'interconnessione tra moduli. Quando è debole, i moduli sono fortemente
     \item \textbf{Stamp}: le strutture dati sono passate per lista di argomenti e solo una parte è utilizzata 
     \item \textbf{Control}: si interfaccia passando flags e altri parametri 
     \item \textbf{External}: è legato a device o device drivers
-    \item \textbf{Premature}: utilizza numeri o altri valori attraverso il programma 
+    \item \textbf{Common}: entrambi i moduli utilizzano dati globali
     \item \textbf{Content}: modifica gli statement/dati dell'altro modulo o si ramifica nel mezzo di un modulo
 \end{itemize}
 Il tradeoff qui è:
@@ -871,7 +871,7 @@ Trasformiamo quindi queste verifiche in \textit{handlers}: ognuna avrà un metod
     \caption{La soluzione}
 \end{figure}
 \paragraph{Applicabilità}
-Utilizziamo questo pattern quando più di un oggetto deve eseguire un comando, l'handler non è conosciuto in anticipo e non può ssere determinato automaticamente.
+Utilizziamo questo pattern quando più di un oggetto deve eseguire un comando, l'handler non è conosciuto in anticipo e non può essere determinato automaticamente.
 \subsubsection{Command}
 \paragraph{Scopo}
 Il \textbf{command} trasforma una richiesta in un oggetto \textit{stand-alone} che contiene tutte le informazioni che la riguardano. Questo pattern può essere utilizzato per \textit{decouplare} i boundary e control objects.
@@ -915,7 +915,7 @@ Estraiamo l'esplorazione della collection tramite un oggetto \textit{iterator}. 
 Lo utilizziamo per accedere ad una collection senza esporne l'implementazione, supportando esplorazioni simultanee, e fornendo un'unica interfaccia per l'esplorazione di collections diverse.
 \subsubsection{Mediator}
 \paragraph{Scopo}
-Il \textbf{mediator} permette di ridurre le caotiche dipendenze tra oggetti. Esso restringe la comunciazione diretta tra gli oggetti e li forza a collaborare solo tramite un oggetto mediator. 
+Il \textbf{mediator} permette di ridurre le caotiche dipendenze tra oggetti. Esso restringe la comunicazione diretta tra gli oggetti e li forza a collaborare solo tramite un oggetto mediator. 
 
 \paragraph{Problema}
 Immaginiamo di avere un dialogo di creazione e modifica dei profili utente, composto da textfields, checkboxes, bottoni. Alcuni di questi elementi devono collaborare: ad esempio, selezionando la checkbox "Sono Guido Soncini", il titolo diventerà "Reggio Merda". Applicare questa logica all'interno degli elementi è un bagno di sangue.
@@ -1007,7 +1007,7 @@ Il pattern \textbf{visitor} suggerisce di inserire il nuovo comportamento in una
 \paragraph{Applicabilità}
 Lo utilizziamo quando operazioni simili devono essere eseguite su un gruppo di oggetti di diversi tipi, ma salvati nella stessa struttura. La struttura degli oggetti è difficilmente modificata, ma è probabile avere nuove operazioni. 
 \section{T17 - Architectural design}
-Il \textbf{design architetturale} permette di comprendere l'organizzazione ed il design della struttura generale di un sistema software. È il collegamento tra design e requirements engineering. Identifica i componenti strutturali e le loro relazioni in un processo creativo, quindi differente da sistema a sistema, ottenendo uno o più \textbf{modelli architetturali}. L'architettura è un modello di alto livello che descrive gli aspetti critici del sistema ed è comprensibile alla maggior parte degli stakeholders, permettendo la valutazione delle proprietà di sistema prima della sua esistenza. fornisce strumenti e tecniche per costruire il sistema. 
+Il \textbf{design architetturale} permette di comprendere l'organizzazione ed il design della struttura generale di un sistema software. È il collegamento tra design e requirements engineering. Identifica i componenti strutturali e le loro relazioni in un processo creativo, quindi differente da sistema a sistema, ottenendo uno o più \textbf{modelli architetturali}. L'architettura è un modello di alto livello che descrive gli aspetti critici del sistema ed è comprensibile alla maggior parte degli stakeholders, permettendo la valutazione delle proprietà di sistema prima della sua esistenza. Fornisce strumenti e tecniche per costruire il sistema. 
 \subsection{Software architecture}
 I risultati principali della \textbf{software architecture} sono gli aspetti rilevanti dell'architettura, una rappresentazione comprensibile, l'implementazione di strumenti e tecniche. Essa è una traccia che identifica componenti, interazioni, interconnessioni ed è definita in modo formale o informale. È fondamentale avere un vocabolario condiviso e ricco. 
 \subsection{Elementi architetturali}

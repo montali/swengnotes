@@ -9,7 +9,9 @@ Grazie!
 * [Refactoring Guru - Design patterns](https://refactoring.guru/design-patterns)
 * [From STUPID to SOLID code!](https://williamdurand.fr/2013/07/30/from-stupid-to-solid-code/)
 * [Object Calisthenics - Non necessario ma interessante](https://williamdurand.fr/2013/06/03/object-calisthenics)
-
+* Design Patterns Cheatsheet
+![Design Patterns Cheatsheet - Parte 1](res/useful/designpatterns1.jpg)
+![Design Patterns Cheatsheet - Parte 2](res/useful/designpatterns2.jpg)
 ## Sans Forgetica
 Per ogni file vi è anche una versione realizzata con il font [Sans Forgetica](https://sansforgetica.rmit/), dategli una chance. NB: per motivi implementativi, qui manca il glossario.
 

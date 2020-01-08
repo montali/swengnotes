@@ -545,8 +545,91 @@ Vi sono vari tipi di eccezioni possibili:
 La \textbf{reflection} è un processo tramite cui un software può osservarsi e modificarsi durante l'esecuzione. In Java permette di scoprire informazioni riguardanti campi, metodi, costruttori, classi, e operare sulle istanze stesse.
 Delle classi possiamo scoprire il qualified name, interfacce e superclassi, costruttori pubblici, campi e metodi, annotazioni. Di un costruttore possiamo ottenere il nome, la classe dichiarante, modificatori, parametri, annotazioni. Per i modifier, utilizziamo i metodi \code{is$[$modifier$]$}. Dei campi possiamo ottenere nome, tipo, classe dichiarante, modificatori, annotazioni. Possiamo creare istanze di classi/costruttori, gettare/settare valori, chiamare metodi. Gli scopi della reflection sono svariati: binding dinamico, browser di classe, visual development, debuggers, test tools. Ha però dei lati negativi: peggiora le performance e la sicurezza, espone parti interne, è difficile da manutenere.
 
+\section{J15 - JavaFX}
+\textbf{JavaFX} è una piattaforma software per creare applicazioni desktop e internet, eseguibili su vari device. Sostituisce Swing, supporta CSS e XML, e da JDK11 è diventato OpenJFX. Separa i compiti: all'UX file FXML, al grafico CSS, al developer Java. 
+Supporta sia il 2D che il 3D tramite tre tools:
+\begin{itemize}
+    \item \textbf{Glass Windowing Toolkit} fornisce servizi operativi, come finestre, timer, surfaces
+    \item \textbf{Prism} supporta una pipeline grafica che gira su render hw/sw (D3D, OpenGL, Java2D)
+    \item \textbf{Quantum Toolkit} unisce Prism e Glass Windowing Toolkit, e gestisce il threading
+\end{itemize}
+\subsection{Struttura delle applicazioni}
+\begin{itemize}
+    \item Lo \textbf{stage} è il contenitore più grande, che definisce la finestra. Ogni lancio dell'applicazione corrisponde ad un primary stage creato, ma se ne possono anche creare altri.
+    \item La \textbf{scene} contiene un albero di nodi, specificando il root node, che può essere un gruppo, una region, un control. Se non ha dimensioni specificate, vengono decise automaticamente
+    \item I \textbf{nodi} sono componenti visuali come shapes, imageview, UIControl e pane
+\end{itemize}
+Ogni applicazione JavaFX è definita da una classe che estende \code{javafx.application.Application}, che ha un metodo \code{start} chiamato dal \code{main}. Non è necessario un main se il JAR è stato generato da JavaFX Packager Tool, ma è utile includerlo per sicurezza. 
+\subsection{Elementi importanti}
+\begin{itemize}
+    \item I \textbf{panes} gestiscono la disposizione degli elementi a schermo: \code{VBox}, \code{TilePane}, \code{GridPane}, \code{BorderPane}, \code{HBox}, \code{FlowPane}, \code{StackPane}, \code{AnchorPane}
+    \item Gli \textbf{events} sono notifiche di qualcosa che accade, come un click. Vengono gestiti tramite gli event filters, che processano l'evento durante il bubbling, possono gestire più eventi/nodi.
+    \item Le \textbf{properties} rispettano lo standard JavaBeans, e contengono valori, tipi, metadata. Li dividiamo in read-only e read/writable. Supportano la sincronizzazione tra valori: unidirectional o bidirectional binding.
+    \item Le \textbf{transformations} modificano la posizione di oggetti grafici (nodi, gruppi di nodi)
+    \item Lo \textbf{shearing} trasforma gli oggetti
+    \item Le \textbf{animations} manipolano le proprietà dei nodi a intervalli regolari, e possono essere custom (tramite interpolator) o di default
+    \item Le \textbf{transitions} incorporano animazioni in una timeline interna e possono essere composte per creare animazioni multiple, specificando il nodo, l'animazione ed i valori.
+    \item I \textbf{charts} forniscono modi di rappresentare dati: pie chart, Line, Area, StackedArea, Bubble, Scatter, Bar, StackedBar
+    \item \textbf{WebView} e \textbf{WebEngine} forniscono un browser integrato, con funzionalità basic web.
+    \item \textbf{Media} supporta i media file di JFX (fxm, mp3, mp4), visualizzabili tramite \textbf{MediaPlayer}, che è poi inserito in una \textbf{MediaView}
+\end{itemize}
+\subsection{Concorrenza}
+La UI di JavaFX non è thread-safe: c'è un solo thread ed è brutto bloccarlo con operazioni lunghe. Una soluzione è il metodo \code{Platform.runLater}, che inserisce un runnable alla event queue. L'alternativa è utilizzare le classi concorrenti offerte da \code{javafx.concurrent}, che realizzano il multithreading e le corrette interazioni col thread della UI. Un'interfaccia Worker è utilizzata per eseguire lavori in thread in background. Questa interfaccia è implementata da Task e Service, che overridano il metodo \code{call} dell'interfaccia Worker. Una \textbf{Task} può essere eseguita una sola volta, mentre un \textbf{Service} può essere eseguito più volte.
 
-
+\section{J16 - Data Persistence}
+JDBC (Java DataBase Connectivity) risolve i problemi di data persistence ed integrazione coi DB, fornendo un'API relazionale per i DB SQL. Ha 4 tipi di driver: JDBC-ODBC Bridge, JDBC-Native Bridge, JDBC-Net Bridge, Direct JDBC (migliore perché scritto in Java).\textit{Mh.} Abbiamo varie classi:
+\begin{itemize}
+    \item DriverManager: gestisce i drivers JDBC 
+    \item Types: identificano i SQL types
+    \item Date: mappa tra java.util.Date e SQL DATE
+    \item Time: mappa tra java.util.Time e SQL TIME
+    \item TimeStamp: mappa tra java.util.Date e SQL TIMESTAMP 
+\end{itemize}
+E interfacce:
+\begin{itemize}
+    \item \textbf{Driver}: tutti i driver JDBC la implementano, serve a ottenere una connessione al DB 
+    \item \textbf{Connection}: rappresenta una connessione a un DB, si utilizza per creare statement, transazioni, procedure, callable 
+    \item \textbf{Statement}: usato per eseguire statement SQL 
+    \item \textbf{ResultSet} rappresenta il risultato di uno statement SQL 
+    \item \textbf{PreparedStatement} rappresenta un template per statement 
+    \item \textbf{CallableStatement} è utilizzato per eseguire procedure salvate 
+    \item \textbf{DataBaseMetaData} fornisce accesso a un catalogo 
+    \item \textbf{ResultSetMetaData} fornisce informazioni sui dati di un ResultSet 
+\end{itemize}
+Una query standard funziona più o meno così:
+\begin{enumerate}
+    \item Carica il driver
+    \item Ottieni una connection 
+    \item Ottieni uno statement dalla connection 
+    \item Esegui il comando SQL sullo statement
+    \item Naviga il ResultSet 
+    \item Chiudi il ResultSet
+    \item Chiudi lo statement 
+\end{enumerate}
+\subsection{Persistence API}
+Facilita la data acquisition dai DB relazionali senza la complessità di SQL: utilizza un approccio object-oriented, sfruttando le annotazioni. Elementi principali:
+\begin{itemize}
+    \item \textbf{Entity}: classe Java e tabella nel DB. Un'istanza dell'entità è una riga del DB.
+    \item \textbf{Entity Class}: ha delle variabili di istanza, getter/setter, una chiave primaria (semplice o composita, nel secondo caso primary key class)
+\end{itemize}
+Metodi principali:
+\begin{itemize}
+    \item \code{beginTransaction()}
+    \item \code{createQuery(String query)}
+    \item \code{delete(Object object)}
+    \item \code{get(String entityName, Serializable id)}
+    \item \code{persist(Object object)}
+    \item \code{save(Object object)}
+    \item \code{update(Object object)}
+\end{itemize}
+\section{J17 - Testing with JUnit and Mockito}
+\subsection{JUnit}
+\textbf{JUnit} è un framework per gli testare le classi Java, sfruttando le annotazioni (per identificare feature dei test ed esecuzione), assertions (per gestire assertions nei test), assumptions (per runnare i test solo in determinate condizioni).
+Esempi di annotations: \code{@BeforeAll}, \code{@AfterAll}, \code{@BeforeEach}, \code{@AfterEach}, \code{@TestInstance}, \code{@Test}, \code{@ParametrizedTest}, \code{@RepeatedTest}, \code{@TestFactory}, \code{@TestTemplate}, \code{@Nested}, \code{@Disable}, \code{@DisplayName}, \code{@Tag}, \code{@ExtendWith}.
+Esempi di assertions: \code{assertEquals}, \code{assertNotEquals}, \code{assertNotNull}, \code{assertNull}, \code{assertNotSame}, \code{assertSame}, \code{assertTrue}, \code{assertFalse}, \code{assertArrayEqual}, \code{assertIterableEquals}, \code{assertLinesMatch}, \code{assertThrows}, \code{assertTimeout}, \code{assertTimeoutPreemptively}, \code{assertThat}, \code{assertAll}, \code{fail}.
+JUnit è fatto per chiamare metodi e controllare i valori di ritorno: non verifica eventuali side effects, ad esempio output a console. Supporta quindi una programmazione funzionale pura. 
+\subsection{Mockito}
+\textbf{Mockito} è un generatore automatico di oggetti mock. Ha infatti metodi come \code{when(methodCall).thenReturn(value)}, sostituibile da \code{thenThrow(Exception)}, \code{thenAnswer(Answer<T> a)}, \code{thenCallRealMethod()}.
 
 
 \printglossary
